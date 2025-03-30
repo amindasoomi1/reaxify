@@ -14,7 +14,6 @@ import {
 } from "react";
 import { Transition, TransitionStatus } from "react-transition-group";
 import { twMerge } from "tailwind-merge";
-import { cn } from "../../helpers";
 import Card from "../Card";
 import { Portal } from "../Portal";
 
@@ -26,14 +25,7 @@ type Context = {
   transitionState: TransitionStatus;
   duration: number;
 };
-type ModalBaseProps = {
-  size?: Size;
-  duration?: number;
-} & ToggleProps;
-type ModalProps<E extends ElementType> = ComponentPropsWithAs<
-  E,
-  ModalBaseProps
->;
+type ModalProps = { size?: Size; duration?: number } & ToggleProps;
 type ModalDialogProps = Omit<ComponentProps<"div">, "as" | "ref">;
 type ModalHeaderProps = ComponentProps<"div">;
 type ModalBodyProps = ComponentProps<"div">;
@@ -56,7 +48,7 @@ function Modal<E extends ElementType = "div">({
   className,
   children,
   ...props
-}: ModalProps<E>) {
+}: ComponentPropsWithAs<E, ModalProps>) {
   const divRef = useRef<HTMLDivElement | null>(null);
   const Component = as || "div";
   const transitionClasses: TransitionClasses = {
@@ -116,7 +108,7 @@ function ModalDialog({ className, children, ...props }: ModalDialogProps) {
     <Card
       as="div"
       style={{ transitionDuration: `${duration}ms` }}
-      className={cn(
+      className={twMerge(
         "max-w-full max-h-full m-auto transition-transform",
         modalSize,
         transitionClasses[transitionState],
