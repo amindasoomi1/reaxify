@@ -1,16 +1,28 @@
-import { ComponentProps, ElementType } from "react";
+import { ComponentProps, ElementType, ReactNode } from "react";
+import { TransitionStatus } from "react-transition-group";
 
+export type ComponentPropsWithAs<
+  E extends ElementType,
+  // eslint-disable-next-line
+  P extends Record<string, unknown> = {}
+> = P & { as?: E } & Omit<ComponentProps<E>, "as" | keyof P>;
 export type Color =
   | "primary"
   | "secondary"
   | "success"
   | "info"
   | "warning"
-  | "error"
+  | "danger"
   | "dark"
   | "light";
-export type ComponentPropsWithAs<
-  E extends ElementType,
-  P extends Record<string, unknown>
-> = { as?: E } & P & Omit<ComponentProps<E>, "as" | keyof P>;
-export type ClassNameProps = { className?: string };
+export type ChildrenProps = {
+  children?: ReactNode;
+};
+export type Callback = () => void;
+export type Rule = (value: unknown) => true | string;
+export type Rules = Rule[];
+export type ToggleProps = { open?: boolean; onClose?: Callback };
+export type TransitionClasses = { [key in TransitionStatus]: string };
+export type RecursivePartial<T> = {
+  [P in keyof T]?: RecursivePartial<T[P]>;
+};

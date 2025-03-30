@@ -31,7 +31,7 @@ export function Colors() {
       <Button color="warning" variant="solid">
         {label}
       </Button>
-      <Button color="error" variant="solid">
+      <Button color="danger" variant="solid">
         {label}
       </Button>
       <Button color="dark" variant="solid">

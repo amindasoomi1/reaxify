@@ -1,10 +1,10 @@
 import { MouseEvent, useCallback } from "react";
 
 export default function useCreateRipple() {
+  // const ref = useRef<HTMLSpanElement | null>(null);
   const createRipple = useCallback((e: MouseEvent<HTMLElement>) => {
     const parent =
-      e.currentTarget.querySelector('[aria-label="ripple-group"]') ||
-      e.currentTarget;
+      e.currentTarget.querySelector(".ripple-group") || e.currentTarget;
     const parentRect = parent.getBoundingClientRect();
     const left = e.clientX - parentRect.left;
     const top = e.clientY - parentRect.top;
@@ -34,7 +34,13 @@ export default function useCreateRipple() {
       ripple.style.setProperty("--scale", `${scale}`);
       ripple.style.setProperty("--opacity", "0");
     }, 0);
+    // ref.current = ripple;
     setTimeout(() => parent.removeChild(ripple), 500);
   }, []);
+  // useEffect(() => {
+  //   return () => {
+  //     !!ref.current && document.removeChild(ref.current);
+  //   };
+  // }, []);
   return createRipple;
 }

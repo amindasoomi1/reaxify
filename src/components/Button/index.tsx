@@ -1,16 +1,15 @@
+import { cn } from "@/helpers";
 import { Color, ComponentPropsWithAs } from "@/types";
-import { ElementType, MouseEvent, useMemo } from "react";
+import { ElementType, MouseEvent, useContext, useMemo } from "react";
 import { twMerge } from "tailwind-merge";
-import { cn } from "../../helpers";
 import { useCreateRipple } from "../../hooks";
-// import { ButtonGroupContext } from "../ButtonGroup";
-// import { DrawerContext } from "../Drawer";
-// import { ModalContext } from "../Modal";
+import { ButtonGroupContext } from "../ButtonGroup";
+import { DrawerContext } from "../Drawer";
+import { ModalContext } from "../Modal";
 
 type Variant = "solid" | "outline" | "text";
 type Size = "sm" | "md" | "lg";
-
-type ButtonProps = {
+export type ButtonProps = {
   variant?: Variant;
   color?: Color | null;
   size?: Size;
@@ -35,33 +34,28 @@ export default function Button<E extends ElementType = "button">({
   size: initSize,
   loading: initLoading,
   stopPropagation = false,
-  //   closeModal = false,
-  //   closeDrawer = false,
+  closeModal = false,
+  closeDrawer = false,
   className,
   onClick,
   children,
   ...props
 }: ComponentPropsWithAs<E, ButtonProps>) {
-  //   ref: Ref<HTMLElement>
-  //   const buttonGroupContext = useContext(ButtonGroupContext);
-  //   const modalContext = useContext(ModalContext);
-  //   const drawerContext = useContext(DrawerContext);
+  const buttonGroupContext = useContext(ButtonGroupContext);
+  const modalContext = useContext(ModalContext);
+  const drawerContext = useContext(DrawerContext);
   const createRipple = useCreateRipple();
   const Component = as || "button";
-  //   const variant = initVariant ?? buttonGroupContext.variant ?? "solid";
-  const variant = initVariant ?? "solid";
+  const variant = initVariant ?? buttonGroupContext.variant ?? "solid";
   const color = useMemo(() => {
     if (initColor !== undefined) return initColor;
-    // if (buttonGroupContext.color !== undefined) return buttonGroupContext.color;
+    if (buttonGroupContext.color !== undefined) return buttonGroupContext.color;
     return "primary";
-    //   }, [initColor, buttonGroupContext.color]);
-  }, [initColor]);
-  //   const size = initSize ?? buttonGroupContext.size ?? "md";
-  const size = initSize ?? "md";
-  //   const loading = initLoading ?? buttonGroupContext.loading ?? false;
-  const loading = initLoading ?? false;
+  }, [initColor, buttonGroupContext.color]);
+  const size = initSize ?? buttonGroupContext.size ?? "md";
+  const loading = initLoading ?? buttonGroupContext.loading ?? false;
   const colorClasses = useMemo(() => {
-    if (!color) return "border-transparent text-black";
+    if (!color) return "border-transparent";
     const colors: Colors = {
       primary: {
         solid: "bg-primary text-white border-primary",
@@ -88,10 +82,10 @@ export default function Button<E extends ElementType = "button">({
         outline: "bg-transparent text-warning border-warning",
         text: "bg-transparent text-warning border-transparent",
       },
-      error: {
-        solid: "bg-error text-white border-error",
-        outline: "bg-transparent text-error border-error",
-        text: "bg-transparent text-error border-transparent",
+      danger: {
+        solid: "bg-danger text-white border-danger",
+        outline: "bg-transparent text-danger border-danger",
+        text: "bg-transparent text-danger border-transparent",
       },
       dark: {
         solid: "bg-dark text-white border-dark",
@@ -107,10 +101,7 @@ export default function Button<E extends ElementType = "button">({
     return colors?.[color]?.[variant] ?? null;
   }, [color, variant]);
   const loadingClasses = useMemo(() => {
-    return (
-      colorClasses?.split(" ").find((e) => e.startsWith("text-")) ??
-      "text-current"
-    );
+    return colorClasses?.split(" ").find((e) => e.startsWith("text-"));
   }, [colorClasses]);
   const sizeClasses = useMemo(() => {
     if (!size) return null;
@@ -123,14 +114,13 @@ export default function Button<E extends ElementType = "button">({
   }, [size]);
   const handleClick = (e: MouseEvent<HTMLElement>) => {
     createRipple(e);
-    // closeModal && modalContext.onClose();
-    // closeDrawer && drawerContext.onClose();
+    closeModal && modalContext.onClose();
+    closeDrawer && drawerContext.onClose();
     stopPropagation && e.stopPropagation();
     onClick?.(e);
   };
   return (
     <Component
-      //   ref={ref}
       className={twMerge(
         "relative inline-block no-underline whitespace-nowrap font-medium text-center rounded border shadow cursor-pointer hover:shadow-md transition-[box-shadow,opacity,color,background-color,border-color]",
         colorClasses,
@@ -138,7 +128,7 @@ export default function Button<E extends ElementType = "button">({
         loading
           ? "disabled:opacity-100 disabled:cursor-wait disabled:text-transparent"
           : "disabled:opacity-75 disabled:cursor-not-allowed active:shadow-lg",
-        // buttonGroupContext.buttonClasses,
+        buttonGroupContext.buttonClasses,
         className
       )}
       onClick={handleClick}
@@ -156,10 +146,7 @@ export default function Button<E extends ElementType = "button">({
           />
         </span>
       )}
-      <span
-        aria-label="ripple-group"
-        className="absolute size-full inset-0 overflow-hidden pointer-events-none"
-      ></span>
+      <span className="ripple-group absolute size-full inset-0 overflow-hidden pointer-events-none"></span>
     </Component>
   );
 }

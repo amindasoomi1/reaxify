@@ -6,9 +6,45 @@
   --color-success: #17c653;
   --color-info: #7239ea;
   --color-warning: #f6c000;
-  --color-error: #f8285a;
+  --color-danger: #f8285a;
   --color-dark: #1e2129;
   --color-light: #f8f9fa;
 
   --default-transition-duration: 300ms;
+}
+* {
+  border-color: #e8eaee;
+}
+html,
+body {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+}
+html,
+body {
+  font-size: 16px;
+  line-height: 1.5;
+  font-weight: 400;
+  background-color: white;
+}
+body:has(.drawer.active, .modal.active, .menu.active) {
+  overflow: hidden;
+  padding-right: 17px;
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+textarea::-webkit-scrollbar {
+  display: none;
+}
+textarea {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+strong,
+b {
+  font-weight: 700;
 }
