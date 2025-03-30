@@ -48,7 +48,7 @@ export const DrawerContext = createContext<Context>({
   transitionState: "unmounted",
 });
 
-export function Drawer<E extends ElementType = "div">({
+function Drawer<E extends ElementType = "div">({
   as,
   open = false,
   onClose = () => {},
@@ -113,11 +113,7 @@ export function Drawer<E extends ElementType = "div">({
     </Portal>
   );
 }
-export function DrawerMenu({
-  children,
-  className = "",
-  ...props
-}: DrawerMenuProps) {
+function DrawerMenu({ children, className = "", ...props }: DrawerMenuProps) {
   const { anchor, duration, transitionState } = useContext(DrawerContext);
   const sizeClasses = useMemo(() => {
     const classes: AnchorClasses = {
@@ -187,14 +183,21 @@ export function DrawerMenu({
     </Card>
   );
 }
-export function DrawerHeader(props: DrawerHeaderProps) {
+function DrawerHeader(props: DrawerHeaderProps) {
   return <Card.Header {...props} />;
 }
-export function DrawerBody({ className, ...props }: DrawerBodyProps) {
+function DrawerBody({ className, ...props }: DrawerBodyProps) {
   return (
     <Card.Body className={cn("flex-1 overflow-auto", className)} {...props} />
   );
 }
-export function DrawerFooter(props: DrawerFooterProps) {
+function DrawerFooter(props: DrawerFooterProps) {
   return <Card.Footer {...props} />;
 }
+
+Drawer.Menu = DrawerMenu;
+Drawer.Header = DrawerHeader;
+Drawer.Body = DrawerBody;
+Drawer.Footer = DrawerFooter;
+
+export default Drawer;

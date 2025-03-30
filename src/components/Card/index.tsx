@@ -20,7 +20,10 @@ function Card<E extends ElementType = "div">({
 }
 function CardHeader({ className, children, ...props }: ComponentProps<"div">) {
   return (
-    <div className={twMerge("w-full border-b p-4", className)} {...props}>
+    <div
+      className={twMerge("w-full border-b border-[#e8eaee] p-4", className)}
+      {...props}
+    >
       {children}
     </div>
   );
@@ -34,7 +37,10 @@ function CardBody({ className, children, ...props }: ComponentProps<"div">) {
 }
 function CardFooter({ className, children, ...props }: ComponentProps<"div">) {
   return (
-    <div className={twMerge("w-full border-t p-4", className)} {...props}>
+    <div
+      className={twMerge("w-full border-t border-[#e8eaee] p-4", className)}
+      {...props}
+    >
       {children}
     </div>
   );

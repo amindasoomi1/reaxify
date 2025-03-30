@@ -3,7 +3,11 @@ import { twMerge } from "tailwind-merge";
 
 type SkeletonProps = ComponentProps<"div">;
 
-export function Skeleton({ className, children, ...props }: SkeletonProps) {
+export default function Skeleton({
+  className,
+  children,
+  ...props
+}: SkeletonProps) {
   return (
     <div
       className={twMerge(

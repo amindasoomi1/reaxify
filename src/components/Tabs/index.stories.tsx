@@ -1,8 +1,8 @@
 import type { Meta } from "@storybook/react";
 import { useState } from "react";
-import { TabButton, TabIndicator, TabItem, Tabs } from ".";
-import { Box } from "../Box";
-import { ButtonGroup } from "../ButtonGroup";
+import Tabs from ".";
+import Box from "../Box";
+import ButtonGroup from "../ButtonGroup";
 import Stack from "../Stack";
 import Typography from "../Typography";
 
@@ -21,12 +21,12 @@ export function Default() {
     <Box className="w-full space-y-4">
       <Tabs active={active} onChange={setActive}>
         <ButtonGroup>
-          <TabIndicator />
-          <TabButton eventKey="basic-info">Basic info</TabButton>
-          <TabButton eventKey="contact-info">Contact info</TabButton>
-          <TabButton eventKey="notes">Notes</TabButton>
+          <Tabs.Indicator />
+          <Tabs.Button eventKey="basic-info">Basic info</Tabs.Button>
+          <Tabs.Button eventKey="contact-info">Contact info</Tabs.Button>
+          <Tabs.Button eventKey="notes">Notes</Tabs.Button>
         </ButtonGroup>
-        <TabItem eventKey="basic-info">
+        <Tabs.Item eventKey="basic-info">
           <Stack variant="vertical" className="gap-4">
             <Typography variant="heading-6">Basic info</Typography>
             <Typography variant="body-1">
@@ -36,8 +36,8 @@ export function Default() {
               quasi, aliquam eius labore incidunt?
             </Typography>
           </Stack>
-        </TabItem>
-        <TabItem eventKey="contact-info">
+        </Tabs.Item>
+        <Tabs.Item eventKey="contact-info">
           <Stack variant="vertical" className="gap-4">
             <Typography variant="heading-6">Contact info</Typography>
             <Typography variant="body-1">
@@ -47,8 +47,8 @@ export function Default() {
               quasi, aliquam eius labore incidunt?
             </Typography>
           </Stack>
-        </TabItem>
-        <TabItem eventKey="notes">
+        </Tabs.Item>
+        <Tabs.Item eventKey="notes">
           <Stack variant="vertical" className="gap-4">
             <Typography variant="heading-6">Notes</Typography>
             <Typography variant="body-1">
@@ -58,7 +58,7 @@ export function Default() {
               quasi, aliquam eius labore incidunt?
             </Typography>
           </Stack>
-        </TabItem>
+        </Tabs.Item>
       </Tabs>
     </Box>
   );

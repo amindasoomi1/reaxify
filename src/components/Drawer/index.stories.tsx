@@ -1,6 +1,6 @@
 import type { Meta } from "@storybook/react";
 import { Fragment, useState } from "react";
-import { Drawer, DrawerBody, DrawerFooter, DrawerHeader, DrawerMenu } from ".";
+import Drawer from ".";
 import { useToggle } from "../..//hooks";
 import Box from "../Box";
 import Button from "../Button";
@@ -24,27 +24,27 @@ export function Default() {
         Show drawer
       </Button>
       <Drawer open={openDrawer} onClose={closeDrawer}>
-        <DrawerMenu>
-          <DrawerHeader>
+        <Drawer.Menu>
+          <Drawer.Header>
             <Typography variant="heading-6">Drawer header</Typography>
-          </DrawerHeader>
-          <DrawerBody>
+          </Drawer.Header>
+          <Drawer.Body>
             <Typography variant="body-1">
               Lorem ipsum dolor sit amet consectetur adipisicing elit.
               Consequatur atque debitis fugiat voluptatum facere, voluptate
               sapiente accusantium, dolor dicta mollitia corporis quas possimus
               omnis minus sequi, recusandae earum deserunt? Doloremque.
             </Typography>
-          </DrawerBody>
-          <DrawerFooter className="flex items-center *:flex-1 gap-4">
+          </Drawer.Body>
+          <Drawer.Footer className="flex items-center *:flex-1 gap-4">
             <Button type="button" variant="outline" color="danger" closeDrawer>
               Cancel
             </Button>
             <Button type="button" variant="solid" color="success">
               Accept
             </Button>
-          </DrawerFooter>
-        </DrawerMenu>
+          </Drawer.Footer>
+        </Drawer.Menu>
       </Drawer>
     </Box>
   );
@@ -78,11 +78,11 @@ export function Anchor() {
             open={state[anchor]}
             onClose={() => toggleDrawer(anchor, false)}
           >
-            <DrawerMenu>
-              <DrawerHeader>
+            <Drawer.Menu>
+              <Drawer.Header>
                 <Typography variant="heading-6">Drawer header</Typography>
-              </DrawerHeader>
-              <DrawerBody>
+              </Drawer.Header>
+              <Drawer.Body>
                 <Typography variant="body-1">
                   Lorem ipsum dolor sit amet consectetur adipisicing elit.
                   Consequatur atque debitis fugiat voluptatum facere, voluptate
@@ -90,8 +90,8 @@ export function Anchor() {
                   possimus omnis minus sequi, recusandae earum deserunt?
                   Doloremque.
                 </Typography>
-              </DrawerBody>
-              <DrawerFooter className="flex items-center *:flex-1 gap-4">
+              </Drawer.Body>
+              <Drawer.Footer className="flex items-center *:flex-1 gap-4">
                 <Button
                   type="button"
                   variant="outline"
@@ -103,8 +103,8 @@ export function Anchor() {
                 <Button type="button" variant="solid" color="success">
                   Accept
                 </Button>
-              </DrawerFooter>
-            </DrawerMenu>
+              </Drawer.Footer>
+            </Drawer.Menu>
           </Drawer>
         </Fragment>
       ))}

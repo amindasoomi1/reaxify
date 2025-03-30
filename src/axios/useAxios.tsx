@@ -12,15 +12,17 @@ import {
   useMemo,
   useState,
 } from "react";
-import { AxiosContext } from "../providers/AxiosProvider";
+import { AxiosContext } from "./AxiosProvider";
 
 type Loading = string[];
-type Error = { [key in string]: unknown };
+// eslint-disable-next-line
+type Error = any;
 type Callback<T> = (input: T) => T | Promise<T>;
 type Config = null | {
   config?: CreateAxiosDefaults;
   beforeRequest?: Callback<InternalAxiosRequestConfig>[];
   afterResponse?: Callback<AxiosResponse>[];
+  afterError?: Callback<Error>[];
 };
 
 export default function useAxios(axiosConfig: Config = null) {
@@ -68,6 +70,20 @@ export default function useAxios(axiosConfig: Config = null) {
     },
     [axiosContext.afterResponse, axiosConfig?.afterResponse]
   );
+  const afterErrorHandler = useCallback(
+    (error: Error) => {
+      const handlers = [
+        ...axiosContext.afterError,
+        ...(axiosConfig?.afterError ?? []),
+      ];
+      if (!handlers.length) return error;
+      return handlers.reduce(
+        async (prev, current) => current(await prev),
+        Promise.resolve(error)
+      );
+    },
+    [axiosContext.afterError, axiosConfig?.afterError]
+  );
   const requestHandler = useCallback(
     async (request: InternalAxiosRequestConfig) => {
       request.signal ||= controller.signal;
@@ -88,12 +104,13 @@ export default function useAxios(axiosConfig: Config = null) {
     [loadingHandler, afterResponseHandler]
   );
   const errorHandler = useCallback(
-    (error: unknown) => {
+    (error: Error) => {
+      afterErrorHandler(error);
       loadingHandler(false);
       setError(error as Error);
       return Promise.reject(error);
     },
-    [loadingHandler]
+    [loadingHandler, afterErrorHandler]
   );
 
   useLayoutEffect(() => {

@@ -4,34 +4,14 @@ export { default as Box } from "./Box";
 export { default as Button } from "./Button";
 export { default as ButtonGroup } from "./ButtonGroup";
 export { default as Card } from "./Card";
-export {
-  Drawer,
-  DrawerBody,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerMenu,
-} from "./Drawer";
+export { default as Drawer } from "./Drawer";
 export { default as Form } from "./Form";
-export { Menu, MenuItem } from "./Menu";
-export {
-  Modal,
-  ModalBody,
-  ModalDialog,
-  ModalFooter,
-  ModalHeader,
-} from "./Modal";
+export { default as Menu } from "./Menu";
+export { default as Modal } from "./Modal";
 export { Portal } from "./Portal";
-export { Progress } from "./Progress";
-export { Skeleton } from "./Skeleton";
+export { default as Progress } from "./Progress";
+export { default as Skeleton } from "./Skeleton";
 export { default as Stack } from "./Stack";
-export {
-  Table,
-  TableBody,
-  TableContainer,
-  TableDataCell,
-  TableHeader,
-  TableHeaderCell,
-  TableRow,
-} from "./Table";
-export { TabButton, TabIndicator, TabItem, Tabs } from "./Tabs";
+export { default as Table } from "./Table";
+export { default as Tabs } from "./Tabs";
 export { default as Typography } from "./Typography";

@@ -1,5 +1,4 @@
 export { default as useAutoFill } from "./useAutoFill";
-export { default as useAxios } from "./useAxios";
 export { default as useCreateRipple } from "./useCreateRipple";
 export { default as useDebounce } from "./useDebounce";
 export { default as useDocumentVisible } from "./useDocumentVisible";

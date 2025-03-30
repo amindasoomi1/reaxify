@@ -71,7 +71,10 @@ function AccordionItem<E extends ElementType = "div">({
   }, [activeKey, eventKey]);
   return (
     <Component
-      className={twMerge("block w-full border rounded", className)}
+      className={twMerge(
+        "block w-full border border-[#e8eaee]rounded",
+        className
+      )}
       {...props}
     >
       <AccordionItemContext.Provider value={{ eventKey, active }}>

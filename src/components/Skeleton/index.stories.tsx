@@ -1,5 +1,5 @@
 import type { Meta } from "@storybook/react";
-import { Skeleton } from ".";
+import Skeleton from ".";
 import Card from "../Card";
 
 const meta: Meta<typeof Skeleton> = {

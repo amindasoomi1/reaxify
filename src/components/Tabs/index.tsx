@@ -33,11 +33,7 @@ export const TabsContext = createContext<TabsContextType>({
   buttonGroupClasses: "",
 });
 
-export function Tabs({
-  active = null,
-  onChange = () => {},
-  children,
-}: TabsProps) {
+function Tabs({ active = null, onChange = () => {}, children }: TabsProps) {
   const buttonGroupClasses = "relative flex items-center";
   return (
     <TabsContext.Provider value={{ active, onChange, buttonGroupClasses }}>
@@ -45,7 +41,7 @@ export function Tabs({
     </TabsContext.Provider>
   );
 }
-export function TabIndicator({
+function TabIndicator({
   className,
   ...props
 }: Omit<ComponentProps<"span">, "children">) {
@@ -97,7 +93,7 @@ export function TabIndicator({
     </span>
   );
 }
-export function TabButton({
+function TabButton({
   eventKey,
   className,
   children,
@@ -126,8 +122,14 @@ export function TabButton({
     </Button>
   );
 }
-export function TabItem({ eventKey, children }: TabItemProps) {
+function TabItem({ eventKey, children }: TabItemProps) {
   const { active } = useContext(TabsContext);
   if (active !== eventKey) return null;
   return <Fragment>{children}</Fragment>;
 }
+
+Tabs.Indicator = TabIndicator;
+Tabs.Button = TabButton;
+Tabs.Item = TabItem;
+
+export default Tabs;

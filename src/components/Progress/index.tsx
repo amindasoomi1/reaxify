@@ -13,7 +13,7 @@ type Colors = {
 type ProgressProps = BaseProgressProps &
   Omit<ComponentProps<"div">, keyof BaseProgressProps>;
 
-export function Progress({
+export default function Progress({
   color = "primary",
   value = 0,
   className,

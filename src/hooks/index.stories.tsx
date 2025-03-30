@@ -1,7 +1,6 @@
 import type { Meta } from "@storybook/react";
-import { Fragment, useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import {
-  useAxios,
   useCreateRipple,
   useDebounce,
   useKeyDown,
@@ -9,7 +8,7 @@ import {
   useOutsideClick,
   usePersistedState,
 } from ".";
-import { Button, Skeleton, Stack, Typography } from "../components";
+import { Button, Stack, Typography } from "../components";
 
 const meta: Meta = {
   title: "Hooks",
@@ -36,7 +35,7 @@ export function Debounce() {
   return (
     <input
       type="text"
-      className="w-full h-10 border rounded px-4"
+      className="w-full h-10 border border-[#e8eaee]rounded px-4"
       placeholder="Please type ..."
       onChange={(e) => {
         debounce(() => {
@@ -85,39 +84,6 @@ export function OutsideClick() {
       <button ref={ref} type="button">
         Click outside me!
       </button>
-    </Stack>
-  );
-}
-export function Axios() {
-  const [axios, loading, error] = useAxios();
-  const [data, setData] = useState<null | object>(null);
-  const getData = () => {
-    const url = "https://jsonplaceholder.typicode.com/todos/1";
-    axios.get(url).then(({ data }) => {
-      setData(data);
-    });
-  };
-  useEffect(getData, []);
-  return (
-    <Stack variant="vertical" className="items-start gap-4">
-      {loading ? (
-        <Fragment>
-          <Skeleton className="w-1/3" />
-          <Skeleton className="w-1/3" />
-          <Skeleton className="w-1/3" />
-        </Fragment>
-      ) : error ? (
-        <p className="text-danger">An error accord!</p>
-      ) : data ? (
-        <Fragment>
-          <Button type="button" onClick={getData}>
-            Get data
-          </Button>
-          <pre>{JSON.stringify(data, null, 2)}</pre>
-        </Fragment>
-      ) : (
-        <p className="text-dark">There is no data</p>
-      )}
     </Stack>
   );
 }

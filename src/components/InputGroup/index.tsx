@@ -44,7 +44,7 @@ function InputGroupStack<E extends ElementType = "div">({
   return (
     <Component
       className={twMerge(
-        "flex items-stretch border rounded divide-x transition-[border-color,box-shadow] [&>*:first-child]:rounded-s [&>*:last-child]:rounded-e focus-within:border-primary focus-within:divide-primary",
+        "flex items-stretch border border-[#e8eaee]rounded divide-x transition-[border-color,box-shadow] [&>*:first-child]:rounded-s [&>*:last-child]:rounded-e focus-within:border-primary focus-within:divide-primary",
         className
       )}
       {...props}

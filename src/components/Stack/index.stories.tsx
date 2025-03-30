@@ -1,6 +1,6 @@
 import type { Meta } from "@storybook/react";
-import { Stack } from ".";
-import { Box } from "../Box";
+import Stack from ".";
+import Box from "../Box";
 
 const meta: Meta<typeof Stack> = {
   title: "Component/Stack",

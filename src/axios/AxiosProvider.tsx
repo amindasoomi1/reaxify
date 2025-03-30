@@ -12,6 +12,8 @@ type BaseProps = {
   config: CreateAxiosDefaults;
   beforeRequest: Callback<InternalAxiosRequestConfig>[];
   afterResponse: Callback<AxiosResponse>[];
+  // eslint-disable-next-line
+  afterError: Callback<any>[];
 };
 type Props = Partial<BaseProps> & ChildrenProps;
 
@@ -21,16 +23,20 @@ export const AxiosContext = createContext<Context>({
   config: {},
   beforeRequest: [],
   afterResponse: [],
+  afterError: [],
 });
 
 export default function AxiosProvider({
   config = {},
   beforeRequest = [],
   afterResponse = [],
+  afterError = [],
   children,
 }: Props) {
   return (
-    <AxiosContext.Provider value={{ config, beforeRequest, afterResponse }}>
+    <AxiosContext.Provider
+      value={{ config, beforeRequest, afterResponse, afterError }}
+    >
       {children}
     </AxiosContext.Provider>
   );

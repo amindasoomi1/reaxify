@@ -1,5 +1,5 @@
 import type { Meta } from "@storybook/react";
-import { Typography } from ".";
+import Typography from ".";
 import Stack from "../Stack";
 
 const meta: Meta<typeof Typography> = {

@@ -1,13 +1,5 @@
 import type { Meta } from "@storybook/react";
-import {
-  Table,
-  TableBody,
-  TableContainer,
-  TableDataCell,
-  TableHeader,
-  TableHeaderCell,
-  TableRow,
-} from ".";
+import Table from ".";
 
 const meta: Meta<typeof Table> = {
   title: "Component/Table",
@@ -18,30 +10,30 @@ const meta: Meta<typeof Table> = {
 
 export function Default() {
   return (
-    <TableContainer className="max-w-sm max-h-96">
+    <Table.Container className="max-w-sm max-h-96">
       <Table striped bordered hover>
-        <TableHeader sticky>
-          <TableRow>
-            <TableHeaderCell>Dessert (100g serving)</TableHeaderCell>
-            <TableHeaderCell>Calories</TableHeaderCell>
-            <TableHeaderCell>Fat (g)</TableHeaderCell>
-            <TableHeaderCell>Carbs (g)</TableHeaderCell>
-            <TableHeaderCell sticky>Protein (g)</TableHeaderCell>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
+        <Table.Header sticky>
+          <Table.Row>
+            <Table.HeaderCell>Dessert (100g serving)</Table.HeaderCell>
+            <Table.HeaderCell>Calories</Table.HeaderCell>
+            <Table.HeaderCell>Fat (g)</Table.HeaderCell>
+            <Table.HeaderCell>Carbs (g)</Table.HeaderCell>
+            <Table.HeaderCell sticky>Protein (g)</Table.HeaderCell>
+          </Table.Row>
+        </Table.Header>
+        <Table.Body>
           {[...Array(25).keys()].map((key) => (
-            <TableRow key={key}>
-              <TableDataCell>Frozen yoghurt</TableDataCell>
-              <TableDataCell>159</TableDataCell>
-              <TableDataCell>6</TableDataCell>
-              <TableDataCell>24</TableDataCell>
-              <TableDataCell sticky>4</TableDataCell>
-            </TableRow>
+            <Table.Row key={key}>
+              <Table.DataCell>Frozen yoghurt</Table.DataCell>
+              <Table.DataCell>159</Table.DataCell>
+              <Table.DataCell>6</Table.DataCell>
+              <Table.DataCell>24</Table.DataCell>
+              <Table.DataCell sticky>4</Table.DataCell>
+            </Table.Row>
           ))}
-        </TableBody>
+        </Table.Body>
       </Table>
-    </TableContainer>
+    </Table.Container>
   );
 }
 export default meta;

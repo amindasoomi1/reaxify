@@ -32,7 +32,7 @@ const TableContext = createContext<TableContextType>({
   bordered: false,
   hover: false,
 });
-export function TableContainer({
+function TableContainer({
   className,
   children,
   ...props
@@ -43,7 +43,7 @@ export function TableContainer({
     </div>
   );
 }
-export function Table({
+function Table({
   striped = false,
   bordered = false,
   hover = false,
@@ -65,7 +65,7 @@ export function Table({
     </table>
   );
 }
-export function TableHeader({
+function TableHeader({
   sticky = false,
   className,
   children,
@@ -83,14 +83,14 @@ export function TableHeader({
     </thead>
   );
 }
-export function TableBody({ className, children, ...props }: TableBodyProps) {
+function TableBody({ className, children, ...props }: TableBodyProps) {
   return (
     <tbody className={twMerge("", className)} {...props}>
       {children}
     </tbody>
   );
 }
-export function TableRow({ className, children, ...props }: TableRowProps) {
+function TableRow({ className, children, ...props }: TableRowProps) {
   const { bordered, hover, striped } = useContext(TableContext);
   const hasBordered = !!bordered;
   const isDashed = bordered === "dashed";
@@ -112,7 +112,7 @@ export function TableRow({ className, children, ...props }: TableRowProps) {
     </tr>
   );
 }
-export function TableHeaderCell({
+function TableHeaderCell({
   sticky = false,
   className,
   children,
@@ -131,7 +131,7 @@ export function TableHeaderCell({
     </th>
   );
 }
-export function TableDataCell({
+function TableDataCell({
   sticky = false,
   className,
   children,
@@ -150,3 +150,12 @@ export function TableDataCell({
     </td>
   );
 }
+
+Table.Container = TableContainer;
+Table.Header = TableHeader;
+Table.Body = TableBody;
+Table.Row = TableRow;
+Table.HeaderCell = TableHeaderCell;
+Table.DataCell = TableDataCell;
+
+export default Table;
