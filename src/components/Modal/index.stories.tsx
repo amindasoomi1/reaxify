@@ -1,7 +1,7 @@
 import type { Meta } from "@storybook/react";
-import { Modal, ModalBody, ModalDialog, ModalFooter, ModalHeader } from ".";
+import Modal from ".";
 import { useToggle } from "../..//hooks";
-import { Box } from "../Box";
+import Box from "../Box";
 import Button from "../Button";
 import Typography from "../Typography";
 
@@ -22,27 +22,27 @@ export function Default() {
         Show modal
       </Button>
       <Modal open={openModal} onClose={closeModal}>
-        <ModalDialog>
-          <ModalHeader>
+        <Modal.Dialog>
+          <Modal.Header>
             <Typography variant="heading-6">Modal header</Typography>
-          </ModalHeader>
-          <ModalBody>
+          </Modal.Header>
+          <Modal.Body>
             <Typography variant="body-1">
               Lorem ipsum dolor sit amet consectetur adipisicing elit.
               Consequatur atque debitis fugiat voluptatum facere, voluptate
               sapiente accusantium, dolor dicta mollitia corporis quas possimus
               omnis minus sequi, recusandae earum deserunt? Doloremque.
             </Typography>
-          </ModalBody>
-          <ModalFooter className="flex items-center *:flex-1 gap-4">
+          </Modal.Body>
+          <Modal.Footer className="flex items-center *:flex-1 gap-4">
             <Button type="button" variant="outline" color="danger" closeModal>
               Cancel
             </Button>
             <Button type="button" variant="solid" color="success">
               Accept
             </Button>
-          </ModalFooter>
-        </ModalDialog>
+          </Modal.Footer>
+        </Modal.Dialog>
       </Modal>
     </Box>
   );

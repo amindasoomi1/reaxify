@@ -47,7 +47,7 @@ export const ModalContext = createContext<Context>({
   duration: 300,
 });
 
-export function Modal<E extends ElementType = "div">({
+function Modal<E extends ElementType = "div">({
   as,
   size = "md",
   open = false,
@@ -96,11 +96,7 @@ export function Modal<E extends ElementType = "div">({
     </Portal>
   );
 }
-export function ModalDialog({
-  className,
-  children,
-  ...props
-}: ModalDialogProps) {
+function ModalDialog({ className, children, ...props }: ModalDialogProps) {
   const { size, transitionState, duration } = useContext(ModalContext);
   const transitionClasses: TransitionClasses = {
     entering: "scale-100",
@@ -132,12 +128,19 @@ export function ModalDialog({
     </Card>
   );
 }
-export function ModalHeader(props: ModalHeaderProps) {
+function ModalHeader(props: ModalHeaderProps) {
   return <Card.Header {...props} />;
 }
-export function ModalBody(props: ModalBodyProps) {
+function ModalBody(props: ModalBodyProps) {
   return <Card.Body {...props} />;
 }
-export function ModalFooter(props: ModalFooterProps) {
+function ModalFooter(props: ModalFooterProps) {
   return <Card.Footer {...props} />;
 }
+
+Modal.Dialog = ModalDialog;
+Modal.Header = ModalHeader;
+Modal.Body = ModalBody;
+Modal.Footer = ModalFooter;
+
+export default Modal;
