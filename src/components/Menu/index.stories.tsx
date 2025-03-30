@@ -1,7 +1,7 @@
 import type { Meta } from "@storybook/react";
 import { MouseEvent, useState } from "react";
 import { Fragment } from "react/jsx-runtime";
-import { Menu, MenuItem } from ".";
+import Menu from ".";
 import Button from "../Button";
 
 const meta: Meta<typeof Menu> = {
@@ -24,10 +24,10 @@ export function Dropdown() {
     <Fragment>
       <Button onClick={handleClick}>Dropdown</Button>
       <Menu anchorEl={anchorEl} open={open} onClose={handleCLose}>
-        <MenuItem>Item #1</MenuItem>
-        <MenuItem>Item #2</MenuItem>
-        <MenuItem>Item #3</MenuItem>
-        <MenuItem>Item #4</MenuItem>
+        <Menu.Item>Item #1</Menu.Item>
+        <Menu.Item>Item #2</Menu.Item>
+        <Menu.Item>Item #3</Menu.Item>
+        <Menu.Item>Item #4</Menu.Item>
       </Menu>
     </Fragment>
   );
@@ -45,10 +45,10 @@ export function CloseOnClick() {
     <Fragment>
       <Button onClick={handleClick}>Close on click all item</Button>
       <Menu anchorEl={anchorEl} open={open} onClose={handleCLose} closeOnClick>
-        <MenuItem>Item #1</MenuItem>
-        <MenuItem>Item #2</MenuItem>
-        <MenuItem>Item #3</MenuItem>
-        <MenuItem>Item #4</MenuItem>
+        <Menu.Item>Item #1</Menu.Item>
+        <Menu.Item>Item #2</Menu.Item>
+        <Menu.Item>Item #3</Menu.Item>
+        <Menu.Item>Item #4</Menu.Item>
       </Menu>
     </Fragment>
   );
@@ -66,10 +66,10 @@ export function CloseOnClickOneItem() {
     <Fragment>
       <Button onClick={handleClick}>Close on click one item</Button>
       <Menu anchorEl={anchorEl} open={open} onClose={handleCLose}>
-        <MenuItem>Item #1</MenuItem>
-        <MenuItem closeOnClick>Item #2 (ClickOnClose)</MenuItem>
-        <MenuItem>Item #3</MenuItem>
-        <MenuItem>Item #4</MenuItem>
+        <Menu.Item>Item #1</Menu.Item>
+        <Menu.Item closeOnClick>Item #2 (ClickOnClose)</Menu.Item>
+        <Menu.Item>Item #3</Menu.Item>
+        <Menu.Item>Item #4</Menu.Item>
       </Menu>
     </Fragment>
   );

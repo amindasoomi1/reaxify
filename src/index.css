@@ -13,7 +13,7 @@
   --default-transition-duration: 300ms;
 }
 * {
-  border-color: #e8eaee;
+  /* border-color: #e8eaee; */
 }
 html,
 body {
@@ -30,7 +30,6 @@ body {
 }
 body:has(.drawer.active, .modal.active, .menu.active) {
   overflow: hidden;
-  padding-right: 17px;
 }
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {

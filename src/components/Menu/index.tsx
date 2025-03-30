@@ -1,7 +1,7 @@
 import {
-  ComponentProps,
   createContext,
-  Dispatch,
+  ElementType,
+  MouseEvent,
   useCallback,
   useContext,
   useEffect,
@@ -9,24 +9,25 @@ import {
 } from "react";
 import { Transition, TransitionStatus } from "react-transition-group";
 import { twMerge } from "tailwind-merge";
-import { ChildrenProps, ToggleProps, TransitionClasses } from "../../types";
+import {
+  ChildrenProps,
+  ComponentPropsWithAs,
+  ToggleProps,
+  TransitionClasses,
+} from "../../types";
 import { Portal } from "../Portal";
 
-type BaseMenuProps = ToggleProps & {
+type Position = { left: number; top: number; right: number };
+type MenuProps = ToggleProps & {
   anchorEl?: HTMLElement | null;
   closeOnClick?: boolean;
 };
-type BaseMenuItemProps = ToggleProps & {
-  anchorEl?: HTMLElement | null;
+type MenuItemProps = {
   closeOnClick?: boolean;
 };
-type MenuProps = BaseMenuProps &
-  Omit<ComponentProps<"div">, keyof BaseMenuProps>;
-type MenuItemProps = BaseMenuItemProps &
-  Omit<ComponentProps<"button">, keyof BaseMenuItemProps>;
+
 type MenuContextType = {
   transitionState: TransitionStatus;
-  setParentRef: Dispatch<HTMLDivElement>;
   closeOnClick: boolean;
 } & ToggleProps;
 
@@ -34,11 +35,11 @@ const MenuContext = createContext<MenuContextType>({
   open: false,
   onClose: () => {},
   transitionState: "unmounted",
-  setParentRef: () => {},
   closeOnClick: false,
 });
 
-export function Menu({
+function Menu<E extends ElementType = "div">({
+  as,
   open,
   onClose,
   closeOnClick = false,
@@ -46,12 +47,15 @@ export function Menu({
   className,
   children,
   ...props
-}: MenuProps) {
+}: ComponentPropsWithAs<E, MenuProps>) {
+  const Component = as || "div";
   const offset = 16;
-  const parentRef = useRef<HTMLDivElement | null>(null);
   const menuRef = useRef<HTMLDivElement | null>(null);
-  const yRef = useRef(offset);
-  const XRef = useRef(offset);
+  const positionRef = useRef<Position>({
+    left: offset,
+    right: offset,
+    top: offset,
+  });
 
   const classes: TransitionClasses = {
     entering: "scale-100 opacity-100",
@@ -60,58 +64,53 @@ export function Menu({
     exited: "scale-90 opacity-0",
     unmounted: "",
   };
-  const setParentRef = useCallback((ref: HTMLDivElement) => {
-    parentRef.current = ref;
+
+  const setPosition = useCallback((position: Position) => {
+    positionRef.current = position;
   }, []);
-  const setY = useCallback((value: number) => {
-    parentRef.current?.style.setProperty("--y", `${value}px`);
+  const setPositionProperty = useCallback((position: Position) => {
+    menuRef.current?.style.setProperty("--left", `${position.left}px`);
+    menuRef.current?.style.setProperty("--right", `${position.right}px`);
+    menuRef.current?.style.setProperty("--top", `${position.top}px`);
   }, []);
-  const setX = useCallback((value: number) => {
-    parentRef.current?.style.setProperty("--x", `${value}px`);
-  }, []);
-  const yHandler = useCallback(() => {
-    if (!open) return setY(yRef.current);
-    if (!anchorEl) return setY(offset);
-    if (!parentRef.current) return setY(offset);
-    const anchorRect = anchorEl.getBoundingClientRect();
-    const parentRect = parentRef.current.getBoundingClientRect();
-    const anchorY = anchorRect.y;
-    const anchorHeight = anchorRect.height;
-    const parentHeight = parentRect.height;
-    const rootHeight = document.body.clientHeight;
-    const max = rootHeight - offset - parentHeight;
-    const y = Math.min(anchorY + anchorHeight, max);
-    yRef.current = y;
-    setY(y);
-  }, [open, anchorEl, setY]);
-  const xHandler = useCallback(() => {
-    if (!open) return setX(XRef.current);
-    if (!anchorEl) return setX(offset);
-    if (!parentRef.current) return setX(offset);
-    const anchorRect = anchorEl.getBoundingClientRect();
-    const parentRect = parentRef.current.getBoundingClientRect();
-    const anchorX = anchorRect.x;
-    const parentWidth = parentRect.width;
-    const rootWidth = document.body.clientWidth;
-    const max = rootWidth - offset - parentWidth;
-    const x = Math.min(anchorX, max);
-    XRef.current = x;
-    setX(x);
-  }, [open, anchorEl, setX]);
+  const positionHandler = useCallback(() => {
+    if (!open) return;
+    if (!anchorEl) return;
+    const rect = anchorEl.getBoundingClientRect();
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
+    const menuWidth = menuRef.current?.offsetWidth || 150;
+    const menuHeight = menuRef.current?.offsetHeight || 200;
+
+    let left = rect.left;
+    let right = rect.right;
+    let top = rect.bottom;
+
+    left = Math.min(Math.max(left, offset), viewportWidth - menuWidth - offset);
+    right = Math.min(
+      Math.max(viewportWidth - rect.right, offset),
+      viewportWidth - menuWidth - offset
+    );
+    top = Math.min(Math.max(top, offset), viewportHeight - menuHeight - offset);
+
+    setPosition({ left, right, top });
+    setPositionProperty({ left, right, top });
+  }, [open, anchorEl, setPosition, setPositionProperty]);
+
   useEffect(() => {
-    xHandler();
-    yHandler();
-  }, [xHandler, yHandler, children]);
+    positionHandler();
+  }, [positionHandler, children]);
   useEffect(() => {
     const handleResize = () => {
-      xHandler();
-      yHandler();
+      positionHandler();
     };
+    window.addEventListener("scroll", handleResize);
     window.addEventListener("resize", handleResize);
     return () => {
+      window.removeEventListener("scroll", handleResize);
       window.removeEventListener("resize", handleResize);
     };
-  }, [xHandler, yHandler]);
+  }, [positionHandler]);
   return (
     <Portal>
       <Transition nodeRef={menuRef} in={open} timeout={300} unmountOnExit>
@@ -121,25 +120,22 @@ export function Menu({
               open,
               onClose,
               transitionState: state,
-              setParentRef,
               closeOnClick,
             }}
           >
             <Container>
               <Backdrop />
-              <Parent>
-                <div
-                  ref={menuRef}
-                  className={twMerge(
-                    "w-full min-w-[12.5rem] bg-white shadow rounded p-2 transition-[transform,opacity] origin-top-left rtl:origin-top-right",
-                    classes[state],
-                    className
-                  )}
-                  {...props}
-                >
-                  {children}
-                </div>
-              </Parent>
+              <Component
+                ref={menuRef}
+                className={twMerge(
+                  "w-fit min-w-[12.5rem] bg-white shadow rounded p-2 transition-[scale,opacity] absolute top-[var(--top)] left-[var(--left)] right-auto origin-top-left rtl:left-auto rtl:right-[var(--right)] rtl:origin-top-right",
+                  classes[state],
+                  className
+                )}
+                {...props}
+              >
+                {children}
+              </Component>
             </Container>
           </MenuContext.Provider>
         )}
@@ -150,10 +146,10 @@ export function Menu({
 function Container({ children }: ChildrenProps) {
   const { transitionState } = useContext(MenuContext);
   const classes: TransitionClasses = {
-    entering: "active opacity-100 pointer-events-auto",
-    entered: "active opacity-100 pointer-events-auto",
-    exiting: "opacity-0 pointer-events-none",
-    exited: "opacity-0 pointer-events-none",
+    entering: "active pointer-events-auto",
+    entered: "active pointer-events-auto",
+    exiting: "pointer-events-none",
+    exited: "pointer-events-none",
     unmounted: "",
   };
   return (
@@ -177,33 +173,24 @@ function Backdrop() {
     ></button>
   );
 }
-function Parent({ children }: ChildrenProps) {
-  const { setParentRef } = useContext(MenuContext);
-  return (
-    <div
-      ref={setParentRef}
-      className="w-fit max-w-full max-h-full absolute top-[var(--y)] start-[var(--x)]"
-    >
-      {children}
-    </div>
-  );
-}
-export function MenuItem({
+function MenuItem<E extends ElementType = "button">({
+  as,
   closeOnClick: itemCloseOnClick,
   type = "button",
   className,
   children,
   onClick,
   ...props
-}: MenuItemProps) {
+}: ComponentPropsWithAs<E, MenuItemProps>) {
+  const Component = as || "div";
   const { closeOnClick: menuCloseOnClick, onClose } = useContext(MenuContext);
   const closeOnClick = itemCloseOnClick ?? menuCloseOnClick;
-  const handleClick: Exclude<typeof onClick, undefined> = (e) => {
+  const handleClick: typeof onClick = (e: MouseEvent<E>) => {
     closeOnClick && onClose?.();
     onClick?.(e);
   };
   return (
-    <button
+    <Component
       type={type}
       className={twMerge(
         "flex items-center px-3 py-2 w-full text-dark text-base font-normal rounded transition-colors hover:bg-dark hover:text-white",
@@ -213,6 +200,10 @@ export function MenuItem({
       {...props}
     >
       {children}
-    </button>
+    </Component>
   );
 }
+
+Menu.Item = MenuItem;
+
+export default Menu;
