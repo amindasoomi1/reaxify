@@ -1,62 +1,22 @@
 import type { Meta } from "@storybook/react";
-import {
-  FormControl,
-  InputGroup,
-  InputGroupLabel,
-  InputGroupStack,
-  InputGroupText,
-} from ".";
-import Stack from "../Stack";
+import InputGroup from ".";
 
 const meta: Meta<typeof InputGroup> = {
   title: "Component/InputGroup",
   component: InputGroup,
-  parameters: { layout: "centered" },
+  parameters: { layout: "padded" },
   tags: ["autodocs"],
 };
 
 export function Default() {
   return (
     <InputGroup>
-      <InputGroupLabel>Email address</InputGroupLabel>
-      <InputGroupStack>
-        <InputGroupText>@</InputGroupText>
-        <FormControl />
-      </InputGroupStack>
+      <InputGroup.Label>Email address</InputGroup.Label>
+      <InputGroup.Stack>
+        <InputGroup.Text>@</InputGroup.Text>
+        <InputGroup.FormControl />
+      </InputGroup.Stack>
     </InputGroup>
-  );
-}
-export function Size() {
-  return (
-    <Stack variant="vertical" className="gap-4">
-      <InputGroup size="sm">
-        <InputGroupLabel>Email address</InputGroupLabel>
-        <InputGroupStack>
-          <InputGroupText>@</InputGroupText>
-          <FormControl />
-        </InputGroupStack>
-      </InputGroup>
-      <InputGroup size="md">
-        <InputGroupLabel>Email address</InputGroupLabel>
-        <InputGroupStack>
-          <InputGroupText>@</InputGroupText>
-          <FormControl />
-        </InputGroupStack>
-      </InputGroup>
-      <InputGroup size="lg">
-        <InputGroupLabel>Email address</InputGroupLabel>
-        <InputGroupStack>
-          <InputGroupText>@</InputGroupText>
-          <FormControl />
-        </InputGroupStack>
-      </InputGroup>
-      <InputGroup>
-        <InputGroupLabel>Textarea</InputGroupLabel>
-        <InputGroupStack>
-          <FormControl multiline rows={5} />
-        </InputGroupStack>
-      </InputGroup>
-    </Stack>
   );
 }
 export default meta;

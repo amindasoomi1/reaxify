@@ -1,5 +1,5 @@
 import { cn } from "@/helpers";
-import { Color, ComponentPropsWithAs } from "@/types";
+import { Color, ComponentPropsWithAs, Size } from "@/types";
 import { ElementType, MouseEvent, useContext, useMemo } from "react";
 import { twMerge } from "tailwind-merge";
 import { useCreateRipple } from "../../hooks";
@@ -8,7 +8,6 @@ import { DrawerContext } from "../Drawer";
 import { ModalContext } from "../Modal";
 
 type Variant = "solid" | "outline" | "text";
-type Size = "sm" | "md" | "lg";
 export type ButtonProps = {
   variant?: Variant;
   color?: Color | null;

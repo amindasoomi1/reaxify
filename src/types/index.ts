@@ -18,6 +18,7 @@ export type Color =
 export type ChildrenProps = {
   children?: ReactNode;
 };
+export type Size = "sm" | "md" | "lg";
 export type Callback = () => void;
 export type Rule = (value: unknown) => true | string;
 export type Rules = Rule[];
