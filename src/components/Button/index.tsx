@@ -121,7 +121,7 @@ export default function Button<E extends ElementType = "button">({
   return (
     <Component
       className={twMerge(
-        "relative inline-block no-underline whitespace-nowrap font-medium text-center rounded border border-[#e8eaee]shadow cursor-pointer hover:shadow-md transition-[box-shadow,opacity,color,background-color,border-color]",
+        "relative inline-block no-underline whitespace-nowrap font-medium text-center rounded border border-[#e8eaee] shadow cursor-pointer hover:shadow-md transition-[box-shadow,opacity,color,background-color,border-color]",
         colorClasses,
         sizeClasses,
         loading

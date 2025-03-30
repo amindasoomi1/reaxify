@@ -72,7 +72,7 @@ function AccordionItem<E extends ElementType = "div">({
   return (
     <Component
       className={twMerge(
-        "block w-full border border-[#e8eaee]rounded",
+        "block w-full border border-[#e8eaee] rounded",
         className
       )}
       {...props}

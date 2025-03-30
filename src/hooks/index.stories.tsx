@@ -35,7 +35,7 @@ export function Debounce() {
   return (
     <input
       type="text"
-      className="w-full h-10 border border-[#e8eaee]rounded px-4"
+      className="w-full h-10 border border-[#e8eaee] rounded px-4"
       placeholder="Please type ..."
       onChange={(e) => {
         debounce(() => {

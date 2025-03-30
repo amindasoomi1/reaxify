@@ -46,7 +46,7 @@ export function Copy() {
       </Button>
       <input
         type="text"
-        className="flex-1 h-10 border border-[#e8eaee]rounded px-4"
+        className="flex-1 h-10 border border-[#e8eaee] rounded px-4"
         placeholder="Paste here"
       />
     </Stack>
