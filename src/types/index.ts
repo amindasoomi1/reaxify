@@ -20,7 +20,7 @@ export type ChildrenProps = {
 };
 export type Size = "sm" | "md" | "lg";
 export type Callback = () => void;
-export type Rule = (value: unknown) => true | string;
+export type Rule = (value: string) => true | string;
 export type Rules = Rule[];
 export type ToggleProps = { open?: boolean; onClose?: Callback };
 export type TransitionClasses = { [key in TransitionStatus]: string };

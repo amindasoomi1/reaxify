@@ -16,7 +16,7 @@ import { Transition, TransitionStatus } from "react-transition-group";
 import { twMerge } from "tailwind-merge";
 import { cn } from "../../helpers";
 import Card from "../Card";
-import { Portal } from "../Portal";
+import Portal from "../Portal";
 
 type Anchor = "start" | "end" | "top" | "bottom";
 type Context = {

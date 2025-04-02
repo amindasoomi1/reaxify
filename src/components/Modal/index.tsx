@@ -15,7 +15,7 @@ import {
 import { Transition, TransitionStatus } from "react-transition-group";
 import { twMerge } from "tailwind-merge";
 import Card from "../Card";
-import { Portal } from "../Portal";
+import Portal from "../Portal";
 
 type Size = "sm" | "md" | "lg";
 type Context = {

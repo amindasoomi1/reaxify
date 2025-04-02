@@ -2,7 +2,7 @@ import { ChildrenProps } from "@/types";
 import { useMemo } from "react";
 import { createPortal } from "react-dom";
 import { randomID } from "../../helpers";
-export function Portal({ children }: ChildrenProps) {
+export default function Portal({ children }: ChildrenProps) {
   const div = useMemo(() => {
     const id = randomID();
     const el = document.createElement("div");

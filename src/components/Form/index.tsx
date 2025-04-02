@@ -27,21 +27,20 @@ export default function Form({
   };
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const fields = [...e.currentTarget.querySelectorAll("div[id]")];
+    const fields = [...e.currentTarget.querySelectorAll("[id]")];
     const result = fields.map((e) => {
       const id = e.id || null;
-      if (!id) return { element: e, isValid: true };
+      if (!id) return { element: e, valid: true };
       const callback = formControlsRef.current[id];
-      const isValid = callback?.();
-      return { element: e, isValid };
+      const valid = callback?.();
+      return { element: e, valid };
     });
-    const canSubmit = result.every((e) => Boolean(e.isValid));
+    const canSubmit = result.every((e) => Boolean(e.valid));
     if (canSubmit) return onSubmit?.(e);
-    const errorElement = result.find((e) => !e.isValid)?.element;
-    const input = errorElement?.querySelector("input");
-    const textarea = errorElement?.querySelector("textarea");
-    const formControl = input || textarea;
-    formControl?.select();
+    const errorElement = result.find((e) => !e.valid)?.element;
+    // eslint-disable-next-line
+    // @ts-expect-error
+    errorElement?.select?.();
     errorElement?.scrollIntoView({
       behavior: "smooth",
       block: "center",

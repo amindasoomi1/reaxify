@@ -2,6 +2,7 @@ export { default as useAutoFill } from "./useAutoFill";
 export { default as useCreateRipple } from "./useCreateRipple";
 export { default as useDebounce } from "./useDebounce";
 export { default as useDocumentVisible } from "./useDocumentVisible";
+export { default as useInputValidation } from "./useInputValidation";
 export { default as useIsOffline } from "./useIsOffline";
 export { default as useKeyDown } from "./useKeyDown";
 export { default as useMouse } from "./useMouse";
