@@ -1,16 +1,52 @@
 {
-  "name": "ryan-ui",
+  "name": "reaxify",
   "private": false,
-  "version": "0.1.3",
+  "version": "0.0.6",
   "type": "module",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.es.js",
+  "types": "dist/index.d.ts",
   "files": [
     "dist"
   ],
-  "main": "dist/index.umd.js",
-  "module": "dist/index.es.js",
-  "types": "dist/index.es.d.ts",
   "publishConfig": {
     "access": "public"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/index/index.es.js",
+      "require": "./dist/index/index.cjs.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./axios": {
+      "import": "./dist/axios/index.es.js",
+      "require": "./dist/axios/index.cjs.js",
+      "types": "./dist/axios/index.d.ts"
+    },
+    "./components": {
+      "import": "./dist/components/index.es.js",
+      "require": "./dist/components/index.cjs.js",
+      "types": "./dist/components/index.d.ts"
+    },
+    "./helpers": {
+      "import": "./dist/helpers/index.es.js",
+      "require": "./dist/helpers/index.cjs.js",
+      "types": "./dist/helpers/index.d.ts"
+    },
+    "./hooks": {
+      "import": "./dist/hooks/index.es.js",
+      "require": "./dist/hooks/index.cjs.js",
+      "types": "./dist/hooks/index.d.ts"
+    },
+    "./providers": {
+      "import": "./dist/providers/index.es.js",
+      "require": "./dist/providers/index.cjs.js",
+      "types": "./dist/providers/index.d.ts"
+    },
+    "./style.css": {
+      "require": "./dist/style.css",
+      "default": "./dist/style.css"
+    }
   },
   "scripts": {
     "dev": "vite",

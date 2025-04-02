@@ -1,15 +1,8 @@
 import type { Meta } from "@storybook/react";
-import { useState } from "react";
 import Form from ".";
 import Button from "../Button";
 import Card from "../Card";
-import {
-  FormControl,
-  HelperText,
-  InputGroup,
-  InputGroupLabel,
-  InputGroupStack,
-} from "../InputGroup";
+import InputGroup from "../InputGroup";
 import Typography from "../Typography";
 
 const meta: Meta<typeof Form> = {
@@ -20,8 +13,6 @@ const meta: Meta<typeof Form> = {
 };
 
 export function Default() {
-  const [username, setUsername] = useState<string | null>(null);
-  const [password, setPassword] = useState<string | null>(null);
   const submit = () => {
     // do something
   };
@@ -35,34 +26,17 @@ export function Default() {
           <Typography variant="heading-6">Login</Typography>
         </Card.Header>
         <Card.Body className="space-y-4">
-          <InputGroup
-            value={username}
-            setValue={setUsername}
-            rules={[
-              (val) => Boolean(String(val ?? "").length) || "Field is required",
-            ]}
-          >
-            <InputGroupLabel>Username</InputGroupLabel>
-            <InputGroupStack>
-              <FormControl />
-            </InputGroupStack>
-            <HelperText />
+          <InputGroup>
+            <InputGroup.Label>Username</InputGroup.Label>
+            <InputGroup.Stack>
+              <InputGroup.FormControl />
+            </InputGroup.Stack>
           </InputGroup>
-          <InputGroup
-            value={password}
-            setValue={setPassword}
-            rules={[
-              (val) => Boolean(String(val ?? "").length) || "Field is required",
-              (val) =>
-                String(val ?? "").length >= 8 ||
-                "The length of the value must be greater than 8",
-            ]}
-          >
-            <InputGroupLabel>Password</InputGroupLabel>
-            <InputGroupStack>
-              <FormControl type="password" />
-            </InputGroupStack>
-            <HelperText />
+          <InputGroup>
+            <InputGroup.Label>Password</InputGroup.Label>
+            <InputGroup.Stack>
+              <InputGroup.FormControl type="password" />
+            </InputGroup.Stack>
           </InputGroup>
         </Card.Body>
         <Card.Footer className="flex items-center *:flex-1 gap-4">

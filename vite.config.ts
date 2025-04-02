@@ -4,8 +4,12 @@ import path from "path";
 import { defineConfig } from "vite";
 import dts from "vite-plugin-dts";
 
-// https://vitejs.dev/config/
 export default defineConfig({
+  plugins: [
+    react(),
+    dts({ entryRoot: "src", exclude: ["**/*.stories.tsx"] }),
+    tailwindcss(),
+  ],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
@@ -13,21 +17,26 @@ export default defineConfig({
   },
   build: {
     lib: {
-      entry: path.resolve(__dirname, "./src/index.tsx"),
-      name: "ad-twui",
-      fileName: (format) => `index.${format}.js`,
+      name: "reaxify",
+      entry: {
+        index: "src/index.ts",
+        axios: "src/axios/index.ts",
+        components: "src/components/index.ts",
+        helpers: "src/helpers/index.ts",
+        hooks: "src/hooks/index.ts",
+        providers: "src/providers/index.ts",
+      },
+      formats: ["es", "cjs"],
     },
     rollupOptions: {
       external: ["react", "react-dom"],
       output: {
-        globals: {
-          react: "React",
-          "react-dom": "ReactDOM",
-        },
+        dir: "dist",
+        preserveModules: true,
+        preserveModulesRoot: "src",
+        entryFileNames: "[name]/index.[format].js",
+        globals: { react: "React", "react-dom": "ReactDom" },
       },
     },
-    sourcemap: true,
-    emptyOutDir: true,
   },
-  plugins: [react(), dts({ rollupTypes: true }), tailwindcss()],
 });
