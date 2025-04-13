@@ -1,3 +1,4 @@
+import { useClasses } from "@/hooks";
 import { ChildrenProps, ComponentPropsWithAs } from "@/types";
 import { ArrowDown2 } from "iconsax-react";
 import {
@@ -60,6 +61,7 @@ function AccordionItem<E extends ElementType = "div">({
   children,
   ...props
 }: ComponentPropsWithAs<E, AccordionItemProps>) {
+  const classes = useClasses(["accordionItem", "base"]);
   const { activeKey } = useContext(AccordionContext);
   const Component = as || "div";
   const ID = useMemo(() => randomID(), []);
@@ -73,6 +75,7 @@ function AccordionItem<E extends ElementType = "div">({
     <Component
       className={twMerge(
         "block w-full border border-[#e8eaee] rounded",
+        classes,
         className
       )}
       {...props}
@@ -90,6 +93,7 @@ function AccordionToggle({
   onClick,
   ...props
 }: ComponentProps<"button">) {
+  const classes = useClasses(["accordionToggle", "base"]);
   const { eventKey } = useContext(AccordionItemContext);
   const { onChange } = useContext(AccordionContext);
   const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
@@ -101,6 +105,7 @@ function AccordionToggle({
       type={type}
       className={twMerge(
         "w-full flex items-center text-start text-base px-5 py-4 rounded-t cursor-pointer",
+        classes,
         className
       )}
       onClick={handleClick}
@@ -114,13 +119,18 @@ function AccordionIcon({
   className,
   ...props
 }: Omit<ComponentProps<"svg">, "ref" | "children">) {
+  const baseClasses = useClasses(["accordionIcon", "base"]);
+  const activeClasses = useClasses(["accordionIcon", "active"]);
+  const inactiveClasses = useClasses(["accordionIcon", "inactive"]);
   const { active } = useContext(AccordionItemContext);
   return (
     <ArrowDown2
       color="currentColor"
       className={twMerge(
         "size-5 transition-transform",
+        baseClasses,
         active ? "-rotate-180" : "rotate-0",
+        active ? activeClasses : inactiveClasses,
         className
       )}
       {...props}
@@ -159,9 +169,14 @@ function AccordionBody({
   children,
   ...props
 }: ComponentProps<"div">) {
+  const classes = useClasses(["accordionBody", "base"]);
   return (
     <div
-      className={twMerge("w-full block px-5 py-4 rounded-b", className)}
+      className={twMerge(
+        "w-full block px-5 py-4 rounded-b",
+        classes,
+        className
+      )}
       {...props}
     >
       {children}

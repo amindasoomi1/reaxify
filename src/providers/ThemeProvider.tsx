@@ -1,8 +1,34 @@
-import { ChildrenProps } from "@/types";
-import { Fragment } from "react";
+import { ChildrenProps, DeepPartial } from "@/types";
+import { createContext } from "react";
 
-type Props = ChildrenProps;
+export type ThemeProviderContextType = {
+  classes: {
+    accordionItem: {
+      base: string;
+    };
+    accordionToggle: {
+      base: string;
+    };
+    accordionIcon: {
+      base: string;
+      active: string;
+      inactive: string;
+    };
+    accordionBody: {
+      base: string;
+    };
+  };
+};
+type Props = ChildrenProps & DeepPartial<ThemeProviderContextType>;
 
-export default function ThemeProvider({ children }: Props) {
-  return <Fragment>{children}</Fragment>;
+export const ThemeProviderContext = createContext<
+  DeepPartial<ThemeProviderContextType>
+>({});
+
+export default function ThemeProvider({ classes, children }: Props) {
+  return (
+    <ThemeProviderContext.Provider value={{ classes }}>
+      {children}
+    </ThemeProviderContext.Provider>
+  );
 }

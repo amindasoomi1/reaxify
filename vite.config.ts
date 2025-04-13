@@ -19,7 +19,7 @@ export default defineConfig({
     lib: {
       name: "reaxify",
       entry: {
-        index: "src/index.ts",
+        // index: "src/index.ts",
         axios: "src/axios/index.ts",
         components: "src/components/index.ts",
         helpers: "src/helpers/index.ts",

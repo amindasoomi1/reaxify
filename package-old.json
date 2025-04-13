@@ -1,0 +1,5 @@
+{
+  "import": "./dist/index/index.es.js",
+  "require": "./dist/index/index.cjs.js",
+  "types": "./dist/index.d.ts"
+}

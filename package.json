@@ -13,11 +13,6 @@
     "access": "public"
   },
   "exports": {
-    ".": {
-      "import": "./dist/index/index.es.js",
-      "require": "./dist/index/index.cjs.js",
-      "types": "./dist/index.d.ts"
-    },
     "./axios": {
       "import": "./dist/axios/index.es.js",
       "require": "./dist/axios/index.cjs.js",

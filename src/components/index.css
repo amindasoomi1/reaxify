@@ -1,4 +1,4 @@
-body:has(.drawer.active, .modal.active, .menu.active) {
+body:has([open="true"]) {
   overflow: hidden;
 }
 input[type="number"]::-webkit-inner-spin-button,
