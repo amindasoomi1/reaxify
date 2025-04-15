@@ -87,11 +87,13 @@ function InputGroupFormControl<E extends ElementType = "input">({
   ...props
 }: ComponentPropsWithAs<E>) {
   const Component = as || "input";
+  const isTextarea = as === "textarea";
   const classes = useClasses((c) => c.inputGroup.formControl.base);
   return (
     <Component
       className={twMerge(
-        "text-start flex-1 leading-10 text-base py-1.5 px-3 h-10 focus:outline-none bg-transparent border-0",
+        "text-start flex-1 leading-10 text-base py-1.5 px-3 focus:outline-none bg-transparent border-0",
+        isTextarea ? "min-h-[7.5rem] field-sizing-content" : "h-10",
         classes,
         className
       )}

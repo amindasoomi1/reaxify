@@ -1,5 +1,5 @@
 import type { Preview } from "@storybook/react";
-import "../src/components/index.css";
+import "../src/index.css";
 import "../src/tailwindcss.css";
 
 const preview: Preview = {
