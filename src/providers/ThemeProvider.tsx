@@ -168,6 +168,13 @@ export type ThemeProviderContextType = {
       base: string;
       item: { base: string };
     };
+    modal: {
+      base: string;
+      dialog: { base: string; size: { sm: string; md: string; lg: string } };
+      header: { base: string };
+      body: { base: string };
+      footer: { base: string };
+    };
   };
 };
 type Props = ChildrenProps & DeepPartial<ThemeProviderContextType>;

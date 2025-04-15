@@ -85,8 +85,9 @@ function Drawer<E extends ElementType = "div">({
           <Component
             ref={divRef}
             style={{ transitionDuration: `${duration}ms` }}
+            data-open={open}
             className={twMerge(
-              "drawer fixed size-full inset-0 flex z-10 bg-black/20 backdrop-blur transition-opacity [--drawer-ratio:1] rtl:[--drawer-ratio:-1]",
+              "fixed size-full inset-0 flex z-10 bg-black/20 backdrop-blur transition-opacity [--drawer-ratio:1] rtl:[--drawer-ratio:-1]",
               classes?.base,
               transitionClasses[state],
               anchorClasses,

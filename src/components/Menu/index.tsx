@@ -129,6 +129,7 @@ function Menu<E extends ElementType = "div">({
               <Backdrop />
               <Component
                 ref={menuRef}
+                data-open={open}
                 className={twMerge(
                   "w-fit min-w-[12.5rem] bg-white shadow rounded p-2 transition-[scale,opacity] absolute top-[var(--top)] left-[var(--left)] right-auto origin-top-left rtl:left-auto rtl:right-[var(--right)] rtl:origin-top-right",
                   classes,
@@ -158,7 +159,7 @@ function Container({ children }: ChildrenProps) {
   return (
     <div
       className={twMerge(
-        "menu fixed inset-0 size-full flex flex-col bg-transparent transition-opacity overflow-hidden z-10",
+        "fixed inset-0 size-full flex flex-col bg-transparent transition-opacity overflow-hidden z-10",
         classes[transitionState]
       )}
     >

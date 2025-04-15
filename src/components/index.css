@@ -1,4 +1,4 @@
-body:has([open="true"]) {
+body:has([data-open="true"]) {
   overflow: hidden;
 }
 input[type="number"]::-webkit-inner-spin-button,

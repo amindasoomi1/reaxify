@@ -1,3 +1,5 @@
+import { cn } from "@/helpers";
+import { useClasses } from "@/hooks";
 import {
   Callback,
   ComponentPropsWithAs,
@@ -49,6 +51,7 @@ function Modal<E extends ElementType = "div">({
   children,
   ...props
 }: ComponentPropsWithAs<E, ModalProps>) {
+  const classes = useClasses((c) => c.modal.base);
   const divRef = useRef<HTMLDivElement | null>(null);
   const Component = as || "div";
   const transitionClasses: TransitionClasses = {
@@ -64,9 +67,11 @@ function Modal<E extends ElementType = "div">({
         {(state) => (
           <Component
             ref={divRef}
+            data-open={open}
             style={{ transitionDuration: `${duration}ms` }}
             className={twMerge(
               "modal fixed size-full inset-0 flex flex-col z-10 bg-black/20 transition-opacity backdrop-blur p-4",
+              classes,
               transitionClasses[state],
               className
             )}
@@ -89,6 +94,7 @@ function Modal<E extends ElementType = "div">({
   );
 }
 function ModalDialog({ className, children, ...props }: ModalDialogProps) {
+  const classes = useClasses((c) => c.modal.dialog);
   const { size, transitionState, duration } = useContext(ModalContext);
   const transitionClasses: TransitionClasses = {
     entering: "scale-100",
@@ -98,18 +104,19 @@ function ModalDialog({ className, children, ...props }: ModalDialogProps) {
     unmounted: "",
   };
   const modalSize = useMemo(() => {
-    if (size === "sm") return "min-[576px]:w-[300px]";
-    if (size === "lg") return "min-[992px]:w-[800px]";
+    if (size === "sm") return cn("min-[576px]:w-[300px]", classes?.size.sm);
+    if (size === "lg") return cn("min-[992px]:w-[800px]", classes?.size.lg);
     //   if (size === "xl")
     //     return "min-[992px]:max-w-[800px] min-[1200px]:max-w-[1140px]";
-    return "min-[576px]:w-[500px]";
-  }, [size]);
+    return cn("min-[576px]:w-[500px]", classes?.size.md);
+  }, [size, classes?.size]);
   return (
     <Card
       as="div"
       style={{ transitionDuration: `${duration}ms` }}
       className={twMerge(
         "max-w-full max-h-full m-auto transition-transform",
+        classes?.base,
         modalSize,
         transitionClasses[transitionState],
         className
@@ -120,14 +127,17 @@ function ModalDialog({ className, children, ...props }: ModalDialogProps) {
     </Card>
   );
 }
-function ModalHeader(props: ModalHeaderProps) {
-  return <Card.Header {...props} />;
+function ModalHeader({ className, ...props }: ModalHeaderProps) {
+  const classes = useClasses((c) => c.modal.header.base);
+  return <Card.Header className={cn(classes, className)} {...props} />;
 }
-function ModalBody(props: ModalBodyProps) {
-  return <Card.Body {...props} />;
+function ModalBody({ className, ...props }: ModalBodyProps) {
+  const classes = useClasses((c) => c.modal.body.base);
+  return <Card.Body className={cn(classes, className)} {...props} />;
 }
-function ModalFooter(props: ModalFooterProps) {
-  return <Card.Footer {...props} />;
+function ModalFooter({ className, ...props }: ModalFooterProps) {
+  const classes = useClasses((c) => c.modal.footer.base);
+  return <Card.Footer className={cn(classes, className)} {...props} />;
 }
 
 Modal.Dialog = ModalDialog;
