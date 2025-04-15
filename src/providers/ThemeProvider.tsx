@@ -17,6 +17,56 @@ export type ThemeProviderContextType = {
     accordionBody: {
       base: string;
     };
+    badge: {
+      base: string;
+      color: {
+        primary: {
+          solid: string;
+          outline: string;
+          soft: string;
+        };
+        secondary: {
+          solid: string;
+          outline: string;
+          soft: string;
+        };
+        success: {
+          solid: string;
+          outline: string;
+          soft: string;
+        };
+        info: {
+          solid: string;
+          outline: string;
+          soft: string;
+        };
+        warning: {
+          solid: string;
+          outline: string;
+          soft: string;
+        };
+        danger: {
+          solid: string;
+          outline: string;
+          soft: string;
+        };
+        dark: {
+          solid: string;
+          outline: string;
+          soft: string;
+        };
+        light: {
+          solid: string;
+          outline: string;
+          soft: string;
+        };
+      };
+      size: {
+        sm: string;
+        md: string;
+        lg: string;
+      };
+    };
   };
 };
 type Props = ChildrenProps & DeepPartial<ThemeProviderContextType>;

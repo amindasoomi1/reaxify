@@ -61,7 +61,7 @@ function AccordionItem<E extends ElementType = "div">({
   children,
   ...props
 }: ComponentPropsWithAs<E, AccordionItemProps>) {
-  const classes = useClasses(["accordionItem", "base"]);
+  const classes = useClasses((s) => s.accordionItem.base);
   const { activeKey } = useContext(AccordionContext);
   const Component = as || "div";
   const ID = useMemo(() => randomID(), []);
@@ -93,7 +93,7 @@ function AccordionToggle({
   onClick,
   ...props
 }: ComponentProps<"button">) {
-  const classes = useClasses(["accordionToggle", "base"]);
+  const classes = useClasses((s) => s.accordionToggle.base);
   const { eventKey } = useContext(AccordionItemContext);
   const { onChange } = useContext(AccordionContext);
   const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
@@ -119,18 +119,16 @@ function AccordionIcon({
   className,
   ...props
 }: Omit<ComponentProps<"svg">, "ref" | "children">) {
-  const baseClasses = useClasses(["accordionIcon", "base"]);
-  const activeClasses = useClasses(["accordionIcon", "active"]);
-  const inactiveClasses = useClasses(["accordionIcon", "inactive"]);
+  const classes = useClasses((s) => s.accordionIcon);
   const { active } = useContext(AccordionItemContext);
   return (
     <ArrowDown2
       color="currentColor"
       className={twMerge(
         "size-5 transition-transform",
-        baseClasses,
+        classes?.base,
         active ? "-rotate-180" : "rotate-0",
-        active ? activeClasses : inactiveClasses,
+        active ? classes?.active : classes?.inactive,
         className
       )}
       {...props}
@@ -169,7 +167,7 @@ function AccordionBody({
   children,
   ...props
 }: ComponentProps<"div">) {
-  const classes = useClasses(["accordionBody", "base"]);
+  const classes = useClasses((s) => s.accordionBody.base);
   return (
     <div
       className={twMerge(
