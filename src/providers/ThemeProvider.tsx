@@ -69,6 +69,9 @@ export type ThemeProviderContextType = {
         lg: string;
       };
     };
+    box: {
+      base: string;
+    };
   };
 };
 type Props = ChildrenProps & DeepPartial<ThemeProviderContextType>;
