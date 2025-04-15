@@ -1,3 +1,5 @@
+import { cn } from "@/helpers";
+import { useClasses } from "@/hooks";
 import { ComponentPropsWithAs } from "@/types";
 import { createContext, ElementType, useContext, useMemo } from "react";
 import { twMerge } from "tailwind-merge";
@@ -25,25 +27,33 @@ export default function ButtonGroup<E extends ElementType = "div">({
   ...props
 }: ComponentPropsWithAs<E, ButtonGroupProps>) {
   const Component = as || "div";
+  const classes = useClasses((c) => c.buttonGroup);
   const { buttonGroupClasses } = useContext(TabsContext);
   const orientationClasses = useMemo(() => {
     const orientations = {
-      horizontal: "flex-row",
-      vertical: "flex-col",
+      horizontal: cn("flex-row", classes?.orientation?.horizontal),
+      vertical: cn("flex-col", classes?.orientation?.vertical),
     };
     return orientations[orientation];
-  }, [orientation]);
+  }, [orientation, classes?.orientation]);
   const buttonClasses = useMemo(() => {
     const orientations = {
-      horizontal: "rounded-none first-of-type:rounded-s last-of-type:rounded-e",
-      vertical: "rounded-none first-of-type:rounded-t last-of-type:rounded-b",
+      horizontal: cn(
+        "rounded-none first-of-type:rounded-s last-of-type:rounded-e",
+        classes?.button?.horizontal
+      ),
+      vertical: cn(
+        "rounded-none first-of-type:rounded-t last-of-type:rounded-b",
+        classes?.button?.vertical
+      ),
     };
     return orientations[orientation];
-  }, [orientation]);
+  }, [orientation, classes?.button]);
   return (
     <Component
       className={twMerge(
         "w-fit flex items-stretch justify-center",
+        classes?.base,
         orientationClasses,
         buttonGroupClasses,
         className

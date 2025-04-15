@@ -126,6 +126,17 @@ export type ThemeProviderContextType = {
         inactive: string;
       };
     };
+    buttonGroup: {
+      base: string;
+      orientation: {
+        horizontal: string;
+        vertical: string;
+      };
+      button: {
+        horizontal: string;
+        vertical: string;
+      };
+    };
   };
 };
 type Props = ChildrenProps & DeepPartial<ThemeProviderContextType>;
