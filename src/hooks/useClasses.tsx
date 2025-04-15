@@ -2,6 +2,7 @@ import {
   ThemeProviderContext,
   ThemeProviderContextType,
 } from "@/providers/ThemeProvider";
+import { DeepPartial } from "@/types";
 import { useContext, useMemo } from "react";
 
 type Classes = ThemeProviderContextType["classes"];
@@ -21,5 +22,5 @@ export default function useClasses<T = string>(
     }
   }, [context.classes, selector]);
 
-  return result as Exclude<T, undefined> | null;
+  return result as DeepPartial<T> | null;
 }

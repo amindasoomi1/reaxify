@@ -188,11 +188,11 @@ export default function Button<E extends ElementType = "button">({
     if (loading)
       return cn(
         "disabled:opacity-100 disabled:cursor-wait disabled:text-transparent",
-        classes?.loading.active
+        classes?.loading?.active
       );
     return cn(
       "disabled:opacity-75 disabled:cursor-not-allowed active:shadow-lg",
-      classes?.loading.active
+      classes?.loading?.active
     );
   }, [loading, classes?.loading]);
   const handleClick = (e: MouseEvent<HTMLElement>) => {
