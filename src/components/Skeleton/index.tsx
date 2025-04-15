@@ -1,3 +1,4 @@
+import { useClasses } from "@/hooks";
 import { ComponentProps } from "react";
 import { twMerge } from "tailwind-merge";
 
@@ -8,10 +9,12 @@ export default function Skeleton({
   children,
   ...props
 }: SkeletonProps) {
+  const classes = useClasses((c) => c.skeleton.base);
   return (
     <div
       className={twMerge(
         "size-10 rounded bg-gray-200 text-gray-200 animate-pulse",
+        classes,
         className
       )}
       {...props}

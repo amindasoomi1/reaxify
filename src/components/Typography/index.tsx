@@ -1,3 +1,5 @@
+import { cn } from "@/helpers";
+import { useClasses } from "@/hooks";
 import { ComponentPropsWithAs } from "@/types";
 import { useMemo } from "react";
 import { twMerge } from "tailwind-merge";
@@ -26,7 +28,7 @@ type TypographyProps = {
   variant?: Variant;
 };
 type Components = { [key in Variant]: string };
-type Variants = { [key in Variant]: string };
+type Variants = { [key in Variant]: string | undefined };
 
 export default function Typography<E extends Component = "p">({
   as,
@@ -34,6 +36,7 @@ export default function Typography<E extends Component = "p">({
   className,
   ...props
 }: ComponentPropsWithAs<E, TypographyProps>) {
+  const classes = useClasses((c) => c.typography);
   const Component = useMemo(() => {
     const components: Components = {
       "heading-1": "h1",
@@ -49,18 +52,21 @@ export default function Typography<E extends Component = "p">({
   }, [as, variant]);
   const variantClasses = useMemo(() => {
     const variants: Variants = {
-      "heading-1": "text-5xl font-semibold",
-      "heading-2": "text-4xl font-semibold",
-      "heading-3": "text-3xl font-semibold",
-      "heading-4": "text-2xl font-semibold",
-      "heading-5": "text-xl font-medium",
-      "heading-6": "text-lg font-medium",
-      "body-1": "text-base font-normal",
-      "body-2": "text-sm font-normal",
+      "heading-1": cn("text-5xl font-semibold", classes?.variant?.heading1),
+      "heading-2": cn("text-4xl font-semibold", classes?.variant?.heading2),
+      "heading-3": cn("text-3xl font-semibold", classes?.variant?.heading3),
+      "heading-4": cn("text-2xl font-semibold", classes?.variant?.heading4),
+      "heading-5": cn("text-xl font-medium", classes?.variant?.heading5),
+      "heading-6": cn("text-lg font-medium", classes?.variant?.heading6),
+      "body-1": cn("text-base font-normal", classes?.variant?.body1),
+      "body-2": cn("text-sm font-normal", classes?.variant?.body2),
     };
     return variants[variant];
-  }, [variant]);
+  }, [variant, classes?.variant]);
   return (
-    <Component className={twMerge("", variantClasses, className)} {...props} />
+    <Component
+      className={twMerge(classes?.base, variantClasses, className)}
+      {...props}
+    />
   );
 }

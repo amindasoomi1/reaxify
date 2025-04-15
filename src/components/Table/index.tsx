@@ -1,3 +1,4 @@
+import { useClasses } from "@/hooks";
 import { ComponentProps, createContext, useContext } from "react";
 import { twMerge } from "tailwind-merge";
 
@@ -37,8 +38,12 @@ function TableContainer({
   children,
   ...props
 }: TableContainerProps) {
+  const classes = useClasses((c) => c.table.container.base);
   return (
-    <div className={twMerge("w-full overflow-auto", className)} {...props}>
+    <div
+      className={twMerge("w-full overflow-auto", classes, className)}
+      {...props}
+    >
       {children}
     </div>
   );
@@ -51,10 +56,12 @@ function Table({
   children,
   ...props
 }: TableProps) {
+  const classes = useClasses((c) => c.table.base);
   return (
     <table
       className={twMerge(
         "min-w-full border-collapse border-spacing-0",
+        classes,
         className
       )}
       {...props}
@@ -71,10 +78,13 @@ function TableHeader({
   children,
   ...props
 }: TableHeaderProps) {
+  const classes = useClasses((c) => c.table.header);
   return (
     <thead
       className={twMerge(
+        classes?.base,
         sticky && "sticky top-0 left-0 right-0 z-[2]",
+        sticky && classes?.sticky,
         className
       )}
       {...props}
@@ -84,13 +94,15 @@ function TableHeader({
   );
 }
 function TableBody({ className, children, ...props }: TableBodyProps) {
+  const classes = useClasses((c) => c.table.body.base);
   return (
-    <tbody className={twMerge("", className)} {...props}>
+    <tbody className={twMerge(classes, className)} {...props}>
       {children}
     </tbody>
   );
 }
 function TableRow({ className, children, ...props }: TableRowProps) {
+  const classes = useClasses((c) => c.table.row);
   const { bordered, hover, striped } = useContext(TableContext);
   const hasBordered = !!bordered;
   const isDashed = bordered === "dashed";
@@ -99,11 +111,15 @@ function TableRow({ className, children, ...props }: TableRowProps) {
     <tr
       className={twMerge(
         "bg-white",
+        classes?.base,
         hasBordered && "border-b border-solid",
+        hasBordered && classes?.bordered,
         isDashed && "border-dashed",
         isSolid && "border-solid",
         hover && "transition-colors hover:bg-gray-200",
+        hover && classes?.hover,
         striped && "even:bg-gray-100",
+        striped && classes?.hover,
         className
       )}
       {...props}

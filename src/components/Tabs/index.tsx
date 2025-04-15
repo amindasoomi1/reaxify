@@ -8,11 +8,12 @@ import {
   useCallback,
   useContext,
   useEffect,
+  useMemo,
   useRef,
 } from "react";
 import { twMerge } from "tailwind-merge";
 import { cn } from "../../helpers";
-import { useDebounce } from "../../hooks";
+import { useClasses, useDebounce } from "../../hooks";
 import Button from "../Button";
 
 type TabsProps = {
@@ -34,7 +35,10 @@ export const TabsContext = createContext<TabsContextType>({
 });
 
 function Tabs({ active = null, onChange = () => {}, children }: TabsProps) {
-  const buttonGroupClasses = "relative flex items-center";
+  const classes = useClasses((c) => c.tabs.buttonGroup.base);
+  const buttonGroupClasses = useMemo(() => {
+    return cn("relative flex items-center", classes) as string;
+  }, [classes]);
   return (
     <TabsContext.Provider value={{ active, onChange, buttonGroupClasses }}>
       {children}
@@ -45,6 +49,7 @@ function TabIndicator({
   className,
   ...props
 }: Omit<ComponentProps<"span">, "children">) {
+  const classes = useClasses((c) => c.tabs.indicator.base);
   const { active } = useContext(TabsContext);
   const indicatorRef = useRef<HTMLSpanElement>(null);
   const debounce = useDebounce();
@@ -85,6 +90,7 @@ function TabIndicator({
       ref={indicatorRef}
       className={twMerge(
         "absolute bottom-0 left-0 w-auto h-px transition-[width,left] overflow-hidden",
+        classes,
         className
       )}
       {...props}
@@ -101,6 +107,7 @@ function TabButton({
   ...props
 }: TabButtonProps &
   Omit<ComponentProps<typeof Button<"button">>, keyof TabButtonProps>) {
+  const classes = useClasses((c) => c.tabs.button.base);
   const { active, onChange } = useContext(TabsContext);
   const isActive = eventKey === active;
   const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
@@ -115,7 +122,7 @@ function TabButton({
       onClick={handleClick}
       color={isActive ? "primary" : null}
       variant="text"
-      className={cn("shadow-none border-none", className)}
+      className={cn("shadow-none border-none", classes, className)}
       {...props}
     >
       {children}

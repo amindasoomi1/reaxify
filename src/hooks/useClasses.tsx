@@ -8,7 +8,7 @@ type Classes = ThemeProviderContextType["classes"];
 
 export default function useClasses<T = string>(
   selector: (classes: Classes) => T
-): T | null {
+) {
   const context = useContext(ThemeProviderContext);
 
   const result = useMemo(() => {
@@ -21,5 +21,5 @@ export default function useClasses<T = string>(
     }
   }, [context.classes, selector]);
 
-  return result;
+  return result as Exclude<T, undefined> | null;
 }

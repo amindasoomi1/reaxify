@@ -175,6 +175,56 @@ export type ThemeProviderContextType = {
       body: { base: string };
       footer: { base: string };
     };
+    progress: {
+      base: string;
+      color: {
+        primary: string;
+        secondary: string;
+        success: string;
+        info: string;
+        warning: string;
+        danger: string;
+        dark: string;
+        light: string;
+      };
+    };
+    skeleton: {
+      base: string;
+    };
+    stack: {
+      base: string;
+      variants: {
+        horizontal: string;
+        vertical: string;
+      };
+    };
+    table: {
+      base: string;
+      container: { base: string };
+      header: { base: string; sticky: string };
+      body: { base: string };
+      row: { base: string; bordered: string; hover: string; striped: string };
+      headerCell: { base: string };
+      dataCell: { base: string };
+    };
+    tabs: {
+      indicator: { base: string };
+      buttonGroup: { base: string };
+      button: { base: string };
+    };
+    typography: {
+      base: string;
+      variant: {
+        heading1: string;
+        heading2: string;
+        heading3: string;
+        heading4: string;
+        heading5: string;
+        heading6: string;
+        body1: string;
+        body2: string;
+      };
+    };
   };
 };
 type Props = ChildrenProps & DeepPartial<ThemeProviderContextType>;
