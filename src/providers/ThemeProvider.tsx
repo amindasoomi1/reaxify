@@ -72,6 +72,60 @@ export type ThemeProviderContextType = {
     box: {
       base: string;
     };
+    button: {
+      base: string;
+      color: {
+        primary: {
+          solid: string;
+          outline: string;
+          text: string;
+        };
+        secondary: {
+          solid: string;
+          outline: string;
+          text: string;
+        };
+        success: {
+          solid: string;
+          outline: string;
+          text: string;
+        };
+        info: {
+          solid: string;
+          outline: string;
+          text: string;
+        };
+        warning: {
+          solid: string;
+          outline: string;
+          text: string;
+        };
+        danger: {
+          solid: string;
+          outline: string;
+          text: string;
+        };
+        dark: {
+          solid: string;
+          outline: string;
+          text: string;
+        };
+        light: {
+          solid: string;
+          outline: string;
+          text: string;
+        };
+      };
+      size: {
+        sm: string;
+        md: string;
+        lg: string;
+      };
+      loading: {
+        active: string;
+        inactive: string;
+      };
+    };
   };
 };
 type Props = ChildrenProps & DeepPartial<ThemeProviderContextType>;

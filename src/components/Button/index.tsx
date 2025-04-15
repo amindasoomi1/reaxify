@@ -2,7 +2,7 @@ import { Color, ComponentPropsWithAs, Size } from "@/types";
 import { ElementType, MouseEvent, useContext, useMemo } from "react";
 import { twMerge } from "tailwind-merge";
 import { cn } from "../../helpers";
-import { useCreateRipple } from "../../hooks";
+import { useClasses, useCreateRipple } from "../../hooks";
 import { ButtonGroupContext } from "../ButtonGroup";
 import { DrawerContext } from "../Drawer";
 import { ModalContext } from "../Modal";
@@ -40,6 +40,7 @@ export default function Button<E extends ElementType = "button">({
   children,
   ...props
 }: ComponentPropsWithAs<E, ButtonProps>) {
+  const classes = useClasses((c) => c.button);
   const buttonGroupContext = useContext(ButtonGroupContext);
   const modalContext = useContext(ModalContext);
   const drawerContext = useContext(DrawerContext);
@@ -57,60 +58,143 @@ export default function Button<E extends ElementType = "button">({
     if (!color) return "border-transparent";
     const colors: Colors = {
       primary: {
-        solid: "bg-primary text-white border-primary",
-        outline: "bg-transparent text-primary border-primary",
-        text: "bg-transparent text-primary border-transparent",
+        solid: cn(
+          "bg-primary text-white border-primary",
+          classes?.color?.primary?.solid
+        ),
+        outline: cn(
+          "bg-transparent text-primary border-primary",
+          classes?.color?.primary?.outline
+        ),
+        text: cn(
+          "bg-transparent text-primary border-transparent",
+          classes?.color?.primary?.text
+        ),
       },
       secondary: {
-        solid: "bg-secondary text-white border-secondary",
-        outline: "bg-transparent text-secondary border-secondary",
-        text: "bg-transparent text-secondary border-transparent",
+        solid: cn(
+          "bg-secondary text-white border-secondary",
+          classes?.color?.secondary?.solid
+        ),
+        outline: cn(
+          "bg-transparent text-secondary border-secondary",
+          classes?.color?.secondary?.outline
+        ),
+        text: cn(
+          "bg-transparent text-secondary border-transparent",
+          classes?.color?.secondary?.text
+        ),
       },
       success: {
-        solid: "bg-success text-white border-success",
-        outline: "bg-transparent text-success border-success",
-        text: "bg-transparent text-success border-transparent",
+        solid: cn(
+          "bg-success text-white border-success",
+          classes?.color?.success?.solid
+        ),
+        outline: cn(
+          "bg-transparent text-success border-success",
+          classes?.color?.success?.outline
+        ),
+        text: cn(
+          "bg-transparent text-success border-transparent",
+          classes?.color?.success?.text
+        ),
       },
       info: {
-        solid: "bg-info text-white border-info",
-        outline: "bg-transparent text-info border-info",
-        text: "bg-transparent text-info border-transparent",
+        solid: cn(
+          "bg-info text-white border-info",
+          classes?.color?.info?.solid
+        ),
+        outline: cn(
+          "bg-transparent text-info border-info",
+          classes?.color?.info?.outline
+        ),
+        text: cn(
+          "bg-transparent text-info border-transparent",
+          classes?.color?.info?.text
+        ),
       },
       warning: {
-        solid: "bg-warning text-white border-warning",
-        outline: "bg-transparent text-warning border-warning",
-        text: "bg-transparent text-warning border-transparent",
+        solid: cn(
+          "bg-warning text-white border-warning",
+          classes?.color?.warning?.solid
+        ),
+        outline: cn(
+          "bg-transparent text-warning border-warning",
+          classes?.color?.warning?.outline
+        ),
+        text: cn(
+          "bg-transparent text-warning border-transparent",
+          classes?.color?.warning?.text
+        ),
       },
       danger: {
-        solid: "bg-danger text-white border-danger",
-        outline: "bg-transparent text-danger border-danger",
-        text: "bg-transparent text-danger border-transparent",
+        solid: cn(
+          "bg-danger text-white border-danger",
+          classes?.color?.danger?.solid
+        ),
+        outline: cn(
+          "bg-transparent text-danger border-danger",
+          classes?.color?.danger?.outline
+        ),
+        text: cn(
+          "bg-transparent text-danger border-transparent",
+          classes?.color?.danger?.text
+        ),
       },
       dark: {
-        solid: "bg-dark text-white border-dark",
-        outline: "bg-transparent text-dark border-dark",
-        text: "bg-transparent text-dark border-transparent",
+        solid: cn(
+          "bg-dark text-white border-dark",
+          classes?.color?.dark?.solid
+        ),
+        outline: cn(
+          "bg-transparent text-dark border-dark",
+          classes?.color?.dark?.outline
+        ),
+        text: cn(
+          "bg-transparent text-dark border-transparent",
+          classes?.color?.dark?.text
+        ),
       },
       light: {
-        solid: "bg-light text-dark border-light",
-        outline: "bg-transparent text-dark border-light",
-        text: "bg-transparent text-dark border-transparent",
+        solid: cn(
+          "bg-light text-dark border-light",
+          classes?.color?.light?.solid
+        ),
+        outline: cn(
+          "bg-transparent text-dark border-light",
+          classes?.color?.light?.outline
+        ),
+        text: cn(
+          "bg-transparent text-dark border-transparent",
+          classes?.color?.light?.text
+        ),
       },
     };
     return colors?.[color]?.[variant] ?? null;
-  }, [color, variant]);
+  }, [color, variant, classes?.color]);
   const loadingClasses = useMemo(() => {
     return colorClasses?.split(" ").find((e) => e.startsWith("text-"));
   }, [colorClasses]);
   const sizeClasses = useMemo(() => {
     if (!size) return null;
     const sizes: Sizes = {
-      sm: "text-base py-1 px-3.5",
-      md: "text-base py-1.5 px-4",
-      lg: "text-lg py-2 px-5",
+      sm: cn("text-base py-1 px-3.5", classes?.size?.sm),
+      md: cn("text-base py-1.5 px-4", classes?.size?.md),
+      lg: cn("text-lg py-2 px-5", classes?.size?.lg),
     };
     return sizes?.[size];
-  }, [size]);
+  }, [size, classes?.size]);
+  const loadingDisabledClasses = useMemo(() => {
+    if (loading)
+      return cn(
+        "disabled:opacity-100 disabled:cursor-wait disabled:text-transparent",
+        classes?.loading.active
+      );
+    return cn(
+      "disabled:opacity-75 disabled:cursor-not-allowed active:shadow-lg",
+      classes?.loading.active
+    );
+  }, [loading, classes?.loading]);
   const handleClick = (e: MouseEvent<HTMLElement>) => {
     createRipple(e);
     closeModal && modalContext.onClose();
@@ -122,11 +206,10 @@ export default function Button<E extends ElementType = "button">({
     <Component
       className={twMerge(
         "relative inline-block no-underline whitespace-nowrap font-medium text-center rounded border border-[#e8eaee] shadow cursor-pointer hover:shadow-md transition-[box-shadow,opacity,color,background-color,border-color]",
+        classes?.base,
         colorClasses,
         sizeClasses,
-        loading
-          ? "disabled:opacity-100 disabled:cursor-wait disabled:text-transparent"
-          : "disabled:opacity-75 disabled:cursor-not-allowed active:shadow-lg",
+        loadingDisabledClasses,
         buttonGroupContext.buttonClasses,
         className
       )}
