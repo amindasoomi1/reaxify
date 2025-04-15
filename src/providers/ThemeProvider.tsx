@@ -3,19 +3,21 @@ import { createContext } from "react";
 
 export type ThemeProviderContextType = {
   classes: {
-    accordionItem: {
-      base: string;
-    };
-    accordionToggle: {
-      base: string;
-    };
-    accordionIcon: {
-      base: string;
-      active: string;
-      inactive: string;
-    };
-    accordionBody: {
-      base: string;
+    accordion: {
+      item: {
+        base: string;
+      };
+      toggle: {
+        base: string;
+      };
+      icon: {
+        base: string;
+        active: string;
+        inactive: string;
+      };
+      body: {
+        base: string;
+      };
     };
     badge: {
       base: string;
