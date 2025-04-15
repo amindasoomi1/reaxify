@@ -9,19 +9,22 @@ const meta: Meta<typeof Progress> = {
   tags: ["autodocs"],
 };
 
-export function Default() {
+export function Value() {
   return (
     <Stack variant="vertical" className="gap-4">
-      <Progress value={50} color="primary" />
-      <Progress value={50} color="secondary" />
-      <Progress value={50} color="success" />
-      <Progress value={50} color="info" />
+      <Progress value={10} color="primary" />
+      <Progress value={20} color="secondary" />
+      <Progress value={30} color="success" />
+      <Progress value={40} color="info" />
       <Progress value={50} color="warning" />
-      <Progress value={50} color="danger" />
-      <Progress value={50} color="dark" />
-      <Progress value={50} color="light" />
+      <Progress value={60} color="danger" />
+      <Progress value={70} color="dark" />
+      <Progress value={80} color="light" />
     </Stack>
   );
+}
+export function Animation() {
+  return <Progress animate color="primary" />;
 }
 
 export default meta;

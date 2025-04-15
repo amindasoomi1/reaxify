@@ -17,3 +17,41 @@ strong,
 b {
   font-weight: 700;
 }
+.animate-linear-progress-1 {
+  animation: linear-progress-1 3.2s cubic-bezier(0.65, 0.815, 0.735, 0.395)
+    infinite;
+}
+
+.animate-linear-progress-2 {
+  animation: linear-progress-2 3.2s 1.2s cubic-bezier(0.165, 0.84, 0.44, 1)
+    infinite;
+}
+@keyframes linear-progress-1 {
+  0% {
+    inset-inline-start: -35%;
+    width: 35%;
+  }
+  60% {
+    inset-inline-start: 100%;
+    width: 100%;
+  }
+  100% {
+    inset-inline-start: 100%;
+    width: 100%;
+  }
+}
+
+@keyframes linear-progress-2 {
+  0% {
+    inset-inline-start: -200%;
+    width: 100%;
+  }
+  60% {
+    inset-inline-start: 107%;
+    width: 10%;
+  }
+  100% {
+    inset-inline-start: 107%;
+    width: 10%;
+  }
+}

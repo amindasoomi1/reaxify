@@ -4,11 +4,19 @@ import { Color } from "@/types";
 import { ComponentProps, useMemo } from "react";
 import { twMerge } from "tailwind-merge";
 
+type ValueAnimation =
+  | {
+      value: number;
+      animate?: never;
+    }
+  | {
+      value?: never;
+      animate: boolean;
+    };
 type BaseProgressProps = {
   color?: Color | null;
-  value: number;
   children?: never;
-};
+} & ValueAnimation;
 type Colors = {
   [key in Color]?: string;
 };
@@ -18,6 +26,7 @@ type ProgressProps = BaseProgressProps &
 export default function Progress({
   color = "primary",
   value = 0,
+  animate = false,
   className,
   ...props
 }: ProgressProps) {
@@ -39,10 +48,14 @@ export default function Progress({
     };
     return colors?.[color] ?? null;
   }, [color, classes?.color]);
+  const width = useMemo(() => {
+    if (animate) return undefined;
+    return `${value}%`;
+  }, [value, animate]);
   return (
     <div
       className={twMerge(
-        "block w-full h-2.5 rounded-full overflow-hidden",
+        "relative block w-full h-2.5 rounded-full overflow-hidden",
         classes?.base,
         colorClasses,
         className
@@ -50,9 +63,19 @@ export default function Progress({
       {...props}
     >
       <span
-        style={{ width: `${value}%` }}
-        className="block h-full max-w-full bg-current rounded-[inherit] transition-[width]"
-      ></span>
+        style={{ width }}
+        className={cn(
+          "absolute h-full max-w-full bg-current rounded-[inherit] top-0 bottom-0 start-0",
+          animate ? "animate-linear-progress-1" : "transition-[width]"
+        )}
+      />
+      <span
+        style={{ width }}
+        className={cn(
+          "absolute h-full max-w-full bg-current rounded-[inherit] top-0 bottom-0 start-0",
+          animate ? "animate-linear-progress-2" : "transition-[width]"
+        )}
+      />
     </div>
   );
 }
