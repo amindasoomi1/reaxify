@@ -1,3 +1,5 @@
+import { cn } from "@/helpers";
+import { useClasses } from "@/hooks";
 import { ComponentProps, FormEvent, createContext, useRef } from "react";
 
 type FormProps = ComponentProps<"form"> & { disabled?: boolean };
@@ -15,9 +17,11 @@ export default function Form({
   disabled = false,
   onSubmit,
   onError,
+  className,
   children,
   ...props
 }: FormProps) {
+  const classes = useClasses((c) => c.form.base);
   const formControlsRef = useRef<FormControls>({});
   const setFormControl = (key: string, callback: Callback) => {
     formControlsRef.current[key] = callback;
@@ -49,7 +53,7 @@ export default function Form({
     onError?.(e);
   };
   return (
-    <form {...props} onSubmit={handleSubmit}>
+    <form className={cn(classes, className)} {...props} onSubmit={handleSubmit}>
       <FormContext.Provider
         value={{ setFormControl, removeFormControl, formDisabled: disabled }}
       >

@@ -1,3 +1,4 @@
+import { useClasses } from "@/hooks";
 import {
   createContext,
   ElementType,
@@ -48,6 +49,7 @@ function Menu<E extends ElementType = "div">({
   children,
   ...props
 }: ComponentPropsWithAs<E, MenuProps>) {
+  const classes = useClasses((c) => c.menu.base);
   const Component = as || "div";
   const offset = 16;
   const menuRef = useRef<HTMLDivElement | null>(null);
@@ -57,7 +59,7 @@ function Menu<E extends ElementType = "div">({
     top: offset,
   });
 
-  const classes: TransitionClasses = {
+  const transitionClasses: TransitionClasses = {
     entering: "scale-100 opacity-100",
     entered: "scale-100 opacity-100",
     exiting: "scale-90 opacity-0",
@@ -129,7 +131,8 @@ function Menu<E extends ElementType = "div">({
                 ref={menuRef}
                 className={twMerge(
                   "w-fit min-w-[12.5rem] bg-white shadow rounded p-2 transition-[scale,opacity] absolute top-[var(--top)] left-[var(--left)] right-auto origin-top-left rtl:left-auto rtl:right-[var(--right)] rtl:origin-top-right",
-                  classes[state],
+                  classes,
+                  transitionClasses[state],
                   className
                 )}
                 {...props}
@@ -183,6 +186,7 @@ function MenuItem<E extends ElementType = "button">({
   ...props
 }: ComponentPropsWithAs<E, MenuItemProps>) {
   const Component = as || "div";
+  const classes = useClasses((c) => c.menu.item.base);
   const { closeOnClick: menuCloseOnClick, onClose } = useContext(MenuContext);
   const closeOnClick = itemCloseOnClick ?? menuCloseOnClick;
   const handleClick: typeof onClick = (e: MouseEvent<E>) => {
@@ -194,6 +198,7 @@ function MenuItem<E extends ElementType = "button">({
       type={type}
       className={twMerge(
         "flex items-center px-3 py-2 w-full text-dark text-base font-normal rounded transition-colors hover:bg-dark hover:text-white",
+        classes,
         className
       )}
       onClick={handleClick}

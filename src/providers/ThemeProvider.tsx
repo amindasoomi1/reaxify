@@ -133,9 +133,40 @@ export type ThemeProviderContextType = {
         vertical: string;
       };
       button: {
-        horizontal: string;
-        vertical: string;
+        orientation: {
+          horizontal: string;
+          vertical: string;
+        };
       };
+    };
+    card: {
+      base: string;
+      header: { base: string };
+      body: { base: string };
+      footer: { base: string };
+    };
+    drawer: {
+      base: string;
+      anchor: { start: string; end: string; top: string; bottom: string };
+      menu: {
+        base: string;
+        anchor: { start: string; end: string; top: string; bottom: string };
+      };
+      header: { base: string };
+      body: { base: string };
+      footer: { base: string };
+    };
+    form: { base: string };
+    inputGroup: {
+      base: string;
+      label: { base: string };
+      stack: { base: string };
+      text: { base: string };
+      formControl: { base: string };
+    };
+    menu: {
+      base: string;
+      item: { base: string };
     };
   };
 };

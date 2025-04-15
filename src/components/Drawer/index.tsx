@@ -1,3 +1,4 @@
+import { useClasses } from "@/hooks";
 import {
   Callback,
   ComponentPropsWithAs,
@@ -38,7 +39,7 @@ type DrawerMenuProps = Omit<ComponentProps<"div">, "as" | "ref">;
 type DrawerHeaderProps = ComponentProps<"div">;
 type DrawerBodyProps = ComponentProps<"div">;
 type DrawerFooterProps = ComponentProps<"div">;
-type AnchorClasses<T = string> = { [key in Anchor]: T };
+type AnchorClasses<T = string | undefined> = { [key in Anchor]: T };
 
 export const DrawerContext = createContext<Context>({
   open: false,
@@ -58,6 +59,7 @@ function Drawer<E extends ElementType = "div">({
   children,
   ...props
 }: DrawerProps<E>) {
+  const classes = useClasses((c) => c.drawer);
   const divRef = useRef<HTMLDivElement | null>(null);
   const Component = as || "div";
   const transitionClasses: TransitionClasses = {
@@ -67,15 +69,15 @@ function Drawer<E extends ElementType = "div">({
     exited: "opacity-0 pointer-events-none",
     unmounted: "",
   };
-  const flexClasses = useMemo(() => {
-    const classes: AnchorClasses = {
-      start: "flex-row-reverse",
-      end: "flex-row",
-      top: "flex-col-reverse",
-      bottom: "flex-col",
+  const anchorClasses = useMemo(() => {
+    const result: AnchorClasses = {
+      start: cn("flex-row-reverse", classes?.anchor?.start),
+      end: cn("flex-row", classes?.anchor?.end),
+      top: cn("flex-col-reverse", classes?.anchor?.top),
+      bottom: cn("flex-col", classes?.anchor?.bottom),
     };
-    return classes[anchor];
-  }, [anchor]);
+    return result[anchor];
+  }, [anchor, classes?.anchor]);
   return (
     <Portal>
       <Transition nodeRef={divRef} in={open} timeout={duration} unmountOnExit>
@@ -85,8 +87,9 @@ function Drawer<E extends ElementType = "div">({
             style={{ transitionDuration: `${duration}ms` }}
             className={twMerge(
               "drawer fixed size-full inset-0 flex z-10 bg-black/20 backdrop-blur transition-opacity [--drawer-ratio:1] rtl:[--drawer-ratio:-1]",
+              classes?.base,
               transitionClasses[state],
-              flexClasses,
+              anchorClasses,
               className
             )}
             {...props}
@@ -114,27 +117,25 @@ function Drawer<E extends ElementType = "div">({
   );
 }
 function DrawerMenu({ children, className = "", ...props }: DrawerMenuProps) {
+  const classes = useClasses((c) => c.drawer.menu);
   const { anchor, duration, transitionState } = useContext(DrawerContext);
-  const sizeClasses = useMemo(() => {
-    const classes: AnchorClasses = {
-      start: "w-[30rem] h-full max-w-[97.5%]",
-      end: "w-[30rem] h-full max-w-[97.5%]",
-      top: "w-full h-[30rem] max-h-[97.5%]",
-      bottom: "w-full h-[30rem] max-h-[97.5%]",
+  const anchorClasses = useMemo(() => {
+    const result: AnchorClasses = {
+      start: cn(
+        "w-[30rem] h-full max-w-[97.5%] rounded-e",
+        classes?.anchor?.start
+      ),
+      end: cn("w-[30rem] h-full max-w-[97.5%] rounded-s", classes?.anchor?.end),
+      top: cn("w-full h-[30rem] max-h-[97.5%] rounded-b", classes?.anchor?.top),
+      bottom: cn(
+        "w-full h-[30rem] max-h-[97.5%] rounded-t",
+        classes?.anchor?.bottom
+      ),
     };
-    return classes[anchor];
-  }, [anchor]);
-  const roundedClasses = useMemo(() => {
-    const classes: AnchorClasses = {
-      start: "rounded-e",
-      end: "rounded-s",
-      top: "rounded-b",
-      bottom: "rounded-t",
-    };
-    return classes[anchor];
-  }, [anchor]);
+    return result[anchor];
+  }, [anchor, classes?.anchor]);
   const transitionClasses = useMemo(() => {
-    const classes: AnchorClasses<TransitionClasses> = {
+    const result: AnchorClasses<TransitionClasses> = {
       start: {
         entering: "translate-x-0",
         entered: "translate-x-0",
@@ -164,7 +165,7 @@ function DrawerMenu({ children, className = "", ...props }: DrawerMenuProps) {
         unmounted: "",
       },
     };
-    return classes[anchor];
+    return result[anchor];
   }, [anchor]);
   return (
     <Card
@@ -172,9 +173,9 @@ function DrawerMenu({ children, className = "", ...props }: DrawerMenuProps) {
       style={{ transitionDuration: `${duration}ms` }}
       className={twMerge(
         "relative flex flex-col transition-[translate,width] rounded-none",
-        sizeClasses,
+        classes?.base,
         transitionClasses[transitionState],
-        roundedClasses,
+        anchorClasses,
         className
       )}
       {...props}
@@ -183,16 +184,22 @@ function DrawerMenu({ children, className = "", ...props }: DrawerMenuProps) {
     </Card>
   );
 }
-function DrawerHeader(props: DrawerHeaderProps) {
-  return <Card.Header {...props} />;
+function DrawerHeader({ className, ...props }: DrawerHeaderProps) {
+  const classes = useClasses((c) => c.drawer.header.base);
+  return <Card.Header className={cn(classes, className)} {...props} />;
 }
 function DrawerBody({ className, ...props }: DrawerBodyProps) {
+  const classes = useClasses((c) => c.drawer.body.base);
   return (
-    <Card.Body className={cn("flex-1 overflow-auto", className)} {...props} />
+    <Card.Body
+      className={cn("flex-1 overflow-auto", classes, className)}
+      {...props}
+    />
   );
 }
-function DrawerFooter(props: DrawerFooterProps) {
-  return <Card.Footer {...props} />;
+function DrawerFooter({ className, ...props }: DrawerFooterProps) {
+  const classes = useClasses((c) => c.drawer.footer.base);
+  return <Card.Footer className={cn(classes, className)} {...props} />;
 }
 
 Drawer.Menu = DrawerMenu;

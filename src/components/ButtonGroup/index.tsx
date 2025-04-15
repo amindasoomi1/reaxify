@@ -40,11 +40,11 @@ export default function ButtonGroup<E extends ElementType = "div">({
     const orientations = {
       horizontal: cn(
         "rounded-none first-of-type:rounded-s last-of-type:rounded-e",
-        classes?.button?.horizontal
+        classes?.button?.orientation?.horizontal
       ),
       vertical: cn(
         "rounded-none first-of-type:rounded-t last-of-type:rounded-b",
-        classes?.button?.vertical
+        classes?.button?.orientation?.vertical
       ),
     };
     return orientations[orientation];
