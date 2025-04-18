@@ -41,18 +41,20 @@ export default function useAxios(
 
   const handleSetCancelDuplicated = useCallback(
     (request: InternalAxiosRequestConfig) => {
-      if (!cancelDuplicated) return request;
+      if (!cancelDuplicated && !cancelOnUnmount) return request;
       const key = `${request.method}-${request.url}`;
-      if (pendingRequests.has(key)) {
+      const controller = new AbortController();
+      if (cancelDuplicated && pendingRequests.has(key)) {
         pendingRequests.get(key)?.abort(cancelMessage);
       }
-      const controller = new AbortController();
-      request.signal = controller.signal;
-      pendingRequests.set(key, controller);
-      allControllers.current.push(controller);
+      if (cancelDuplicated) {
+        request.signal = controller.signal;
+        pendingRequests.set(key, controller);
+      }
+      if (cancelOnUnmount) allControllers.current.push(controller);
       return request;
     },
-    [pendingRequests, cancelDuplicated]
+    [pendingRequests, cancelDuplicated, cancelOnUnmount]
   );
   const handleDeleteCancelDuplicated = useCallback(
     (config: InternalAxiosRequestConfig | null) => {
@@ -136,7 +138,7 @@ export default function useAxios(
   );
   const errorHandler = useCallback(
     async (error: Error) => {
-      const isCanceled = error?.config?.signal.reason === cancelMessage;
+      const isCanceled = error?.config?.signal?.reason === cancelMessage;
       !isCanceled && handleDeleteCancelDuplicated(error?.config);
       const result = await afterErrorHandler(error);
       loadingHandler(false);
