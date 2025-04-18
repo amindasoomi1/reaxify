@@ -10,7 +10,10 @@ import {
 import { AxiosContext } from "./AxiosProvider";
 import type { AxiosConfig, Error, Loading } from "./types";
 
-export default function useAxios(axiosConfig: AxiosConfig | null = null) {
+export default function useAxios(
+  axiosConfig: Partial<AxiosConfig> | null = null
+) {
+  const cancelMessage = "Canceled due to duplication.";
   const axiosContext = useContext(AxiosContext);
   const pendingRequests = useMemo(() => new Map<string, AbortController>(), []);
   // const controller = useMemo(() => new AbortController(), []);
@@ -19,10 +22,9 @@ export default function useAxios(axiosConfig: AxiosConfig | null = null) {
     return baseAxios.create(config);
   }, [axiosContext.config, axiosConfig?.config]);
   const cancelDuplicated = useMemo(() => {
-    return (
-      axiosContext.cancelDuplicatedRequests ||
-      axiosConfig?.cancelDuplicatedRequests
-    );
+    return typeof axiosConfig?.cancelDuplicatedRequests === "boolean"
+      ? axiosConfig.cancelDuplicatedRequests
+      : axiosContext.cancelDuplicatedRequests ?? false;
   }, [
     axiosContext.cancelDuplicatedRequests,
     axiosConfig?.cancelDuplicatedRequests,
@@ -35,7 +37,7 @@ export default function useAxios(axiosConfig: AxiosConfig | null = null) {
       if (!cancelDuplicated) return request;
       const key = `${request.method}-${request.url}`;
       if (pendingRequests.has(key)) {
-        pendingRequests.get(key)?.abort("Canceled due to duplication.");
+        pendingRequests.get(key)?.abort(cancelMessage);
       }
       const controller = new AbortController();
       request.signal = controller.signal;
@@ -66,10 +68,11 @@ export default function useAxios(axiosConfig: AxiosConfig | null = null) {
         ...(axiosConfig?.beforeRequest ?? []),
       ];
       if (!handlers.length) return request;
-      return handlers.reduce(
-        async (prev, current) => current(await prev) || (await prev),
-        Promise.resolve(request)
-      );
+      return handlers.reduce(async (prevPromise, currentHandler) => {
+        const prev = await prevPromise;
+        const result = await currentHandler(prev);
+        return result ?? prev;
+      }, Promise.resolve(request));
     },
     [axiosContext.beforeRequest, axiosConfig?.beforeRequest]
   );
@@ -80,10 +83,11 @@ export default function useAxios(axiosConfig: AxiosConfig | null = null) {
         ...(axiosConfig?.afterResponse ?? []),
       ];
       if (!handlers.length) return response;
-      return handlers.reduce(
-        async (prev, current) => current(await prev) || (await prev),
-        Promise.resolve(response)
-      );
+      return handlers.reduce(async (prevPromise, currentHandler) => {
+        const prev = await prevPromise;
+        const result = await currentHandler(prev);
+        return result ?? prev;
+      }, Promise.resolve(response));
     },
     [axiosContext.afterResponse, axiosConfig?.afterResponse]
   );
@@ -124,7 +128,8 @@ export default function useAxios(axiosConfig: AxiosConfig | null = null) {
   );
   const errorHandler = useCallback(
     async (error: Error) => {
-      handleDeleteCancelDuplicated(error?.config);
+      const isCanceled = error?.config?.signal.reason === cancelMessage;
+      !isCanceled && handleDeleteCancelDuplicated(error?.config);
       const result = await afterErrorHandler(error);
       loadingHandler(false);
       setError(error as Error);
