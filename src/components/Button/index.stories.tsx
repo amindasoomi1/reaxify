@@ -11,34 +11,32 @@ const meta: Meta<typeof Button> = {
 
 // type Story = StoryObj<typeof meta>;
 
-const label = "Button";
-
 export function Colors() {
   return (
     <Stack wrap className="items-center gap-4">
       <Button color="primary" variant="solid">
-        {label}
+        Primary
       </Button>
       <Button color="secondary" variant="solid">
-        {label}
+        Secondary
       </Button>
       <Button color="success" variant="solid">
-        {label}
+        Success
       </Button>
       <Button color="info" variant="solid">
-        {label}
+        Info
       </Button>
       <Button color="warning" variant="solid">
-        {label}
+        Warning
       </Button>
       <Button color="danger" variant="solid">
-        {label}
+        Danger
       </Button>
       <Button color="dark" variant="solid">
-        {label}
+        Dark
       </Button>
       <Button color="light" variant="solid">
-        {label}
+        Light
       </Button>
     </Stack>
   );
@@ -47,13 +45,13 @@ export function Variants() {
   return (
     <Stack wrap className="items-center gap-4">
       <Button color="primary" variant="solid">
-        {label}
+        Solid
       </Button>
       <Button color="primary" variant="outline">
-        {label}
+        Outline
       </Button>
       <Button color="primary" variant="text">
-        {label}
+        Text
       </Button>
     </Stack>
   );
@@ -62,13 +60,13 @@ export function Sizes() {
   return (
     <Stack wrap className="items-center gap-4">
       <Button color="primary" variant="solid" size="sm">
-        {label}
+        Small
       </Button>
       <Button color="primary" variant="solid" size="md">
-        {label}
+        Medium
       </Button>
       <Button color="primary" variant="solid" size="lg">
-        {label}
+        Large
       </Button>
     </Stack>
   );
@@ -77,13 +75,13 @@ export function Loading() {
   return (
     <Stack wrap className="items-center gap-4">
       <Button color="primary" variant="solid" loading>
-        {label}
+        Button
       </Button>
       <Button color="primary" variant="outline" loading>
-        {label}
+        Button
       </Button>
       <Button color="primary" variant="text" loading>
-        {label}
+        Button
       </Button>
     </Stack>
   );
