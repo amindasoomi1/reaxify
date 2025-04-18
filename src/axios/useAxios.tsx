@@ -43,19 +43,14 @@ export default function useAxios(
     (request: InternalAxiosRequestConfig) => {
       if (!cancelDuplicated && !cancelOnUnmount) return request;
       const key = `${request.method}-${request.url}`;
-      console.log({ key });
       const controller = new AbortController();
-      console.log({ controller });
       if (cancelDuplicated && pendingRequests.has(key)) {
-        console.log("pendingRequests.has(key)");
         pendingRequests.get(key)?.abort(cancelMessage);
       }
       if (cancelDuplicated || cancelOnUnmount) {
-        console.log("abort");
         request.signal = controller.signal;
       }
       if (cancelDuplicated) pendingRequests.set(key, controller);
-      if (cancelDuplicated) console.log("pendingRequests.set");
       if (cancelOnUnmount) allControllers.current.push(controller);
       return request;
     },
