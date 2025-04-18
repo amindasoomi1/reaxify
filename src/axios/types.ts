@@ -13,6 +13,7 @@ export type Callback<T> = (
 export type AxiosConfig = {
   config: CreateAxiosDefaults;
   cancelDuplicatedRequests: boolean;
+  cancelOnUnmount: boolean;
   beforeRequest: Callback<InternalAxiosRequestConfig>[];
   afterResponse: Callback<AxiosResponse>[];
   afterError: Callback<Error>[];

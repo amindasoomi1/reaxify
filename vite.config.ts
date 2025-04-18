@@ -18,23 +18,36 @@ export default defineConfig({
   build: {
     lib: {
       name: "reaxify",
-      entry: {
-        // index: "src/index.ts",
-        axios: "src/axios/index.ts",
-        components: "src/components/index.ts",
-        helpers: "src/helpers/index.ts",
-        hooks: "src/hooks/index.ts",
-        providers: "src/providers/index.ts",
-      },
+      entry: [
+        "src/index.ts",
+        "src/axios/index.ts",
+        "src/components/index.ts",
+        "src/helpers/index.ts",
+        "src/hooks/index.ts",
+        "src/providers/index.ts",
+      ],
       formats: ["es", "cjs"],
     },
     rollupOptions: {
-      external: ["react", "react-dom"],
+      external: ["react", "react-dom", "axios"],
       output: {
         dir: "dist",
         preserveModules: true,
         preserveModulesRoot: "src",
-        entryFileNames: "[name]/index.[format].js",
+        entryFileNames: ({ facadeModuleId }) => {
+          // const cleanName = name.replace(/\/index$/, "");
+          // return `${cleanName}/index.[format].js`;
+          const relativePath = facadeModuleId
+            ?.split("src/")[1]
+            ?.replace(/\.ts(x)?$/, "");
+          if (!relativePath) {
+            return `[name].[format].js`;
+          }
+          if (relativePath.endsWith("/index")) {
+            return `${relativePath.replace(/\/index$/, "")}/index.[format].js`;
+          }
+          return `${relativePath}.[format].js`;
+        },
         globals: { react: "React", "react-dom": "ReactDom" },
       },
     },

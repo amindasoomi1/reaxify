@@ -9,6 +9,7 @@ type Context = AxiosConfig;
 export const AxiosContext = createContext<Context>({
   config: {},
   cancelDuplicatedRequests: false,
+  cancelOnUnmount: false,
   beforeRequest: [],
   afterResponse: [],
   afterError: [],
@@ -17,6 +18,7 @@ export const AxiosContext = createContext<Context>({
 export default function AxiosProvider({
   config = {},
   cancelDuplicatedRequests = false,
+  cancelOnUnmount = false,
   beforeRequest = [],
   afterResponse = [],
   afterError = [],
@@ -27,6 +29,7 @@ export default function AxiosProvider({
       value={{
         config,
         cancelDuplicatedRequests,
+        cancelOnUnmount,
         beforeRequest,
         afterResponse,
         afterError,

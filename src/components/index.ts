@@ -16,3 +16,4 @@ export { default as Stack } from "./Stack";
 export { default as Table } from "./Table";
 export { default as Tabs } from "./Tabs";
 export { default as Typography } from "./Typography";
+import "../index.css";

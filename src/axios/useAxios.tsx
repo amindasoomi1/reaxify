@@ -1,10 +1,10 @@
 import baseAxios, { AxiosResponse, InternalAxiosRequestConfig } from "axios";
-import { cloneDeep } from "lodash";
 import {
   useCallback,
   useContext,
   useLayoutEffect,
   useMemo,
+  useRef,
   useState,
 } from "react";
 import { AxiosContext } from "./AxiosProvider";
@@ -15,6 +15,7 @@ export default function useAxios(
 ) {
   const cancelMessage = "Canceled due to duplication.";
   const axiosContext = useContext(AxiosContext);
+  const allControllers = useRef<AbortController[]>([]);
   const pendingRequests = useMemo(() => new Map<string, AbortController>(), []);
   // const controller = useMemo(() => new AbortController(), []);
   const axios = useMemo(() => {
@@ -29,6 +30,12 @@ export default function useAxios(
     axiosContext.cancelDuplicatedRequests,
     axiosConfig?.cancelDuplicatedRequests,
   ]);
+  const cancelOnUnmount = useMemo(() => {
+    return typeof axiosConfig?.cancelOnUnmount === "boolean"
+      ? axiosConfig.cancelOnUnmount
+      : axiosContext.cancelOnUnmount ?? false;
+  }, [axiosConfig?.cancelOnUnmount, axiosContext.cancelOnUnmount]);
+
   const [loading, setLoading] = useState<Loading>([]);
   const [error, setError] = useState<Error | null>(null);
 
@@ -42,6 +49,7 @@ export default function useAxios(
       const controller = new AbortController();
       request.signal = controller.signal;
       pendingRequests.set(key, controller);
+      allControllers.current.push(controller);
       return request;
     },
     [pendingRequests, cancelDuplicated]
@@ -56,7 +64,7 @@ export default function useAxios(
   );
   const loadingHandler = useCallback((value: boolean) => {
     setLoading((p) => {
-      const loading = cloneDeep(p);
+      const loading = [...p];
       value ? loading.push("") : loading.pop();
       return loading;
     });
@@ -152,11 +160,15 @@ export default function useAxios(
     responseHandler,
     errorHandler,
   ]);
-  // useLayoutEffect(() => {
-  //   return () => {
-  //     const development = process.env.NODE_ENV !== "production";
-  //     !development && controller.abort("Canceled.");
-  //   };
-  // }, []);
+  useLayoutEffect(() => {
+    return () => {
+      if (cancelOnUnmount) {
+        allControllers.current.forEach((controller) => {
+          controller.abort(cancelMessage);
+        });
+        allControllers.current = [];
+      }
+    };
+  }, [cancelOnUnmount]);
   return [axios, Boolean(loading.length), error] as const;
 }
