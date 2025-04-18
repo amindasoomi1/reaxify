@@ -1,26 +1,14 @@
 import { ChildrenProps } from "@/types";
-import {
-  AxiosResponse,
-  CreateAxiosDefaults,
-  InternalAxiosRequestConfig,
-} from "axios";
 import { createContext } from "react";
+import type { AxiosConfig } from "./types";
 
-type Callback<T> = (input: T) => T | Promise<T>;
+type Props = Partial<AxiosConfig> & ChildrenProps;
 
-type BaseProps = {
-  config: CreateAxiosDefaults;
-  beforeRequest: Callback<InternalAxiosRequestConfig>[];
-  afterResponse: Callback<AxiosResponse>[];
-  // eslint-disable-next-line
-  afterError: Callback<any>[];
-};
-type Props = Partial<BaseProps> & ChildrenProps;
-
-type Context = BaseProps;
+type Context = AxiosConfig;
 
 export const AxiosContext = createContext<Context>({
   config: {},
+  cancelDuplicatedRequests: false,
   beforeRequest: [],
   afterResponse: [],
   afterError: [],
@@ -28,6 +16,7 @@ export const AxiosContext = createContext<Context>({
 
 export default function AxiosProvider({
   config = {},
+  cancelDuplicatedRequests = false,
   beforeRequest = [],
   afterResponse = [],
   afterError = [],
@@ -35,7 +24,13 @@ export default function AxiosProvider({
 }: Props) {
   return (
     <AxiosContext.Provider
-      value={{ config, beforeRequest, afterResponse, afterError }}
+      value={{
+        config,
+        cancelDuplicatedRequests,
+        beforeRequest,
+        afterResponse,
+        afterError,
+      }}
     >
       {children}
     </AxiosContext.Provider>

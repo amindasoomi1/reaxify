@@ -1,10 +1,5 @@
-import baseAxios, {
-  AxiosResponse,
-  CreateAxiosDefaults,
-  InternalAxiosRequestConfig,
-} from "axios";
+import baseAxios, { AxiosResponse, InternalAxiosRequestConfig } from "axios";
 import { cloneDeep } from "lodash";
-import process from "process";
 import {
   useCallback,
   useContext,
@@ -13,28 +8,50 @@ import {
   useState,
 } from "react";
 import { AxiosContext } from "./AxiosProvider";
+import type { AxiosConfig, Error, Loading } from "./types";
 
-type Loading = string[];
-// eslint-disable-next-line
-type Error = any;
-type Callback<T> = (input: T) => T | Promise<T>;
-type Config = null | {
-  config?: CreateAxiosDefaults;
-  beforeRequest?: Callback<InternalAxiosRequestConfig>[];
-  afterResponse?: Callback<AxiosResponse>[];
-  afterError?: Callback<Error>[];
-};
-
-export default function useAxios(axiosConfig: Config = null) {
+export default function useAxios(axiosConfig: AxiosConfig | null = null) {
   const axiosContext = useContext(AxiosContext);
-  const controller = useMemo(() => new AbortController(), []);
+  const pendingRequests = useMemo(() => new Map<string, AbortController>(), []);
+  // const controller = useMemo(() => new AbortController(), []);
   const axios = useMemo(() => {
     const config = { ...axiosContext.config, ...axiosConfig?.config };
     return baseAxios.create(config);
   }, [axiosContext.config, axiosConfig?.config]);
+  const cancelDuplicated = useMemo(() => {
+    return (
+      axiosContext.cancelDuplicatedRequests ||
+      axiosConfig?.cancelDuplicatedRequests
+    );
+  }, [
+    axiosContext.cancelDuplicatedRequests,
+    axiosConfig?.cancelDuplicatedRequests,
+  ]);
   const [loading, setLoading] = useState<Loading>([]);
   const [error, setError] = useState<Error | null>(null);
 
+  const handleSetCancelDuplicated = useCallback(
+    (request: InternalAxiosRequestConfig) => {
+      if (!cancelDuplicated) return request;
+      const key = `${request.method}-${request.url}`;
+      if (pendingRequests.has(key)) {
+        pendingRequests.get(key)?.abort("Canceled due to duplication.");
+      }
+      const controller = new AbortController();
+      request.signal = controller.signal;
+      pendingRequests.set(key, controller);
+      return request;
+    },
+    [pendingRequests, cancelDuplicated]
+  );
+  const handleDeleteCancelDuplicated = useCallback(
+    (config: InternalAxiosRequestConfig | null) => {
+      if (!config) return;
+      const key = `${config.method}-${config.url}`;
+      pendingRequests.delete(key);
+    },
+    [pendingRequests]
+  );
   const loadingHandler = useCallback((value: boolean) => {
     setLoading((p) => {
       const loading = cloneDeep(p);
@@ -50,7 +67,7 @@ export default function useAxios(axiosConfig: Config = null) {
       ];
       if (!handlers.length) return request;
       return handlers.reduce(
-        async (prev, current) => current(await prev),
+        async (prev, current) => current(await prev) || (await prev),
         Promise.resolve(request)
       );
     },
@@ -64,7 +81,7 @@ export default function useAxios(axiosConfig: Config = null) {
       ];
       if (!handlers.length) return response;
       return handlers.reduce(
-        async (prev, current) => current(await prev),
+        async (prev, current) => current(await prev) || (await prev),
         Promise.resolve(response)
       );
     },
@@ -86,31 +103,34 @@ export default function useAxios(axiosConfig: Config = null) {
   );
   const requestHandler = useCallback(
     async (request: InternalAxiosRequestConfig) => {
-      request.signal ||= controller.signal;
+      // request.signal ||= controller.signal;
+      const handledRequest = handleSetCancelDuplicated(request);
       loadingHandler(true);
       setError(null);
-      const result = await beforeRequestHandler(request);
+      const result = await beforeRequestHandler(handledRequest);
       return result;
     },
-    [controller, loadingHandler, beforeRequestHandler]
+    [handleSetCancelDuplicated, loadingHandler, beforeRequestHandler]
   );
   const responseHandler = useCallback(
     async (response: AxiosResponse) => {
+      handleDeleteCancelDuplicated(response.config);
       const result = await afterResponseHandler(response);
       loadingHandler(false);
       setError(null);
       return result;
     },
-    [loadingHandler, afterResponseHandler]
+    [loadingHandler, afterResponseHandler, handleDeleteCancelDuplicated]
   );
   const errorHandler = useCallback(
-    (error: Error) => {
-      afterErrorHandler(error);
+    async (error: Error) => {
+      handleDeleteCancelDuplicated(error?.config);
+      const result = await afterErrorHandler(error);
       loadingHandler(false);
       setError(error as Error);
-      return Promise.reject(error);
+      return Promise.reject(result);
     },
-    [loadingHandler, afterErrorHandler]
+    [loadingHandler, afterErrorHandler, handleDeleteCancelDuplicated]
   );
 
   useLayoutEffect(() => {
@@ -127,11 +147,11 @@ export default function useAxios(axiosConfig: Config = null) {
     responseHandler,
     errorHandler,
   ]);
-  useLayoutEffect(() => {
-    return () => {
-      const development = process.env.NODE_ENV !== "production";
-      !development && controller.abort("Canceled.");
-    };
-  }, []);
+  // useLayoutEffect(() => {
+  //   return () => {
+  //     const development = process.env.NODE_ENV !== "production";
+  //     !development && controller.abort("Canceled.");
+  //   };
+  // }, []);
   return [axios, Boolean(loading.length), error] as const;
 }
