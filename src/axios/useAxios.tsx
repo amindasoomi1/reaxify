@@ -47,10 +47,10 @@ export default function useAxios(
       if (cancelDuplicated && pendingRequests.has(key)) {
         pendingRequests.get(key)?.abort(cancelMessage);
       }
-      if (cancelDuplicated) {
+      if (cancelDuplicated || cancelOnUnmount) {
         request.signal = controller.signal;
-        pendingRequests.set(key, controller);
       }
+      if (cancelDuplicated) pendingRequests.set(key, controller);
       if (cancelOnUnmount) allControllers.current.push(controller);
       return request;
     },
