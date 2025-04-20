@@ -228,7 +228,7 @@ export default function Button<E extends ElementType = "button">({
           />
         </span>
       )}
-      <span className="ripple-group absolute size-full inset-0 overflow-hidden pointer-events-none"></span>
+      <span className="ripple-group absolute size-full inset-0 overflow-hidden rounded-[inherit] pointer-events-none"></span>
     </Component>
   );
 }
