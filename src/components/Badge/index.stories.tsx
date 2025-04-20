@@ -11,34 +11,32 @@ const meta: Meta<typeof Badge> = {
 
 // type Story = StoryObj<typeof meta>;
 
-const label = "Badge";
-
 export function Colors() {
   return (
     <Stack wrap className="items-center gap-4">
       <Badge color="primary" variant="solid">
-        {label}
+        Primary
       </Badge>
       <Badge color="secondary" variant="solid">
-        {label}
+        Secondary
       </Badge>
       <Badge color="success" variant="solid">
-        {label}
+        Success
       </Badge>
       <Badge color="info" variant="solid">
-        {label}
+        Info
       </Badge>
       <Badge color="warning" variant="solid">
-        {label}
+        Warning
       </Badge>
       <Badge color="danger" variant="solid">
-        {label}
+        Danger
       </Badge>
       <Badge color="dark" variant="solid">
-        {label}
+        Dark
       </Badge>
       <Badge color="light" variant="solid">
-        {label}
+        Light
       </Badge>
     </Stack>
   );
@@ -47,13 +45,13 @@ export function Variants() {
   return (
     <Stack wrap className="items-center gap-4">
       <Badge color="primary" variant="solid">
-        {label}
+        Solid
       </Badge>
       <Badge color="primary" variant="outline">
-        {label}
+        Outline
       </Badge>
       <Badge color="primary" variant="soft">
-        {label}
+        Soft
       </Badge>
     </Stack>
   );
@@ -62,13 +60,13 @@ export function Sizes() {
   return (
     <Stack wrap className="items-center gap-4">
       <Badge color="primary" variant="solid" size="sm">
-        {label}
+        Small
       </Badge>
       <Badge color="primary" variant="solid" size="md">
-        {label}
+        Medium
       </Badge>
       <Badge color="primary" variant="solid" size="lg">
-        {label}
+        Large
       </Badge>
     </Stack>
   );
