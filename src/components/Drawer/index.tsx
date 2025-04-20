@@ -1,10 +1,5 @@
 import { useClasses } from "@/hooks";
-import {
-  Callback,
-  ComponentPropsWithAs,
-  ToggleProps,
-  TransitionClasses,
-} from "@/types";
+import { ComponentPropsWithAs, ToggleProps, TransitionClasses } from "@/types";
 import {
   ComponentProps,
   createContext,
@@ -22,7 +17,7 @@ import Portal from "../Portal";
 type Anchor = "start" | "end" | "top" | "bottom";
 type Context = {
   open: boolean;
-  onClose: Callback;
+  onClose: VoidFunction;
   duration: number;
   anchor: Anchor;
   transitionState: TransitionStatus;

@@ -84,6 +84,7 @@
     "eslint-plugin-storybook": "^0.10.1",
     "storybook": "^8.6.11",
     "typescript": "^5.7.2",
-    "vite": "^5.0.8"
+    "vite": "^5.0.8",
+    "vite-plugin-static-copy": "^2.3.1"
   }
 }

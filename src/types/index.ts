@@ -19,10 +19,9 @@ export type ChildrenProps = {
   children?: ReactNode;
 };
 export type Size = "sm" | "md" | "lg";
-export type Callback = () => void;
 export type Rule = (value: string) => true | string;
 export type Rules = Rule[];
-export type ToggleProps = { open?: boolean; onClose?: Callback };
+export type ToggleProps = { open?: boolean; onClose?: VoidFunction };
 export type TransitionClasses = { [key in TransitionStatus]: string };
 export type RecursivePartial<T> = {
   [P in keyof T]?: RecursivePartial<T[P]>;

@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useRef } from "react";
-import { Callback } from "../types";
 
 export default function useDebounce() {
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -11,7 +10,7 @@ export default function useDebounce() {
   }, []);
 
   const debounce = useCallback(
-    (callback: Callback, ms: number = 1000) => {
+    (callback: VoidFunction, ms: number = 1000) => {
       clearTimeoutRef();
       timeoutRef.current = setTimeout(callback, ms);
     },

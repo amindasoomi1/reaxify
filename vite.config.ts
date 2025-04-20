@@ -3,12 +3,14 @@ import react from "@vitejs/plugin-react-swc";
 import path from "path";
 import { defineConfig } from "vite";
 import dts from "vite-plugin-dts";
+// import { viteStaticCopy } from "vite-plugin-static-copy";
 
 export default defineConfig({
   plugins: [
     react(),
     dts({ entryRoot: "src", exclude: ["**/*.stories.tsx"] }),
     tailwindcss(),
+    // viteStaticCopy({ targets: [{ src: "./src/types", dest: "" }] }),
   ],
   resolve: {
     alias: {

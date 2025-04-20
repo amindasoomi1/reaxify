@@ -1,11 +1,6 @@
 import { cn } from "@/helpers";
 import { useClasses } from "@/hooks";
-import {
-  Callback,
-  ComponentPropsWithAs,
-  ToggleProps,
-  TransitionClasses,
-} from "@/types";
+import { ComponentPropsWithAs, ToggleProps, TransitionClasses } from "@/types";
 import {
   ComponentProps,
   createContext,
@@ -23,7 +18,7 @@ type Size = "sm" | "md" | "lg";
 type Context = {
   size: Size;
   open: boolean;
-  onClose: Callback;
+  onClose: VoidFunction;
   transitionState: TransitionStatus;
   duration: number;
 };
