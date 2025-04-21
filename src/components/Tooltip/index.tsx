@@ -38,7 +38,7 @@ export default function Tooltip({
   const classes = useClasses((c) => c.tooltip);
   const divRef = useRef<HTMLDivElement | null>(null);
   const triggerRef = useRef<HTMLElement | null>(null);
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const [position, setPosition] = useState<Record<string, string>>({});
   const colorClasses = useMemo(() => {
     if (!color) return "border-transparent";
@@ -61,7 +61,7 @@ export default function Tooltip({
         classes?.placement?.top
       ),
       end: cn(
-        "h-(--height) top-(--top) bottom-(--bottom) left-(--right) rtl:left-auto translate-x-[0.5rem] flex-row-reverse origin-start",
+        "h-(--height) top-(--top) bottom-(--bottom) left-(--right) translate-x-[0.5rem] flex-row-reverse origin-start",
         classes?.placement?.end
       ),
       bottom: cn(
@@ -69,7 +69,7 @@ export default function Tooltip({
         classes?.placement?.bottom
       ),
       start: cn(
-        "h-(--height) top-(--top) bottom-(--bottom) left-(--left) rtl:left-auto rtl:right-(--right) translate-x-[calc(var(--ratio)*-100%-0.5rem)] flex-row origin-start",
+        "h-(--height) top-(--top) bottom-(--bottom) left-(--left) translate-x-[calc(var(--ratio)*-100%-0.5rem)] flex-row origin-start",
         classes?.placement?.start
       ),
     };
