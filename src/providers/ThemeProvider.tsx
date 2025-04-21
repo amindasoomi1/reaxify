@@ -225,6 +225,25 @@ export type ThemeProviderContextType = {
         body2: string;
       };
     };
+    tooltip: {
+      base: string;
+      color: {
+        primary: string;
+        secondary: string;
+        success: string;
+        info: string;
+        warning: string;
+        danger: string;
+        dark: string;
+        light: string;
+      };
+      placement: {
+        top: string;
+        end: string;
+        bottom: string;
+        start: string;
+      };
+    };
   };
 };
 type Props = ChildrenProps & DeepPartial<ThemeProviderContextType>;

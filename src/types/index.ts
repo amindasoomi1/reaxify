@@ -1,6 +1,11 @@
 import { ComponentProps, ElementType, ReactNode } from "react";
 import { TransitionStatus } from "react-transition-group";
 
+export type ComponentPropsWithoutAs<
+  E extends ElementType,
+  // eslint-disable-next-line
+  P extends Record<string, unknown> = {}
+> = P & Omit<ComponentProps<E>, keyof P>;
 export type ComponentPropsWithAs<
   E extends ElementType,
   // eslint-disable-next-line
