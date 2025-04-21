@@ -21,15 +21,23 @@ export default function useInputValidation({ rules }: Config) {
 
   const validate = useCallback(
     (node: HTMLInputElement | HTMLTextAreaElement) => {
-      if (!rules.length) return;
       const id = node.id;
       const value = node.value;
+      if (!rules.length) {
+        setFormControl?.(id, () => true);
+        setErrorMessage(null);
+        setError(false);
+        return;
+      }
       for (const rule of rules) {
         // if (isAsync(rule)) setLoading(true);
         const result = rule(value);
         const isString = typeof result === "string";
         if (isString) {
-          setFormControl?.(id, () => false);
+          setFormControl?.(id, () => {
+            setError(true);
+            return false;
+          });
           setErrorMessage(result);
           setError(true);
           //   setLoading(false);
