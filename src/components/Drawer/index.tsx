@@ -74,9 +74,9 @@ function Drawer<E extends ElementType = "div">({
     return result[anchor];
   }, [anchor, classes?.anchor]);
   return (
-    <Transition nodeRef={divRef} in={open} timeout={duration} unmountOnExit>
-      {(state) => (
-        <Portal>
+    <Portal>
+      <Transition nodeRef={divRef} in={open} timeout={duration} unmountOnExit>
+        {(state) => (
           <Component
             ref={divRef}
             style={{ transitionDuration: `${duration}ms` }}
@@ -107,9 +107,9 @@ function Drawer<E extends ElementType = "div">({
               {children}
             </DrawerContext.Provider>
           </Component>
-        </Portal>
-      )}
-    </Transition>
+        )}
+      </Transition>
+    </Portal>
   );
 }
 function DrawerMenu({ children, className = "", ...props }: DrawerMenuProps) {

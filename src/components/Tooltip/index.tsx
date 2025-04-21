@@ -150,9 +150,9 @@ export default function Tooltip({
   return (
     <Fragment>
       {enhancedChild}
-      <Transition nodeRef={divRef} in={open} timeout={duration} unmountOnExit>
-        {(state) => (
-          <Portal>
+      <Portal>
+        <Transition nodeRef={divRef} in={open} timeout={duration} unmountOnExit>
+          {(state) => (
             <div
               // data-open={open}
               ref={divRef}
@@ -182,9 +182,9 @@ export default function Tooltip({
                 )}
               ></span>
             </div>
-          </Portal>
-        )}
-      </Transition>
+          )}
+        </Transition>
+      </Portal>
     </Fragment>
   );
 }
