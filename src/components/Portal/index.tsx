@@ -1,5 +1,5 @@
 import { ChildrenProps } from "@/types";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { createPortal } from "react-dom";
 import { randomID } from "../../helpers";
 export default function Portal({ children }: ChildrenProps) {
@@ -10,5 +10,10 @@ export default function Portal({ children }: ChildrenProps) {
     document.body.appendChild(el);
     return el;
   }, []);
+  useEffect(() => {
+    return () => {
+      document.body.removeChild(div);
+    };
+  }, [div]);
   return createPortal(children, div);
 }

@@ -57,9 +57,9 @@ function Modal<E extends ElementType = "div">({
     unmounted: "",
   };
   return (
-    <Portal>
-      <Transition nodeRef={divRef} in={open} timeout={duration} unmountOnExit>
-        {(state) => (
+    <Transition nodeRef={divRef} in={open} timeout={duration} unmountOnExit>
+      {(state) => (
+        <Portal>
           <Component
             ref={divRef}
             data-open={open}
@@ -83,9 +83,9 @@ function Modal<E extends ElementType = "div">({
               {children}
             </ModalContext.Provider>
           </Component>
-        )}
-      </Transition>
-    </Portal>
+        </Portal>
+      )}
+    </Transition>
   );
 }
 function ModalDialog({ className, children, ...props }: ModalDialogProps) {

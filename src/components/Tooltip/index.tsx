@@ -1,13 +1,25 @@
 import { cn } from "@/helpers";
 import { useClasses } from "@/hooks";
-import { Color, ComponentPropsWithoutAs } from "@/types";
-import { cloneElement, Fragment, ReactElement, useMemo, useState } from "react";
+import { Color, ComponentPropsWithoutAs, TransitionClasses } from "@/types";
+import {
+  cloneElement,
+  Fragment,
+  ReactElement,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
+import { Transition } from "react-transition-group";
 import { twMerge } from "tailwind-merge";
+import Portal from "../Portal";
 
 type Placement = "top" | "end" | "bottom" | "start";
 type Props = {
   title: string;
   color?: Color;
+  duration?: number;
   placement?: Placement;
   children?: ReactElement;
 };
@@ -18,12 +30,16 @@ export default function Tooltip({
   title,
   color = "dark",
   placement = "top",
+  duration = 300,
   className,
   children,
   ...props
 }: ComponentPropsWithoutAs<"span", Props>) {
   const classes = useClasses((c) => c.tooltip);
-  const [open, setOpen] = useState(false);
+  const divRef = useRef<HTMLDivElement | null>(null);
+  const triggerRef = useRef<HTMLElement | null>(null);
+  const [open, setOpen] = useState(true);
+  const [position, setPosition] = useState<Record<string, string>>({});
   const colorClasses = useMemo(() => {
     if (!color) return "border-transparent";
     const colors: Colors = {
@@ -41,24 +57,31 @@ export default function Tooltip({
   const placementClasses = useMemo(() => {
     const placements = {
       top: cn(
-        "bottom-[calc(100%+0.5rem)] left-0 right-0 flex-col origin-bottom",
+        "w-(--width) top-(--top) left-(--left) right-(--right) translate-y-[calc(-100%-0.5rem)] flex-col origin-bottom",
         classes?.placement?.top
       ),
       end: cn(
-        "start-[calc(100%+0.5rem)] top-0 bottom-0 flex-row-reverse origin-start",
+        "h-(--height) top-(--top) bottom-(--bottom) left-(--right) rtl:left-auto translate-x-[0.5rem] flex-row-reverse origin-start",
         classes?.placement?.end
       ),
       bottom: cn(
-        "top-[calc(100%+0.5rem)] left-0 right-0 flex-col-reverse origin-top",
+        "w-(--width) top-(--bottom) left-(--left) right-(--right) translate-y-[0.5rem] flex-col-reverse origin-top",
         classes?.placement?.bottom
       ),
       start: cn(
-        "end-[calc(100%+0.5rem)] top-0 bottom-0 flex-row origin-end",
+        "h-(--height) top-(--top) bottom-(--bottom) left-(--left) rtl:left-auto rtl:right-(--right) translate-x-[calc(var(--ratio)*-100%-0.5rem)] flex-row origin-start",
         classes?.placement?.start
       ),
     };
     return placements[placement];
   }, [placement, classes?.placement]);
+  const transitionClasses: TransitionClasses = {
+    entering: "scale-100 opacity-100",
+    entered: "scale-100 opacity-100",
+    exiting: "scale-75 opacity-0",
+    exited: "scale-75 opacity-0",
+    unmounted: "",
+  };
   const arrowPlacementClasses = useMemo(() => {
     const placements = {
       top: "mt-[-0.5rem]",
@@ -71,6 +94,11 @@ export default function Tooltip({
   const enhancedChild = useMemo(() => {
     if (!children) return null;
     return cloneElement(children, {
+      ref: (el: HTMLElement) => {
+        triggerRef.current = el;
+        // if (typeof children.ref === "function") children.ref(el);
+        // else if (children.ref) (children.ref as any).current = el;
+      },
       onMouseEnter: (e: React.MouseEvent) => {
         children.props.onMouseEnter?.(e);
         setOpen(true);
@@ -87,49 +115,76 @@ export default function Tooltip({
         children.props.onBlur?.(e);
         setOpen(false);
       },
-      className: cn(children.props.className, "relative"),
-      children: (
-        <Fragment>
-          {children.props.children}
-          <div
-            className={cn(
-              "absolute flex justify-center items-center z-10 pointer-events-none transition-[scale,opacity]",
-              placementClasses,
-              open ? "scale-100 opacity-100" : "scale-75 opacity-0"
-            )}
-          >
-            <span
-              className={twMerge(
-                "relative block w-fit h-fit bg-dark text-sm rounded px-2 py-px whitespace-nowrap z-[1]",
-                classes?.base,
-                colorClasses,
-                className
-              )}
-              {...props}
-            >
-              {title}
-            </span>
-            <span
-              className={twMerge(
-                "block size-3 bg-dark rotate-45",
-                arrowPlacementClasses,
-                colorClasses
-              )}
-            ></span>
-          </div>
-        </Fragment>
-      ),
     });
-  }, [
-    title,
-    children,
-    className,
-    classes?.base,
-    colorClasses,
-    open,
-    props,
-    placementClasses,
-    arrowPlacementClasses,
-  ]);
-  return enhancedChild;
+  }, [children]);
+  const updatePosition = useCallback(() => {
+    const el = triggerRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+
+    const width = rect.width;
+    const height = rect.height;
+    const top = rect.top;
+    const left = rect.left;
+    const right = rect.right;
+    const bottom = rect.bottom;
+
+    setPosition({
+      "--width": `${width}px`,
+      "--height": `${height}px`,
+      "--top": `${top}px`,
+      "--left": `${left}px`,
+      "--right": `${right}px`,
+      "--bottom": `${bottom}px`,
+    });
+  }, []);
+  useEffect(() => {
+    if (open) updatePosition();
+    window.addEventListener("scroll", updatePosition);
+    window.addEventListener("resize", updatePosition);
+    return () => {
+      window.removeEventListener("scroll", updatePosition);
+      window.removeEventListener("resize", updatePosition);
+    };
+  }, [open, placement, updatePosition]);
+  return (
+    <Fragment>
+      {enhancedChild}
+      <Transition nodeRef={divRef} in={open} timeout={duration} unmountOnExit>
+        {(state) => (
+          <Portal>
+            <div
+              // data-open={open}
+              ref={divRef}
+              style={position}
+              className={cn(
+                "fixed flex justify-center items-center z-10 pointer-events-none transition-[scale,opacity] [--ratio:1] rtl:[--ratio:-1]",
+                placementClasses,
+                transitionClasses[state]
+              )}
+            >
+              <span
+                className={twMerge(
+                  "relative block w-fit h-fit bg-dark text-sm rounded px-2 py-px whitespace-nowrap z-[1]",
+                  classes?.base,
+                  colorClasses,
+                  className
+                )}
+                {...props}
+              >
+                {title}
+              </span>
+              <span
+                className={twMerge(
+                  "block size-3 bg-dark rotate-45",
+                  arrowPlacementClasses,
+                  colorClasses
+                )}
+              ></span>
+            </div>
+          </Portal>
+        )}
+      </Transition>
+    </Fragment>
+  );
 }

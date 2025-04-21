@@ -15,7 +15,7 @@ const meta: Meta<typeof Tooltip> = {
 
 export function Default() {
   return (
-    <Box className="w-full space-y-4">
+    <Box>
       <Tooltip title="Tooltip">
         <Button>Button</Button>
       </Tooltip>
@@ -54,17 +54,17 @@ export function Colors() {
 }
 export function Placement() {
   return (
-    <Stack wrap className="items-center gap-4 py-10">
-      <Tooltip title="Tooltip" placement="top">
+    <Stack dir="rtl" wrap className="items-center gap-4 py-10">
+      <Tooltip title="Top" placement="top">
         <Button>Top</Button>
       </Tooltip>
-      <Tooltip title="Tooltip" placement="end">
+      <Tooltip title="End" placement="end">
         <Button>End</Button>
       </Tooltip>
-      <Tooltip title="Tooltip" placement="bottom">
+      <Tooltip title="Bottom" placement="bottom">
         <Button>Bottom</Button>
       </Tooltip>
-      <Tooltip title="Tooltip" placement="start">
+      <Tooltip title="Start" placement="start">
         <Button>Start</Button>
       </Tooltip>
     </Stack>
