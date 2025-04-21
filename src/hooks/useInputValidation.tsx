@@ -39,7 +39,6 @@ export default function useInputValidation({ rules }: Config) {
             return false;
           });
           setErrorMessage(result);
-          setError(true);
           //   setLoading(false);
           return;
         }
