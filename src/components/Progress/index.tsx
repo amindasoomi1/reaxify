@@ -50,7 +50,7 @@ export default function Progress({
   }, [color, classes?.color]);
   const width = useMemo(() => {
     if (animate) return undefined;
-    return `${value}%`;
+    return `${Math.max(value, 0)}%`;
   }, [value, animate]);
   return (
     <div
@@ -69,13 +69,9 @@ export default function Progress({
           animate ? "animate-linear-progress-1" : "transition-[width]"
         )}
       />
-      <span
-        style={{ width }}
-        className={cn(
-          "absolute h-full max-w-full bg-current rounded-[inherit] top-0 bottom-0 start-0",
-          animate ? "animate-linear-progress-2" : "transition-[width]"
-        )}
-      />
+      {animate && (
+        <span className="absolute h-full max-w-full bg-current rounded-[inherit] top-0 bottom-0 start-0 animate-linear-progress-2" />
+      )}
     </div>
   );
 }
