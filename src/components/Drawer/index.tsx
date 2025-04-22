@@ -119,13 +119,19 @@ function DrawerMenu({ children, className = "", ...props }: DrawerMenuProps) {
   const anchorClasses = useMemo(() => {
     const result: AnchorClasses = {
       start: cn(
-        "w-[30rem] h-full max-w-[97.5%] rounded-e",
+        "w-[31.875rem] h-full max-w-[97.5%] rounded-e",
         classes?.anchor?.start
       ),
-      end: cn("w-[30rem] h-full max-w-[97.5%] rounded-s", classes?.anchor?.end),
-      top: cn("w-full h-[30rem] max-h-[97.5%] rounded-b", classes?.anchor?.top),
+      end: cn(
+        "w-[31.875rem] h-full max-w-[97.5%] rounded-s",
+        classes?.anchor?.end
+      ),
+      top: cn(
+        "w-full h-[31.875rem] max-h-[97.5%] rounded-b",
+        classes?.anchor?.top
+      ),
       bottom: cn(
-        "w-full h-[30rem] max-h-[97.5%] rounded-t",
+        "w-full h-[31.875rem] max-h-[97.5%] rounded-t",
         classes?.anchor?.bottom
       ),
     };
