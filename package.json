@@ -1,7 +1,7 @@
 {
   "name": "reaxify",
   "private": false,
-  "version": "0.0.21",
+  "version": "0.0.22",
   "type": "module",
   "types": "./dist/index.d.ts",
   "files": [
@@ -35,6 +35,9 @@
       "import": "./dist/providers/index.es.js",
       "require": "./dist/providers/index.cjs.js",
       "types": "./dist/providers/index.d.ts"
+    },
+    "./types": {
+      "types": "./dist/types/index.d.ts"
     },
     "./style.css": {
       "require": "./dist/style.css",
