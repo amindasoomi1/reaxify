@@ -1,5 +1,12 @@
-import { ChildrenProps, DeepPartial } from "@/types";
+import { ChildrenProps, Color, DeepPartial, Size } from "@/types";
 import { createContext } from "react";
+
+type ColorClasses<T> = {
+  [key in Color]: T;
+};
+type SizeClasses = {
+  [key in Size]: string;
+};
 
 export type ThemeProviderContextType = {
   classes: {
@@ -21,106 +28,14 @@ export type ThemeProviderContextType = {
     };
     badge: {
       base: string;
-      color: {
-        primary: {
-          solid: string;
-          outline: string;
-          soft: string;
-        };
-        secondary: {
-          solid: string;
-          outline: string;
-          soft: string;
-        };
-        success: {
-          solid: string;
-          outline: string;
-          soft: string;
-        };
-        info: {
-          solid: string;
-          outline: string;
-          soft: string;
-        };
-        warning: {
-          solid: string;
-          outline: string;
-          soft: string;
-        };
-        danger: {
-          solid: string;
-          outline: string;
-          soft: string;
-        };
-        dark: {
-          solid: string;
-          outline: string;
-          soft: string;
-        };
-        light: {
-          solid: string;
-          outline: string;
-          soft: string;
-        };
-      };
-      size: {
-        sm: string;
-        md: string;
-        lg: string;
-      };
+      color: ColorClasses<{ solid: string; outline: string; soft: string }>;
+      size: SizeClasses;
     };
-    box: {
-      base: string;
-    };
+    box: { base: string };
     button: {
       base: string;
-      color: {
-        primary: {
-          solid: string;
-          outline: string;
-          text: string;
-        };
-        secondary: {
-          solid: string;
-          outline: string;
-          text: string;
-        };
-        success: {
-          solid: string;
-          outline: string;
-          text: string;
-        };
-        info: {
-          solid: string;
-          outline: string;
-          text: string;
-        };
-        warning: {
-          solid: string;
-          outline: string;
-          text: string;
-        };
-        danger: {
-          solid: string;
-          outline: string;
-          text: string;
-        };
-        dark: {
-          solid: string;
-          outline: string;
-          text: string;
-        };
-        light: {
-          solid: string;
-          outline: string;
-          text: string;
-        };
-      };
-      size: {
-        sm: string;
-        md: string;
-        lg: string;
-      };
+      color: ColorClasses<{ solid: string; outline: string; text: string }>;
+      size: SizeClasses;
       loading: {
         active: string;
         inactive: string;
@@ -128,16 +43,8 @@ export type ThemeProviderContextType = {
     };
     buttonGroup: {
       base: string;
-      orientation: {
-        horizontal: string;
-        vertical: string;
-      };
-      button: {
-        orientation: {
-          horizontal: string;
-          vertical: string;
-        };
-      };
+      orientation: { horizontal: string; vertical: string };
+      button: { orientation: { horizontal: string; vertical: string } };
     };
     card: {
       base: string;
@@ -177,26 +84,14 @@ export type ThemeProviderContextType = {
     };
     progress: {
       base: string;
-      color: {
-        primary: string;
-        secondary: string;
-        success: string;
-        info: string;
-        warning: string;
-        danger: string;
-        dark: string;
-        light: string;
-      };
+      color: ColorClasses<string>;
     };
     skeleton: {
       base: string;
     };
     stack: {
       base: string;
-      variants: {
-        horizontal: string;
-        vertical: string;
-      };
+      variants: { horizontal: string; vertical: string };
     };
     table: {
       base: string;
@@ -227,22 +122,13 @@ export type ThemeProviderContextType = {
     };
     tooltip: {
       base: string;
-      color: {
-        primary: string;
-        secondary: string;
-        success: string;
-        info: string;
-        warning: string;
-        danger: string;
-        dark: string;
-        light: string;
-      };
-      placement: {
-        top: string;
-        end: string;
-        bottom: string;
-        start: string;
-      };
+      color: ColorClasses<string>;
+      placement: { top: string; end: string; bottom: string; start: string };
+    };
+    spinner: {
+      base: string;
+      color: ColorClasses<string>;
+      size: SizeClasses;
     };
   };
 };

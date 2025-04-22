@@ -6,6 +6,7 @@ import { useClasses, useCreateRipple } from "../../hooks";
 import { ButtonGroupContext } from "../ButtonGroup";
 import { DrawerContext } from "../Drawer";
 import { ModalContext } from "../Modal";
+import Spinner from "../Spinner";
 
 type Variant = "solid" | "outline" | "text";
 export type ButtonProps = {
@@ -180,7 +181,7 @@ export default function Button<E extends ElementType = "button">({
     const sizes: Sizes = {
       sm: cn("text-base py-1 px-3.5", classes?.size?.sm),
       md: cn("text-base py-1.5 px-4", classes?.size?.md),
-      lg: cn("text-lg py-2 px-5", classes?.size?.lg),
+      lg: cn("text-lg py-2 px-6", classes?.size?.lg),
     };
     return sizes?.[size];
   }, [size, classes?.size]);
@@ -220,12 +221,7 @@ export default function Button<E extends ElementType = "button">({
       {children}
       {loading && (
         <span className="absolute inset-0 size-full flex items-center justify-center bg-transparent p-2">
-          <span
-            className={cn(
-              "h-full aspect-square rounded-full border-4 border-current border-l-transparent animate-spin",
-              loadingClasses
-            )}
-          />
+          <Spinner size={size} color={null} className={loadingClasses} />
         </span>
       )}
       <span className="ripple-group absolute size-full inset-0 overflow-hidden rounded-[inherit] pointer-events-none"></span>
