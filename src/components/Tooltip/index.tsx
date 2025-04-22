@@ -1,6 +1,8 @@
 import { cn } from "@/helpers";
 import { useClasses } from "@/hooks";
-import { Color, ComponentPropsWithoutAs, TransitionClasses } from "@/types";
+import { Color, ComponentPropsWithoutAs } from "@/types";
+import { TransitionClasses } from "@/types/internal";
+
 import {
   cloneElement,
   Fragment,

@@ -1,4 +1,6 @@
 import { useClasses } from "@/hooks";
+import { ChildrenProps, ComponentPropsWithAs, ToggleProps } from "@/types";
+import { TransitionClasses } from "@/types/internal";
 import {
   createContext,
   ElementType,
@@ -10,12 +12,6 @@ import {
 } from "react";
 import { Transition, TransitionStatus } from "react-transition-group";
 import { twMerge } from "tailwind-merge";
-import {
-  ChildrenProps,
-  ComponentPropsWithAs,
-  ToggleProps,
-  TransitionClasses,
-} from "../../types";
 import Portal from "../Portal";
 
 type Position = { left: number; top: number; right: number };

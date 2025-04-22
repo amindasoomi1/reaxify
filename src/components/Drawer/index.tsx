@@ -1,5 +1,6 @@
 import { useClasses } from "@/hooks";
-import { ComponentPropsWithAs, ToggleProps, TransitionClasses } from "@/types";
+import { ComponentPropsWithAs, ToggleProps } from "@/types";
+import { TransitionClasses } from "@/types/internal";
 import {
   ComponentProps,
   createContext,

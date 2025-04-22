@@ -1,5 +1,4 @@
 import { ComponentProps, ElementType, ReactNode } from "react";
-import { TransitionStatus } from "react-transition-group";
 
 export type ComponentPropsWithoutAs<
   E extends ElementType,
@@ -27,7 +26,6 @@ export type Size = "sm" | "md" | "lg";
 export type Rule = (value: string) => true | string;
 export type Rules = Rule[];
 export type ToggleProps = { open?: boolean; onClose?: VoidFunction };
-export type TransitionClasses = { [key in TransitionStatus]: string };
 export type RecursivePartial<T> = {
   [P in keyof T]?: RecursivePartial<T[P]>;
 };

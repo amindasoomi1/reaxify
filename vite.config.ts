@@ -8,7 +8,7 @@ import dts from "vite-plugin-dts";
 export default defineConfig({
   plugins: [
     react(),
-    dts({ entryRoot: "src", exclude: ["**/*.stories.tsx"] }),
+    dts({ entryRoot: "src", exclude: ["**/*.stories.tsx", "**/internal.ts"] }),
     tailwindcss(),
     // viteStaticCopy({ targets: [{ src: "./src/types", dest: "" }] }),
   ],
