@@ -55,7 +55,7 @@ export default function Progress({
   return (
     <div
       className={twMerge(
-        "relative block w-full h-2.5 rounded-full overflow-hidden",
+        "relative block w-full h-1.5 rounded-full overflow-hidden",
         classes?.base,
         colorClasses,
         className

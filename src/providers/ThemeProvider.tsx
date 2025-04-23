@@ -7,6 +7,7 @@ type ColorClasses<T> = {
 type SizeClasses = {
   [key in Size]: string;
 };
+type ActiveClasses = { active: string; inactive: string };
 
 export type ThemeProviderContextType = {
   classes: {
@@ -17,11 +18,7 @@ export type ThemeProviderContextType = {
       toggle: {
         base: string;
       };
-      icon: {
-        base: string;
-        active: string;
-        inactive: string;
-      };
+      icon: { base: string } & ActiveClasses;
       body: {
         base: string;
       };
@@ -36,10 +33,7 @@ export type ThemeProviderContextType = {
       base: string;
       color: ColorClasses<{ solid: string; outline: string; text: string }>;
       size: SizeClasses;
-      loading: {
-        active: string;
-        inactive: string;
-      };
+      loading: ActiveClasses;
     };
     buttonGroup: {
       base: string;
