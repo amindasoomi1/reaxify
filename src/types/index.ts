@@ -19,6 +19,9 @@ export type Color =
   | "danger"
   | "dark"
   | "light";
+export type ClassNameProps = {
+  className?: string;
+};
 export type ChildrenProps = {
   children?: ReactNode;
 };
