@@ -12,16 +12,10 @@ type ActiveClasses = { active: string; inactive: string };
 export type ThemeProviderContextType = {
   classes: {
     accordion: {
-      item: {
-        base: string;
-      };
-      toggle: {
-        base: string;
-      };
+      item: { base: string };
+      toggle: { base: string };
       icon: { base: string } & ActiveClasses;
-      body: {
-        base: string;
-      };
+      body: { base: string };
     };
     badge: {
       base: string;
