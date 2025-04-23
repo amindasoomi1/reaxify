@@ -60,113 +60,113 @@ export default function Button<E extends ElementType = "button">({
     const colors: Colors = {
       primary: {
         solid: cn(
-          "bg-primary text-white border-primary focus:ring-primary focus-visible:ring-primary",
+          "bg-primary text-white border-primary",
           classes?.color?.primary?.solid
         ),
         outline: cn(
-          "bg-transparent text-primary border-primary focus:ring-primary focus-visible:ring-primary",
+          "bg-transparent text-primary border-primary",
           classes?.color?.primary?.outline
         ),
         text: cn(
-          "bg-transparent text-primary border-transparent focus:ring-primary focus-visible:ring-primary",
+          "bg-transparent text-primary border-transparent",
           classes?.color?.primary?.text
         ),
       },
       secondary: {
         solid: cn(
-          "bg-secondary text-white border-secondary focus:ring-secondary focus-visible:ring-secondary",
+          "bg-secondary text-white border-secondary",
           classes?.color?.secondary?.solid
         ),
         outline: cn(
-          "bg-transparent text-secondary border-secondary focus:ring-secondary focus-visible:ring-secondary",
+          "bg-transparent text-secondary border-secondary",
           classes?.color?.secondary?.outline
         ),
         text: cn(
-          "bg-transparent text-secondary border-transparent focus:ring-secondary focus-visible:ring-secondary",
+          "bg-transparent text-secondary border-transparent",
           classes?.color?.secondary?.text
         ),
       },
       success: {
         solid: cn(
-          "bg-success text-white border-success focus:ring-success focus-visible:ring-success",
+          "bg-success text-white border-success",
           classes?.color?.success?.solid
         ),
         outline: cn(
-          "bg-transparent text-success border-success focus:ring-success focus-visible:ring-success",
+          "bg-transparent text-success border-success",
           classes?.color?.success?.outline
         ),
         text: cn(
-          "bg-transparent text-success border-transparent focus:ring-success focus-visible:ring-success",
+          "bg-transparent text-success border-transparent",
           classes?.color?.success?.text
         ),
       },
       info: {
         solid: cn(
-          "bg-info text-white border-info focus:ring-info focus-visible:ring-info",
+          "bg-info text-white border-info",
           classes?.color?.info?.solid
         ),
         outline: cn(
-          "bg-transparent text-info border-info focus:ring-info focus-visible:ring-info",
+          "bg-transparent text-info border-info",
           classes?.color?.info?.outline
         ),
         text: cn(
-          "bg-transparent text-info border-transparent focus:ring-info focus-visible:ring-info",
+          "bg-transparent text-info border-transparent",
           classes?.color?.info?.text
         ),
       },
       warning: {
         solid: cn(
-          "bg-warning text-white border-warning focus:ring-warning focus-visible:ring-warning",
+          "bg-warning text-white border-warning",
           classes?.color?.warning?.solid
         ),
         outline: cn(
-          "bg-transparent text-warning border-warning focus:ring-warning focus-visible:ring-warning",
+          "bg-transparent text-warning border-warning",
           classes?.color?.warning?.outline
         ),
         text: cn(
-          "bg-transparent text-warning border-transparent focus:ring-warning focus-visible:ring-warning",
+          "bg-transparent text-warning border-transparent",
           classes?.color?.warning?.text
         ),
       },
       danger: {
         solid: cn(
-          "bg-danger text-white border-danger focus:ring-danger focus-visible:ring-danger",
+          "bg-danger text-white border-danger",
           classes?.color?.danger?.solid
         ),
         outline: cn(
-          "bg-transparent text-danger border-danger focus:ring-danger focus-visible:ring-danger",
+          "bg-transparent text-danger border-danger",
           classes?.color?.danger?.outline
         ),
         text: cn(
-          "bg-transparent text-danger border-transparent focus:ring-danger focus-visible:ring-danger",
+          "bg-transparent text-danger border-transparent",
           classes?.color?.danger?.text
         ),
       },
       dark: {
         solid: cn(
-          "bg-dark text-white border-dark focus:ring-dark focus-visible:ring-dark",
+          "bg-dark text-white border-dark",
           classes?.color?.dark?.solid
         ),
         outline: cn(
-          "bg-transparent text-dark border-dark focus:ring-dark focus-visible:ring-dark",
+          "bg-transparent text-dark border-dark",
           classes?.color?.dark?.outline
         ),
         text: cn(
-          "bg-transparent text-dark border-transparent focus:ring-dark focus-visible:ring-dark",
+          "bg-transparent text-dark border-transparent",
           classes?.color?.dark?.text
         ),
       },
       light: {
         solid: cn(
-          "bg-light text-dark border-light focus:ring-light focus-visible:ring-light",
+          "bg-light text-dark border-light",
           classes?.color?.light?.solid
         ),
         outline: cn(
-          "bg-transparent text-dark border-light focus:ring-light focus-visible:ring-light",
+          "bg-transparent text-dark border-light",
           classes?.color?.light?.outline
         ),
         text: cn(
-          "bg-transparent text-dark border-transparent focus:ring-light focus-visible:ring-light",
+          "bg-transparent text-dark border-transparent",
           classes?.color?.light?.text
         ),
       },
@@ -207,7 +207,7 @@ export default function Button<E extends ElementType = "button">({
     <Component
       className={twMerge(
         "relative inline-block no-underline whitespace-nowrap font-medium text-center rounded border border-[#e8eaee] cursor-pointer transition-[box-shadow,opacity,color,background-color,border-color]",
-        "focus:outline-none focus:ring-2 focus:ring-offset-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
+        // "focus:outline-none focus:ring-2 focus:ring-offset-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
         // variant === "solid"
         //   ? "shadow hover:shadow-md active:shadow-lg"
         //   : "shadow-none",
