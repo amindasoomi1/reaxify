@@ -207,10 +207,10 @@ export default function Button<E extends ElementType = "button">({
     <Component
       className={twMerge(
         "relative inline-block no-underline whitespace-nowrap font-medium text-center rounded border border-[#e8eaee] cursor-pointer transition-[box-shadow,opacity,color,background-color,border-color]",
-        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
-        variant === "solid"
-          ? "shadow hover:shadow-md active:shadow-lg"
-          : "shadow-none",
+        "focus:outline-none focus:ring-2 focus:ring-offset-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
+        // variant === "solid"
+        //   ? "shadow hover:shadow-md active:shadow-lg"
+        //   : "shadow-none",
         // color ? "ring-2 ring-offset-2 ring-transparent" : null,
         classes?.base,
         colorClasses,
