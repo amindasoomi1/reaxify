@@ -34,19 +34,17 @@ export default function Progress({
   const colorClasses = useMemo(() => {
     if (!color) return "border-transparent";
     const colors: Colors = {
-      primary: cn("bg-primary/15 text-primary", classes?.color?.primary),
-      secondary: cn(
-        "bg-secondary/15 text-secondary",
-        classes?.color?.secondary
-      ),
-      success: cn("bg-success/15 text-success", classes?.color?.success),
-      info: cn("bg-info/15 text-info", classes?.color?.info),
-      warning: cn("bg-warning/15 text-warning", classes?.color?.warning),
-      danger: cn("bg-danger/15 text-danger", classes?.color?.danger),
-      dark: cn("bg-dark/15 text-dark", classes?.color?.dark),
-      light: cn("bg-light/15 text-light", classes?.color?.light),
+      primary: "bg-primary/15 text-primary",
+      secondary: "bg-secondary/15 text-secondary",
+      success: "bg-success/15 text-success",
+      info: "bg-info/15 text-info",
+      warning: "bg-warning/15 text-warning",
+      danger: "bg-danger/15 text-danger",
+      dark: "bg-dark/15 text-dark",
+      light: "bg-light/15 text-light",
     };
-    return colors?.[color] ?? null;
+    const classesResult = classes?.color?.[color];
+    return [colors?.[color], classesResult];
   }, [color, classes?.color]);
   const width = useMemo(() => {
     if (animate) return undefined;

@@ -101,11 +101,12 @@ function ModalDialog({ className, children, ...props }: ModalDialogProps) {
     unmounted: "",
   };
   const modalSize = useMemo(() => {
-    if (size === "sm") return cn("min-[576px]:w-[300px]", classes?.size?.sm);
-    if (size === "lg") return cn("min-[992px]:w-[800px]", classes?.size?.lg);
-    //   if (size === "xl")
-    //     return "min-[992px]:max-w-[800px] min-[1200px]:max-w-[1140px]";
-    return cn("min-[576px]:w-[500px]", classes?.size?.md);
+    const sizes = {
+      sm: "min-[576px]:w-[300px]",
+      md: "min-[576px]:w-[500px]",
+      lg: "min-[992px]:w-[800px]",
+    };
+    return [sizes[size], classes?.size?.[size]];
   }, [size, classes?.size]);
   return (
     <Card

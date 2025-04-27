@@ -1,5 +1,6 @@
 export { default as cn } from "./cn";
 export { default as copy } from "./copy";
+export { default as getByPath } from "./getByPath";
 export {
   isEmpty,
   isEmptyArray,

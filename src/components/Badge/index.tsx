@@ -36,119 +36,49 @@ export default function Badge<E extends ElementType = "span">({
     if (!color) return "border-transparent";
     const colors: Colors = {
       primary: {
-        solid: cn(
-          "bg-primary text-white border-primary",
-          classes?.color?.primary?.solid
-        ),
-        outline: cn(
-          "bg-transparent text-primary border-primary",
-          classes?.color?.primary?.outline
-        ),
-        soft: cn(
-          "bg-primary/10 text-primary border-primary/10",
-          classes?.color?.primary?.soft
-        ),
+        solid: "bg-primary text-white border-primary",
+        outline: "bg-transparent text-primary border-primary",
+        soft: "bg-primary/10 text-primary border-primary/10",
       },
       secondary: {
-        solid: cn(
-          "bg-secondary text-white border-secondary",
-          classes?.color?.secondary?.solid
-        ),
-        outline: cn(
-          "bg-transparent text-secondary border-secondary",
-          classes?.color?.secondary?.outline
-        ),
-        soft: cn(
-          "bg-secondary/10 text-secondary border-secondary/10",
-          classes?.color?.secondary?.soft
-        ),
+        solid: "bg-secondary text-white border-secondary",
+        outline: "bg-transparent text-secondary border-secondary",
+        soft: "bg-secondary/10 text-secondary border-secondary/10",
       },
       success: {
-        solid: cn(
-          "bg-success text-white border-success",
-          classes?.color?.success?.solid
-        ),
-        outline: cn(
-          "bg-transparent text-success border-success",
-          classes?.color?.success?.outline
-        ),
-        soft: cn(
-          "bg-success/10 text-success border-success/10",
-          classes?.color?.success?.soft
-        ),
+        solid: "bg-success text-white border-success",
+        outline: "bg-transparent text-success border-success",
+        soft: "bg-success/10 text-success border-success/10",
       },
       info: {
-        solid: cn(
-          "bg-info text-white border-info",
-          classes?.color?.info?.solid
-        ),
-        outline: cn(
-          "bg-transparent text-info border-info",
-          classes?.color?.info?.outline
-        ),
-        soft: cn(
-          "bg-info/10 text-info border-info/10",
-          classes?.color?.info?.soft
-        ),
+        solid: "bg-info text-white border-info",
+        outline: "bg-transparent text-info border-info",
+        soft: "bg-info/10 text-info border-info/10",
       },
       warning: {
-        solid: cn(
-          "bg-warning text-white border-warning",
-          classes?.color?.warning?.solid
-        ),
-        outline: cn(
-          "bg-transparent text-warning border-warning",
-          classes?.color?.warning?.outline
-        ),
-        soft: cn(
-          "bg-warning/10 text-warning border-warning/10",
-          classes?.color?.warning?.soft
-        ),
+        solid: "bg-warning text-white border-warning",
+        outline: "bg-transparent text-warning border-warning",
+        soft: "bg-warning/10 text-warning border-warning/10",
       },
       danger: {
-        solid: cn(
-          "bg-danger text-white border-danger",
-          classes?.color?.danger?.solid
-        ),
-        outline: cn(
-          "bg-transparent text-danger border-danger",
-          classes?.color?.danger?.outline
-        ),
-        soft: cn(
-          "bg-danger/10 text-danger border-danger/10",
-          classes?.color?.danger?.soft
-        ),
+        solid: "bg-danger text-white border-danger",
+        outline: "bg-transparent text-danger border-danger",
+        soft: "bg-danger/10 text-danger border-danger/10",
       },
       dark: {
-        solid: cn(
-          "bg-dark text-white border-dark",
-          classes?.color?.dark?.solid
-        ),
-        outline: cn(
-          "bg-transparent text-dark border-dark",
-          classes?.color?.dark?.outline
-        ),
-        soft: cn(
-          "bg-dark/10 text-dark border-dark/10",
-          classes?.color?.dark?.soft
-        ),
+        solid: "bg-dark text-white border-dark",
+        outline: "bg-transparent text-dark border-dark",
+        soft: "bg-dark/10 text-dark border-dark/10",
       },
       light: {
-        solid: cn(
-          "bg-light text-dark border-light",
-          classes?.color?.light?.solid
-        ),
-        outline: cn(
-          "bg-transparent text-dark border-light",
-          classes?.color?.light?.outline
-        ),
-        soft: cn(
-          "bg-light/10 text-dark border-light/10",
-          classes?.color?.light?.soft
-        ),
+        solid: "bg-light text-dark border-light",
+        outline: "bg-transparent text-dark border-light",
+        soft: "bg-light/10 text-dark border-light/10",
       },
     };
-    return colors?.[color]?.[variant] ?? null;
+    const colorResult = colors?.[color]?.[variant];
+    const classesResult = classes?.color?.[color]?.[variant];
+    return [colorResult, classesResult];
   }, [color, variant, classes?.color]);
   const sizeClasses = useMemo(() => {
     if (!size) return null;

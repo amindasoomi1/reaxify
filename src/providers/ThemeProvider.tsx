@@ -98,14 +98,14 @@ export type ThemeProviderContextType = {
     typography: {
       base: string;
       variant: {
-        heading1: string;
-        heading2: string;
-        heading3: string;
-        heading4: string;
-        heading5: string;
-        heading6: string;
-        body1: string;
-        body2: string;
+        "heading-1": string;
+        "heading-2": string;
+        "heading-3": string;
+        "heading-4": string;
+        "heading-5": string;
+        "heading-6": string;
+        "body-1": string;
+        "body-2": string;
       };
     };
     tooltip: {

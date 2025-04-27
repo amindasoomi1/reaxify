@@ -45,37 +45,27 @@ export default function Tooltip({
   const colorClasses = useMemo(() => {
     if (!color) return "border-transparent";
     const colors: Colors = {
-      primary: cn("bg-primary text-white", classes?.color?.primary),
-      secondary: cn("bg-secondary text-white", classes?.color?.secondary),
-      success: cn("bg-success text-white", classes?.color?.success),
-      info: cn("bg-info text-white", classes?.color?.info),
-      warning: cn("bg-warning text-white", classes?.color?.warning),
-      danger: cn("bg-danger text-white", classes?.color?.danger),
-      dark: cn("bg-dark text-white", classes?.color?.dark),
-      light: cn("bg-light text-dark", classes?.color?.light),
+      primary: "bg-primary text-white",
+      secondary: "bg-secondary text-white",
+      success: "bg-success text-white",
+      info: "bg-info text-white",
+      warning: "bg-warning text-white",
+      danger: "bg-danger text-white",
+      dark: "bg-dark text-white",
+      light: "bg-light text-dark",
     };
-    return colors?.[color] ?? null;
+    return [colors?.[color], classes?.color?.[color]];
   }, [color, classes?.color]);
   const placementClasses = useMemo(() => {
     const placements = {
-      top: cn(
-        "w-(--width) top-(--top) left-(--left) right-(--right) translate-y-[calc(-100%-0.5rem)] flex-col origin-bottom",
-        classes?.placement?.top
-      ),
-      end: cn(
-        "h-(--height) top-(--top) bottom-(--bottom) left-(--right) translate-x-[0.5rem] flex-row-reverse origin-start",
-        classes?.placement?.end
-      ),
-      bottom: cn(
+      top: "w-(--width) top-(--top) left-(--left) right-(--right) translate-y-[calc(-100%-0.5rem)] flex-col origin-bottom",
+      end: "h-(--height) top-(--top) bottom-(--bottom) left-(--right) translate-x-[0.5rem] flex-row-reverse origin-start",
+      bottom:
         "w-(--width) top-(--bottom) left-(--left) right-(--right) translate-y-[0.5rem] flex-col-reverse origin-top",
-        classes?.placement?.bottom
-      ),
-      start: cn(
+      start:
         "h-(--height) top-(--top) bottom-(--bottom) left-(--left) translate-x-[calc(var(--ratio)*-100%-0.5rem)] flex-row origin-start",
-        classes?.placement?.start
-      ),
     };
-    return placements[placement];
+    return [placements[placement], classes?.placement?.[placement]];
   }, [placement, classes?.placement]);
   const transitionClasses: TransitionClasses = {
     entering: "scale-100 opacity-100",
@@ -161,7 +151,7 @@ export default function Tooltip({
               style={position}
               className={cn(
                 "fixed flex justify-center items-center z-10 pointer-events-none transition-[scale,opacity] [--ratio:1] rtl:[--ratio:-1]",
-                placementClasses,
+                ...placementClasses,
                 transitionClasses[state]
               )}
             >

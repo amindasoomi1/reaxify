@@ -59,119 +59,49 @@ export default function Button<E extends ElementType = "button">({
     if (!color) return "border-transparent";
     const colors: Colors = {
       primary: {
-        solid: cn(
-          "bg-primary text-white border-primary",
-          classes?.color?.primary?.solid
-        ),
-        outline: cn(
-          "bg-transparent text-primary border-primary",
-          classes?.color?.primary?.outline
-        ),
-        text: cn(
-          "bg-transparent text-primary border-transparent",
-          classes?.color?.primary?.text
-        ),
+        solid: "bg-primary text-white border-primary",
+        outline: "bg-transparent text-primary border-primary",
+        text: "bg-transparent text-primary border-transparent",
       },
       secondary: {
-        solid: cn(
-          "bg-secondary text-white border-secondary",
-          classes?.color?.secondary?.solid
-        ),
-        outline: cn(
-          "bg-transparent text-secondary border-secondary",
-          classes?.color?.secondary?.outline
-        ),
-        text: cn(
-          "bg-transparent text-secondary border-transparent",
-          classes?.color?.secondary?.text
-        ),
+        solid: "bg-secondary text-white border-secondary",
+        outline: "bg-transparent text-secondary border-secondary",
+        text: "bg-transparent text-secondary border-transparent",
       },
       success: {
-        solid: cn(
-          "bg-success text-white border-success",
-          classes?.color?.success?.solid
-        ),
-        outline: cn(
-          "bg-transparent text-success border-success",
-          classes?.color?.success?.outline
-        ),
-        text: cn(
-          "bg-transparent text-success border-transparent",
-          classes?.color?.success?.text
-        ),
+        solid: "bg-success text-white border-success",
+        outline: "bg-transparent text-success border-success",
+        text: "bg-transparent text-success border-transparent",
       },
       info: {
-        solid: cn(
-          "bg-info text-white border-info",
-          classes?.color?.info?.solid
-        ),
-        outline: cn(
-          "bg-transparent text-info border-info",
-          classes?.color?.info?.outline
-        ),
-        text: cn(
-          "bg-transparent text-info border-transparent",
-          classes?.color?.info?.text
-        ),
+        solid: "bg-info text-white border-info",
+        outline: "bg-transparent text-info border-info",
+        text: "bg-transparent text-info border-transparent",
       },
       warning: {
-        solid: cn(
-          "bg-warning text-white border-warning",
-          classes?.color?.warning?.solid
-        ),
-        outline: cn(
-          "bg-transparent text-warning border-warning",
-          classes?.color?.warning?.outline
-        ),
-        text: cn(
-          "bg-transparent text-warning border-transparent",
-          classes?.color?.warning?.text
-        ),
+        solid: "bg-warning text-white border-warning",
+        outline: "bg-transparent text-warning border-warning",
+        text: "bg-transparent text-warning border-transparent",
       },
       danger: {
-        solid: cn(
-          "bg-danger text-white border-danger",
-          classes?.color?.danger?.solid
-        ),
-        outline: cn(
-          "bg-transparent text-danger border-danger",
-          classes?.color?.danger?.outline
-        ),
-        text: cn(
-          "bg-transparent text-danger border-transparent",
-          classes?.color?.danger?.text
-        ),
+        solid: "bg-danger text-white border-danger",
+        outline: "bg-transparent text-danger border-danger",
+        text: "bg-transparent text-danger border-transparent",
       },
       dark: {
-        solid: cn(
-          "bg-dark text-white border-dark",
-          classes?.color?.dark?.solid
-        ),
-        outline: cn(
-          "bg-transparent text-dark border-dark",
-          classes?.color?.dark?.outline
-        ),
-        text: cn(
-          "bg-transparent text-dark border-transparent",
-          classes?.color?.dark?.text
-        ),
+        solid: "bg-dark text-white border-dark",
+        outline: "bg-transparent text-dark border-dark",
+        text: "bg-transparent text-dark border-transparent",
       },
       light: {
-        solid: cn(
-          "bg-light text-dark border-light",
-          classes?.color?.light?.solid
-        ),
-        outline: cn(
-          "bg-transparent text-dark border-light",
-          classes?.color?.light?.outline
-        ),
-        text: cn(
-          "bg-transparent text-dark border-transparent",
-          classes?.color?.light?.text
-        ),
+        solid: "bg-light text-dark border-light",
+        outline: "bg-transparent text-dark border-light",
+        text: "bg-transparent text-dark border-transparent",
       },
     };
-    return colors?.[color]?.[variant] ?? null;
+    const classesResult = classes?.color?.[color]?.[variant];
+    const colorResult = colors?.[color]?.[variant];
+    return twMerge(colorResult, classesResult);
   }, [color, variant, classes?.color]);
   const loadingClasses = useMemo(() => {
     return colorClasses?.split(" ").find((e) => e.startsWith("text-"));
@@ -179,11 +109,11 @@ export default function Button<E extends ElementType = "button">({
   const sizeClasses = useMemo(() => {
     if (!size) return null;
     const sizes: Sizes = {
-      sm: cn("text-base py-1 px-3.5", classes?.size?.sm),
-      md: cn("text-base py-1.5 px-4", classes?.size?.md),
-      lg: cn("text-lg py-2 px-6", classes?.size?.lg),
+      sm: "text-base py-1 px-3.5",
+      md: "text-base py-1.5 px-4",
+      lg: "text-lg py-2 px-6",
     };
-    return sizes?.[size];
+    return [sizes?.[size], classes?.size?.[size]];
   }, [size, classes?.size]);
   const loadingDisabledClasses = useMemo(() => {
     if (loading)
@@ -193,7 +123,7 @@ export default function Button<E extends ElementType = "button">({
       );
     return cn(
       "disabled:opacity-75 disabled:cursor-not-allowed",
-      classes?.loading?.active
+      classes?.loading?.inactive
     );
   }, [loading, classes?.loading]);
   const handleClick = (e: MouseEvent<HTMLElement>) => {
