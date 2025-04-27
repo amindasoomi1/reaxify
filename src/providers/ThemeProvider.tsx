@@ -10,7 +10,7 @@ type SizeClasses = {
 type ActiveClasses = { active: string; inactive: string };
 
 export type ThemeProviderContextType = {
-  classes: {
+  extendClasses: {
     accordion: {
       item: { base: string };
       toggle: { base: string };
@@ -126,9 +126,9 @@ export const ThemeProviderContext = createContext<
   DeepPartial<ThemeProviderContextType>
 >({});
 
-export default function ThemeProvider({ classes, children }: Props) {
+export default function ThemeProvider({ extendClasses, children }: Props) {
   return (
-    <ThemeProviderContext.Provider value={{ classes }}>
+    <ThemeProviderContext.Provider value={{ extendClasses }}>
       {children}
     </ThemeProviderContext.Provider>
   );
