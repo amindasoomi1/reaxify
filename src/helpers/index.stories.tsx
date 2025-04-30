@@ -3,6 +3,7 @@ import { useState } from "react";
 import {
   cn,
   copy,
+  getByPath,
   isEmpty,
   isEmptyArray,
   isEmptyObject,
@@ -134,6 +135,20 @@ export function Wait() {
       Click me!
     </Button>
   );
+}
+export function GetByPath() {
+  const data = {
+    user: {
+      profile: {
+        name: "Ali",
+        age: 28,
+      },
+    },
+  };
+  const name = getByPath(data, "user.profile.name");
+  const age = getByPath(data, "user.profile.age");
+  const unknownValue = getByPath(data, "user.profile.height", 170);
+  return <Typography>{JSON.stringify({ name, age, unknownValue })}</Typography>;
 }
 
 export default meta;

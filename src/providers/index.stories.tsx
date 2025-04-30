@@ -18,7 +18,7 @@ export function Theme() {
         Success
       </Button>
       <ThemeProvider
-        classes={{
+        extendClasses={{
           button: {
             base: "rounded-full",
             color: {

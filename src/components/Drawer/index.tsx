@@ -67,12 +67,14 @@ function Drawer<E extends ElementType = "div">({
   };
   const anchorClasses = useMemo(() => {
     const result: AnchorClasses = {
-      start: cn("flex-row-reverse", classes?.anchor?.start),
-      end: cn("flex-row", classes?.anchor?.end),
-      top: cn("flex-col-reverse", classes?.anchor?.top),
-      bottom: cn("flex-col", classes?.anchor?.bottom),
+      start: "flex-row-reverse",
+      end: "flex-row",
+      top: "flex-col-reverse",
+      bottom: "flex-col",
     };
-    return result[anchor];
+    const classesResult = classes?.anchor?.[anchor];
+    const anchorResult = result[anchor];
+    return [anchorResult, classesResult];
   }, [anchor, classes?.anchor]);
   return (
     <Portal>
@@ -118,24 +120,13 @@ function DrawerMenu({ children, className = "", ...props }: DrawerMenuProps) {
   const { anchor, duration, transitionState } = useContext(DrawerContext);
   const anchorClasses = useMemo(() => {
     const result: AnchorClasses = {
-      start: cn(
-        "w-[31.875rem] h-full max-w-[97.5%] rounded-e",
-        classes?.anchor?.start
-      ),
-      end: cn(
-        "w-[31.875rem] h-full max-w-[97.5%] rounded-s",
-        classes?.anchor?.end
-      ),
-      top: cn(
-        "w-full h-[31.875rem] max-h-[97.5%] rounded-b",
-        classes?.anchor?.top
-      ),
-      bottom: cn(
-        "w-full h-[31.875rem] max-h-[97.5%] rounded-t",
-        classes?.anchor?.bottom
-      ),
+      start: "w-[31.875rem] h-full max-w-[97.5%] rounded-e",
+      end: "w-[31.875rem] h-full max-w-[97.5%] rounded-s",
+      top: "w-full h-[31.875rem] max-h-[97.5%] rounded-b",
+      bottom: "w-full h-[31.875rem] max-h-[97.5%] rounded-t",
     };
-    return result[anchor];
+    const classesResult = classes?.anchor?.[anchor];
+    return [result[anchor], classesResult];
   }, [anchor, classes?.anchor]);
   const transitionClasses = useMemo(() => {
     const result: AnchorClasses<TransitionClasses> = {

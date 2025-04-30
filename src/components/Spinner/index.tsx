@@ -1,4 +1,3 @@
-import { cn } from "@/helpers";
 import { useClasses } from "@/hooks";
 import { Color, ComponentPropsWithoutAs, Size } from "@/types";
 import { useMemo } from "react";
@@ -20,24 +19,24 @@ export default function Spinner({
   const colorClasses = useMemo(() => {
     if (!color) return "border-current";
     const colors = {
-      primary: cn("border-primary", classes?.color?.primary),
-      secondary: cn("border-secondary", classes?.color?.secondary),
-      success: cn("border-success", classes?.color?.success),
-      info: cn("border-info", classes?.color?.info),
-      warning: cn("border-warning", classes?.color?.warning),
-      danger: cn("border-danger", classes?.color?.danger),
-      dark: cn("border-dark", classes?.color?.dark),
-      light: cn("border-light", classes?.color?.light),
+      primary: "border-primary",
+      secondary: "border-secondary",
+      success: "border-success",
+      info: "border-info",
+      warning: "border-warning",
+      danger: "border-danger",
+      dark: "border-dark",
+      light: "border-light",
     };
-    return colors?.[color] ?? null;
+    return [colors?.[color], classes?.color?.[color]];
   }, [color, classes?.color]);
   const sizeClasses = useMemo(() => {
     const sizes = {
-      sm: cn("border-2 size-4", classes?.size?.sm),
-      md: cn("border-3 size-6", classes?.size?.md),
-      lg: cn("border-4 size-8", classes?.size?.lg),
+      sm: "border-2 size-4",
+      md: "border-3 size-6",
+      lg: "border-4 size-8",
     };
-    return sizes?.[size];
+    return [sizes?.[size], classes?.size?.[size]];
   }, [size, classes?.size]);
   return (
     <span

@@ -38,16 +38,12 @@ export default function ButtonGroup<E extends ElementType = "div">({
   }, [orientation, classes?.orientation]);
   const buttonClasses = useMemo(() => {
     const orientations = {
-      horizontal: cn(
-        "rounded-none first-of-type:rounded-s last-of-type:rounded-e",
-        classes?.button?.orientation?.horizontal
-      ),
-      vertical: cn(
-        "rounded-none first-of-type:rounded-t last-of-type:rounded-b",
-        classes?.button?.orientation?.vertical
-      ),
+      horizontal: "rounded-none first-of-type:rounded-s last-of-type:rounded-e",
+      vertical: "rounded-none first-of-type:rounded-t last-of-type:rounded-b",
     };
-    return orientations[orientation];
+    const classesResult = classes?.button?.orientation?.[orientation];
+    const orientationsResult = orientations[orientation];
+    return [orientationsResult, classesResult];
   }, [orientation, classes?.button]);
   return (
     <Component
@@ -61,7 +57,7 @@ export default function ButtonGroup<E extends ElementType = "div">({
       {...props}
     >
       <ButtonGroupContext.Provider
-        value={{ variant, color, size, loading, buttonClasses }}
+        value={{ variant, color, size, loading, ...buttonClasses }}
       >
         {children}
       </ButtonGroupContext.Provider>

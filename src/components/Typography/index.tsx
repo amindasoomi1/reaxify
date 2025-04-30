@@ -1,6 +1,5 @@
-import { cn } from "@/helpers";
 import { useClasses } from "@/hooks";
-import { ComponentPropsWithAs } from "@/types";
+import { ComponentPropsWithAs, TypographyVariant } from "@/types";
 import { useMemo } from "react";
 import { twMerge } from "tailwind-merge";
 
@@ -14,21 +13,12 @@ type Component =
   | "p"
   | "span"
   | "label";
-type Variant =
-  | "heading-1"
-  | "heading-2"
-  | "heading-3"
-  | "heading-4"
-  | "heading-5"
-  | "heading-6"
-  | "body-1"
-  | "body-2";
 
 type TypographyProps = {
-  variant?: Variant;
+  variant?: TypographyVariant;
 };
-type Components = { [key in Variant]: string };
-type Variants = { [key in Variant]: string | undefined };
+type Components = { [key in TypographyVariant]: string };
+type Variants = { [key in TypographyVariant]: string | undefined };
 
 export default function Typography<E extends Component = "p">({
   as,
@@ -52,16 +42,16 @@ export default function Typography<E extends Component = "p">({
   }, [as, variant]);
   const variantClasses = useMemo(() => {
     const variants: Variants = {
-      "heading-1": cn("text-5xl font-semibold", classes?.variant?.heading1),
-      "heading-2": cn("text-4xl font-semibold", classes?.variant?.heading2),
-      "heading-3": cn("text-3xl font-semibold", classes?.variant?.heading3),
-      "heading-4": cn("text-2xl font-semibold", classes?.variant?.heading4),
-      "heading-5": cn("text-xl font-medium", classes?.variant?.heading5),
-      "heading-6": cn("text-lg font-medium", classes?.variant?.heading6),
-      "body-1": cn("text-base font-normal", classes?.variant?.body1),
-      "body-2": cn("text-sm font-normal", classes?.variant?.body2),
+      "heading-1": "text-5xl font-semibold",
+      "heading-2": "text-4xl font-semibold",
+      "heading-3": "text-3xl font-semibold",
+      "heading-4": "text-2xl font-semibold",
+      "heading-5": "text-xl font-medium",
+      "heading-6": "text-lg font-medium",
+      "body-1": "text-base font-normal",
+      "body-2": "text-sm font-normal",
     };
-    return variants[variant];
+    return [variants[variant], classes?.variant?.[variant]];
   }, [variant, classes?.variant]);
   return (
     <Component
