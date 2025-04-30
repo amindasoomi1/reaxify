@@ -11,11 +11,11 @@ export type ComponentPropsWithAs<
   P extends Record<string, unknown> = {}
 > = P & { as?: E } & Omit<ComponentProps<E>, "as" | keyof P>;
 
-interface ExtendBadgeVariant {}
-interface ExtendButtonVariant {}
-interface ExtendTypographyVariant {}
-interface ExtendColor {}
-interface ExtendSize {}
+export interface ExtendBadgeVariant {}
+export interface ExtendButtonVariant {}
+export interface ExtendTypographyVariant {}
+export interface ExtendColor {}
+export interface ExtendSize {}
 
 type BaseBadgeVariant = "solid" | "outline" | "soft";
 type BaseButtonVariant = "solid" | "outline" | "text";
