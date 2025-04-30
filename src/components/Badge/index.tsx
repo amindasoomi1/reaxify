@@ -1,20 +1,17 @@
 import { cn } from "@/helpers";
 import { useClasses } from "@/hooks";
-import { Color, ComponentPropsWithAs } from "@/types";
+import { BadgeVariant, Color, ComponentPropsWithAs, Size } from "@/types";
 import { ElementType, useMemo } from "react";
 import { twMerge } from "tailwind-merge";
 
-type Variant = "solid" | "outline" | "soft";
-type Size = "sm" | "md" | "lg";
-
 type BadgeProps = {
-  variant?: Variant;
+  variant?: BadgeVariant;
   color?: Color | null;
   size?: Size;
 };
 type Colors = {
   [key in Color]?: {
-    [key in Variant]?: string;
+    [key in BadgeVariant]?: string;
   };
 };
 type Sizes = {

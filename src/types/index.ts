@@ -19,6 +19,17 @@ export type Color =
   | "danger"
   | "dark"
   | "light";
+export type BadgeVariant = "solid" | "outline" | "soft";
+export type ButtonVariant = "solid" | "outline" | "text";
+export type TypographyVariant =
+  | "heading-1"
+  | "heading-2"
+  | "heading-3"
+  | "heading-4"
+  | "heading-5"
+  | "heading-6"
+  | "body-1"
+  | "body-2";
 export type ClassNameProps = {
   className?: string;
 };

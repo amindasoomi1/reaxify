@@ -1,12 +1,16 @@
-import { ChildrenProps, Color, DeepPartial, Size } from "@/types";
+import {
+  BadgeVariant,
+  ButtonVariant,
+  ChildrenProps,
+  Color,
+  DeepPartial,
+  Size,
+  TypographyVariant,
+} from "@/types";
 import { createContext } from "react";
 
-type ColorClasses<T> = {
-  [key in Color]: T;
-};
-type SizeClasses = {
-  [key in Size]: string;
-};
+type ColorClasses<T> = Record<Color, T>;
+type SizeClasses = Record<Size, string>;
 type ActiveClasses = { active: string; inactive: string };
 
 export type ThemeProviderContextType = {
@@ -19,13 +23,13 @@ export type ThemeProviderContextType = {
     };
     badge: {
       base: string;
-      color: ColorClasses<{ solid: string; outline: string; soft: string }>;
+      color: ColorClasses<Record<BadgeVariant, string>>;
       size: SizeClasses;
     };
     box: { base: string };
     button: {
       base: string;
-      color: ColorClasses<{ solid: string; outline: string; text: string }>;
+      color: ColorClasses<Record<ButtonVariant, string>>;
       size: SizeClasses;
       loading: ActiveClasses;
     };
@@ -65,7 +69,7 @@ export type ThemeProviderContextType = {
     };
     modal: {
       base: string;
-      dialog: { base: string; size: { sm: string; md: string; lg: string } };
+      dialog: { base: string; size: SizeClasses };
       header: { base: string };
       body: { base: string };
       footer: { base: string };
@@ -97,16 +101,7 @@ export type ThemeProviderContextType = {
     };
     typography: {
       base: string;
-      variant: {
-        "heading-1": string;
-        "heading-2": string;
-        "heading-3": string;
-        "heading-4": string;
-        "heading-5": string;
-        "heading-6": string;
-        "body-1": string;
-        "body-2": string;
-      };
+      variant: Record<TypographyVariant, string>;
     };
     tooltip: {
       base: string;

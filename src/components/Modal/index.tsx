@@ -1,6 +1,6 @@
 import { cn } from "@/helpers";
 import { useClasses } from "@/hooks";
-import { ComponentPropsWithAs, ToggleProps } from "@/types";
+import { ComponentPropsWithAs, Size, ToggleProps } from "@/types";
 import { TransitionClasses } from "@/types/internal";
 
 import {
@@ -16,7 +16,6 @@ import { twMerge } from "tailwind-merge";
 import Card from "../Card";
 import Portal from "../Portal";
 
-type Size = "sm" | "md" | "lg";
 type Context = {
   size: Size;
   open: boolean;
