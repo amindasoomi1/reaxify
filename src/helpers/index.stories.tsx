@@ -117,10 +117,10 @@ export function TwoDigitNumber() {
         5 {`=>`} {twoDigitNumber(5)}
       </Typography>
       <Typography>
-        10 {`1=>`} {twoDigitNumber(10)}
+        10 {`=>`} {twoDigitNumber(10)}
       </Typography>
       <Typography>
-        20 {`2=>`} {twoDigitNumber(20)}
+        20 {`=>`} {twoDigitNumber(20)}
       </Typography>
     </Stack>
   );
