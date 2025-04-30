@@ -4,15 +4,15 @@ import Table from ".";
 const meta: Meta<typeof Table> = {
   title: "Component/Table",
   component: Table,
-  parameters: { layout: "centered" },
+  parameters: { layout: "padded" },
   tags: ["autodocs"],
 };
 
 export function Default() {
   return (
-    <Table.Container className="max-w-sm max-h-96">
+    <Table.Container className="w-full max-h-96">
       <Table striped bordered hover>
-        <Table.Header sticky>
+        <Table.Header>
           <Table.Row>
             <Table.HeaderCell>Dessert (100g serving)</Table.HeaderCell>
             <Table.HeaderCell>Calories</Table.HeaderCell>
@@ -28,7 +28,7 @@ export function Default() {
               <Table.DataCell>159</Table.DataCell>
               <Table.DataCell>6</Table.DataCell>
               <Table.DataCell>24</Table.DataCell>
-              <Table.DataCell sticky>4</Table.DataCell>
+              <Table.DataCell>4</Table.DataCell>
             </Table.Row>
           ))}
         </Table.Body>

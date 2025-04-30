@@ -46,7 +46,9 @@ export function Debounce() {
   );
 }
 export function KeyDown() {
-  const key = useKeyDown();
+  const key = useKeyDown("Enter", (key) => {
+    console.log(key);
+  });
   return <Typography>{key ?? "Press key"}</Typography>;
 }
 export function PersistedState() {
