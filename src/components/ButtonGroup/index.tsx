@@ -31,10 +31,11 @@ export default function ButtonGroup<E extends ElementType = "div">({
   const { buttonGroupClasses } = useContext(TabsContext);
   const orientationClasses = useMemo(() => {
     const orientations = {
-      horizontal: cn("flex-row", classes?.orientation?.horizontal),
-      vertical: cn("flex-col", classes?.orientation?.vertical),
+      horizontal: "flex-row",
+      vertical: "flex-col",
     };
-    return orientations[orientation];
+
+    return [orientations[orientation], classes?.orientation?.[orientation]];
   }, [orientation, classes?.orientation]);
   const buttonClasses = useMemo(() => {
     const orientations = {
@@ -43,7 +44,7 @@ export default function ButtonGroup<E extends ElementType = "div">({
     };
     const classesResult = classes?.button?.orientation?.[orientation];
     const orientationsResult = orientations[orientation];
-    return [orientationsResult, classesResult];
+    return cn(orientationsResult, classesResult);
   }, [orientation, classes?.button]);
   return (
     <Component
@@ -57,7 +58,7 @@ export default function ButtonGroup<E extends ElementType = "div">({
       {...props}
     >
       <ButtonGroupContext.Provider
-        value={{ variant, color, size, loading, ...buttonClasses }}
+        value={{ variant, color, size, loading, buttonClasses }}
       >
         {children}
       </ButtonGroupContext.Provider>
