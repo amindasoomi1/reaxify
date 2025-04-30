@@ -4,11 +4,5 @@
       "src": "storybook-static/**",
       "use": "@vercel/static"
     }
-  ],
-  "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "/"
-    }
   ]
 }
