@@ -10,18 +10,16 @@ export type ComponentPropsWithAs<
   // eslint-disable-next-line
   P extends Record<string, unknown> = {}
 > = P & { as?: E } & Omit<ComponentProps<E>, "as" | keyof P>;
-export type Color =
-  | "primary"
-  | "secondary"
-  | "success"
-  | "info"
-  | "warning"
-  | "danger"
-  | "dark"
-  | "light";
-export type BadgeVariant = "solid" | "outline" | "soft";
-export type ButtonVariant = "solid" | "outline" | "text";
-export type TypographyVariant =
+
+interface ExtendBadgeVariant {}
+interface ExtendButtonVariant {}
+interface ExtendTypographyVariant {}
+interface ExtendColor {}
+interface ExtendSize {}
+
+type BaseBadgeVariant = "solid" | "outline" | "soft";
+type BaseButtonVariant = "solid" | "outline" | "text";
+type BaseTypographyVariant =
   | "heading-1"
   | "heading-2"
   | "heading-3"
@@ -30,13 +28,27 @@ export type TypographyVariant =
   | "heading-6"
   | "body-1"
   | "body-2";
-export type ClassNameProps = {
-  className?: string;
-};
-export type ChildrenProps = {
-  children?: ReactNode;
-};
-export type Size = "sm" | "md" | "lg";
+type BaseColor =
+  | "primary"
+  | "secondary"
+  | "success"
+  | "info"
+  | "warning"
+  | "danger"
+  | "dark"
+  | "light";
+type BaseSize = "sm" | "md" | "lg";
+
+export type BadgeVariant = BaseBadgeVariant | keyof ExtendBadgeVariant;
+export type ButtonVariant = BaseButtonVariant | keyof ExtendButtonVariant;
+export type TypographyVariant =
+  | BaseTypographyVariant
+  | keyof ExtendTypographyVariant;
+export type Color = BaseColor | keyof ExtendColor;
+export type Size = BaseSize | keyof ExtendSize;
+
+export type ClassNameProps = { className?: string };
+export type ChildrenProps = { children?: ReactNode };
 export type Rule = (value: string) => true | string;
 export type Rules = Rule[];
 export type ToggleProps = { open?: boolean; onClose?: VoidFunction };
