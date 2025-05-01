@@ -14,6 +14,7 @@ export { default as Progress } from "./Progress";
 export { default as Skeleton } from "./Skeleton";
 export { default as Spinner } from "./Spinner";
 export { default as Stack } from "./Stack";
+export { default as Switch } from "./Switch";
 export { default as Table } from "./Table";
 export { default as Tabs } from "./Tabs";
 export { default as Tooltip } from "./Tooltip";
