@@ -138,11 +138,14 @@ export default function useAxios(
   );
   const errorHandler = useCallback(
     async (error: Error) => {
-      const isCanceled = error?.config?.signal?.reason === cancelMessage;
+      const isCanceled = [
+        error?.code === "ERR_CANCELED",
+        error?.config?.signal?.reason === cancelMessage,
+      ].some(Boolean);
       !isCanceled && handleDeleteCancelDuplicated(error?.config);
       const result = await afterErrorHandler(error);
       loadingHandler(false);
-      setError(error as Error);
+      !isCanceled && setError(result as Error);
       return Promise.reject(result);
     },
     [loadingHandler, afterErrorHandler, handleDeleteCancelDuplicated]
