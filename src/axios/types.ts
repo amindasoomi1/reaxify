@@ -16,5 +16,6 @@ export type AxiosConfig = {
   cancelOnUnmount: boolean;
   beforeRequest: Callback<InternalAxiosRequestConfig>[];
   afterResponse: Callback<AxiosResponse>[];
-  afterError: Callback<Error>[];
+  // eslint-disable-next-line
+  afterError: Callback<any>[];
 };
