@@ -1,17 +1,19 @@
 import { ChildrenProps } from "@/types";
-import { useEffect, useRef } from "react";
+import { useLayoutEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { randomID } from "../../helpers";
 export default function Portal({ children }: ChildrenProps) {
-  const divRef = useRef(document.createElement("div"));
-  useEffect(() => {
-    const div = divRef.current;
+  const [element, setElement] = useState<HTMLDivElement | null>(null);
+  useLayoutEffect(() => {
+    const div = document.createElement("div");
     const id = randomID();
     div.id = id;
     document.body.appendChild(div);
+    setElement(div);
     return () => {
       document.body.removeChild(div);
     };
   }, []);
-  return createPortal(children, divRef.current);
+  if (!element) return null;
+  return createPortal(children, element);
 }
