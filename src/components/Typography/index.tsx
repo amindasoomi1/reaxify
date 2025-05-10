@@ -37,6 +37,7 @@ export default function Typography<E extends Component = "p">({
       "heading-6": "h6",
       "body-1": "p",
       "body-2": "p",
+      "body-3": "p",
     };
     return as || components[variant] || "p";
   }, [as, variant]);
@@ -50,6 +51,7 @@ export default function Typography<E extends Component = "p">({
       "heading-6": "text-lg font-medium",
       "body-1": "text-base font-normal",
       "body-2": "text-sm font-normal",
+      "body-3": "text-xs font-normal",
     };
     return [variants[variant], classes?.variant?.[variant]];
   }, [variant, classes?.variant]);

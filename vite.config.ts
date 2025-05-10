@@ -8,8 +8,8 @@ import dts from "vite-plugin-dts";
 export default defineConfig({
   plugins: [
     react(),
-    dts({ entryRoot: "src", exclude: ["**/*.stories.tsx", "**/internal.ts"] }),
     tailwindcss(),
+    dts({ entryRoot: "src", exclude: ["**/*.stories.tsx", "**/internal.ts"] }),
     // viteStaticCopy({ targets: [{ src: "./src/types", dest: "" }] }),
   ],
   resolve: {
@@ -33,6 +33,7 @@ export default defineConfig({
     rollupOptions: {
       external: ["react", "react-dom", "axios"],
       output: {
+        banner: '"use client";',
         dir: "dist",
         preserveModules: true,
         preserveModulesRoot: "src",
@@ -42,9 +43,7 @@ export default defineConfig({
           const relativePath = facadeModuleId
             ?.split("src/")[1]
             ?.replace(/\.ts(x)?$/, "");
-          if (!relativePath) {
-            return `[name].[format].js`;
-          }
+          if (!relativePath) return `[name].[format].js`;
           if (relativePath.endsWith("/index")) {
             return `${relativePath.replace(/\/index$/, "")}/index.[format].js`;
           }

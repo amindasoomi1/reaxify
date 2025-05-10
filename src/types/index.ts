@@ -27,7 +27,8 @@ type BaseTypographyVariant =
   | "heading-5"
   | "heading-6"
   | "body-1"
-  | "body-2";
+  | "body-2"
+  | "body-3";
 type BaseColor =
   | "primary"
   | "secondary"

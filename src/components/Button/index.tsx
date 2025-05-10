@@ -14,6 +14,7 @@ export type ButtonProps = {
   size?: Size;
   loading?: boolean;
   stopPropagation?: boolean;
+  preventDefault?: boolean;
   closeModal?: boolean;
   closeDrawer?: boolean;
 };
@@ -33,6 +34,7 @@ export default function Button<E extends ElementType = "button">({
   size: initSize,
   loading: initLoading,
   stopPropagation = false,
+  preventDefault = false,
   closeModal = false,
   closeDrawer = false,
   className,
@@ -130,6 +132,7 @@ export default function Button<E extends ElementType = "button">({
     closeModal && modalContext.onClose();
     closeDrawer && drawerContext.onClose();
     stopPropagation && e.stopPropagation();
+    preventDefault && e.preventDefault();
     onClick?.(e);
   };
   return (
