@@ -36,6 +36,9 @@ export function Default() {
       <Typography as="p" variant="body-2">
         Body 2
       </Typography>
+      <Typography as="p" variant="body-3">
+        Body 3
+      </Typography>
     </Stack>
   );
 }
