@@ -28,7 +28,7 @@ export default function Stack<E extends ElementType = "div">({
   return (
     <Component
       className={twMerge(
-        "w-full flex",
+        "flex",
         classes?.base,
         variantClasses,
         wrap && "flex-wrap",
