@@ -108,10 +108,11 @@ export default function useAxios(
         ...(axiosConfig?.afterError ?? []),
       ];
       if (!handlers.length) return error;
-      return handlers.reduce(
-        async (prev, current) => current(await prev),
-        Promise.resolve(error)
-      );
+      return handlers.reduce(async (prevPromise, currentHandler) => {
+        const prev = await prevPromise;
+        const result = await currentHandler(prev);
+        return result ?? prev;
+      }, Promise.resolve(error));
     },
     [axiosContext.afterError, axiosConfig?.afterError]
   );
