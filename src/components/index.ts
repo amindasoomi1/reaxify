@@ -5,7 +5,6 @@ export { default as Button } from "./Button";
 export { default as ButtonGroup } from "./ButtonGroup";
 export { default as Card } from "./Card";
 export { default as Drawer } from "./Drawer";
-export { default as Form } from "./Form";
 export { default as InputGroup } from "./InputGroup";
 export { default as Menu } from "./Menu";
 export { default as Modal } from "./Modal";

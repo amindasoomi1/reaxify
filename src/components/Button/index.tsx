@@ -40,6 +40,7 @@ export default function Button<E extends ElementType = "button">({
   className,
   onClick,
   children,
+  disabled,
   ...props
 }: ComponentPropsWithAs<E, ButtonProps>) {
   const classes = useClasses((c) => c.button);
@@ -152,7 +153,7 @@ export default function Button<E extends ElementType = "button">({
         className
       )}
       onClick={handleClick}
-      disabled={props.disabled || loading}
+      disabled={disabled || loading}
       {...props}
     >
       {children}

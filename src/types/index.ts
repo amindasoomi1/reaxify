@@ -50,8 +50,6 @@ export type Size = BaseSize | keyof ExtendSize;
 
 export type ClassNameProps = { className?: string };
 export type ChildrenProps = { children?: ReactNode };
-export type Rule = (value: string) => true | string;
-export type Rules = Rule[];
 export type ToggleProps = { open?: boolean; onClose?: VoidFunction };
 export type RecursivePartial<T> = {
   [P in keyof T]?: RecursivePartial<T[P]>;

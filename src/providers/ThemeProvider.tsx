@@ -55,7 +55,6 @@ export type ThemeProviderContextType = {
       body: { base: string };
       footer: { base: string };
     };
-    form: { base: string };
     inputGroup: {
       base: string;
       label: { base: string };
