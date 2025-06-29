@@ -2,10 +2,11 @@ import baseAxios, { AxiosResponse, InternalAxiosRequestConfig } from "axios";
 import {
   useCallback,
   useContext,
-  useLayoutEffect,
+  useEffect,
   useMemo,
   useRef,
   useState,
+  useTransition,
 } from "react";
 import { AxiosContext } from "./AxiosProvider";
 import type { AxiosConfig, Error, Loading } from "./types";
@@ -16,6 +17,7 @@ export default function useAxios(
   const cancelMessage = "Canceled.";
   const axiosContext = useContext(AxiosContext);
   const allControllers = useRef<AbortController[]>([]);
+  const [isPending, startTransition] = useTransition();
   const pendingRequests = useMemo(() => new Map<string, AbortController>(), []);
   // const controller = useMemo(() => new AbortController(), []);
   const axios = useMemo(() => {
@@ -65,10 +67,12 @@ export default function useAxios(
     [pendingRequests]
   );
   const loadingHandler = useCallback((value: boolean) => {
-    setLoading((p) => {
-      const loading = [...p];
-      value ? loading.push("") : loading.pop();
-      return loading;
+    startTransition(() => {
+      setLoading((p) => {
+        const loading = [...p];
+        value ? loading.push("") : loading.pop();
+        return loading;
+      });
     });
   }, []);
   const beforeRequestHandler = useCallback(
@@ -119,9 +123,9 @@ export default function useAxios(
   const requestHandler = useCallback(
     async (request: InternalAxiosRequestConfig) => {
       // request.signal ||= controller.signal;
-      const handledRequest = handleSetCancelDuplicated(request);
       loadingHandler(true);
       setError(null);
+      const handledRequest = handleSetCancelDuplicated(request);
       const result = await beforeRequestHandler(handledRequest);
       return result;
     },
@@ -152,7 +156,7 @@ export default function useAxios(
     [loadingHandler, afterErrorHandler, handleDeleteCancelDuplicated]
   );
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const req = axios.interceptors.request.use(requestHandler);
     const res = axios.interceptors.response.use(responseHandler, errorHandler);
     return () => {
@@ -166,7 +170,7 @@ export default function useAxios(
     responseHandler,
     errorHandler,
   ]);
-  useLayoutEffect(() => {
+  useEffect(() => {
     return () => {
       if (cancelOnUnmount) {
         allControllers.current.forEach((controller) => {
@@ -176,5 +180,5 @@ export default function useAxios(
       }
     };
   }, [cancelOnUnmount]);
-  return [axios, Boolean(loading.length), error] as const;
+  return [axios, Boolean(loading.length) || isPending, error] as const;
 }
