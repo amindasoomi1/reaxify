@@ -151,7 +151,7 @@ export default function useAxios(
       const result = await afterErrorHandler(error);
       loadingHandler(false);
       !isCanceled && setError(result as Error);
-      return result;
+      return Promise.reject(result);
     },
     [loadingHandler, afterErrorHandler, handleDeleteCancelDuplicated]
   );
