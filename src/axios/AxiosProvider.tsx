@@ -1,5 +1,5 @@
 import { ChildrenProps } from "@/types";
-import { createContext } from "react";
+import { createContext, useCallback } from "react";
 import type { AxiosConfig } from "./types";
 
 type Props = Partial<AxiosConfig> & ChildrenProps;
@@ -24,6 +24,10 @@ export default function AxiosProvider({
   afterError = [],
   children,
 }: Props) {
+  // eslint-disable-next-line
+  const defaultAfterError = useCallback((error: any) => {
+    return Promise.reject(error);
+  }, []);
   return (
     <AxiosContext.Provider
       value={{
@@ -32,7 +36,7 @@ export default function AxiosProvider({
         cancelOnUnmount,
         beforeRequest,
         afterResponse,
-        afterError,
+        afterError: [defaultAfterError, ...afterError],
       }}
     >
       {children}
