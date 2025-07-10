@@ -18,10 +18,9 @@ export default function useAxios(
   const cancelMessage = "Canceled.";
   const axiosContext = useContext(AxiosContext);
   const allControllers = useRef<AbortController[]>([]);
+  const pendingRequests = useRef(new Map<string, AbortController>());
   const retryCount = useRef(0);
   const [isPending, startTransition] = useTransition();
-  const pendingRequests = useMemo(() => new Map<string, AbortController>(), []);
-  // const controller = useMemo(() => new AbortController(), []);
   const axios = useMemo(() => {
     const config = { ...axiosContext.config, ...axiosConfig?.config };
     return baseAxios.create(config);
@@ -54,25 +53,25 @@ export default function useAxios(
       if (!cancelDuplicated && !cancelOnUnmount) return request;
       const key = `${request.method}-${request.url}`;
       const controller = new AbortController();
-      if (cancelDuplicated && pendingRequests.has(key)) {
-        pendingRequests.get(key)?.abort(cancelMessage);
+      if (cancelDuplicated && pendingRequests.current.has(key)) {
+        pendingRequests.current.get(key)?.abort(cancelMessage);
       }
       if (cancelDuplicated || cancelOnUnmount) {
         request.signal = controller.signal;
       }
-      if (cancelDuplicated) pendingRequests.set(key, controller);
+      if (cancelDuplicated) pendingRequests.current.set(key, controller);
       if (cancelOnUnmount) allControllers.current.push(controller);
       return request;
     },
-    [pendingRequests, cancelDuplicated, cancelOnUnmount]
+    [cancelDuplicated, cancelOnUnmount]
   );
   const handleDeleteCancelDuplicated = useCallback(
     (config: InternalAxiosRequestConfig | null) => {
       if (!config) return;
       const key = `${config.method}-${config.url}`;
-      pendingRequests.delete(key);
+      pendingRequests.current.delete(key);
     },
-    [pendingRequests]
+    []
   );
   const loadingHandler = useCallback((value: boolean) => {
     startTransition(() => {
@@ -207,7 +206,6 @@ export default function useAxios(
       return Promise.reject(result);
     },
     [
-      axios,
       loadingHandler,
       afterErrorHandler,
       handleDeleteCancelDuplicated,
