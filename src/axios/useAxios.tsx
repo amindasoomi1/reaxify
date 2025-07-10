@@ -1,3 +1,4 @@
+import { wait } from "@/helpers";
 import baseAxios, { AxiosResponse, InternalAxiosRequestConfig } from "axios";
 import {
   useCallback,
@@ -17,6 +18,7 @@ export default function useAxios(
   const cancelMessage = "Canceled.";
   const axiosContext = useContext(AxiosContext);
   const allControllers = useRef<AbortController[]>([]);
+  const retryCount = useRef(0);
   const [isPending, startTransition] = useTransition();
   const pendingRequests = useMemo(() => new Map<string, AbortController>(), []);
   // const controller = useMemo(() => new AbortController(), []);
@@ -37,6 +39,12 @@ export default function useAxios(
       ? axiosConfig.cancelOnUnmount
       : axiosContext.cancelOnUnmount ?? false;
   }, [axiosConfig?.cancelOnUnmount, axiosContext.cancelOnUnmount]);
+  const retry = useMemo(() => {
+    return {
+      ...axiosContext.retry,
+      ...axiosConfig?.retry,
+    };
+  }, [axiosConfig?.retry, axiosContext.retry]);
 
   const [loading, setLoading] = useState<Loading>([]);
   const [error, setError] = useState<Error | null>(null);
@@ -120,6 +128,36 @@ export default function useAxios(
     },
     [axiosContext.afterError, axiosConfig?.afterError]
   );
+  const beforeRetryHandler = useCallback(
+    (request: InternalAxiosRequestConfig) => {
+      const handlers = [
+        ...axiosContext.beforeRetry,
+        ...(axiosConfig?.beforeRetry ?? []),
+      ];
+      if (!handlers.length) return request;
+      return handlers.reduce(async (prevPromise, currentHandler) => {
+        const prev = await prevPromise;
+        const result = await currentHandler(prev);
+        return result ?? prev;
+      }, Promise.resolve(request));
+    },
+    [axiosContext.beforeRetry, axiosConfig?.beforeRetry]
+  );
+  const canRetry = useCallback(
+    (status: number) => {
+      if (!retry) return false;
+      if (retry.count && retryCount.current >= retry.count) return false;
+      if (retry.statuses && !retry.statuses.includes(status)) return false;
+      return true;
+    },
+    [retry]
+  );
+  const incrementRetryCount = useCallback(() => {
+    retryCount.current++;
+  }, []);
+  const resetRetryCount = useCallback(() => {
+    retryCount.current = 0;
+  }, []);
   const requestHandler = useCallback(
     async (request: InternalAxiosRequestConfig) => {
       // request.signal ||= controller.signal;
@@ -137,9 +175,15 @@ export default function useAxios(
       const result = await afterResponseHandler(response);
       loadingHandler(false);
       setError(null);
+      resetRetryCount();
       return result;
     },
-    [loadingHandler, afterResponseHandler, handleDeleteCancelDuplicated]
+    [
+      loadingHandler,
+      afterResponseHandler,
+      handleDeleteCancelDuplicated,
+      resetRetryCount,
+    ]
   );
   const errorHandler = useCallback(
     async (error: Error) => {
@@ -147,13 +191,32 @@ export default function useAxios(
         error?.code === "ERR_CANCELED",
         error?.config?.signal?.reason === cancelMessage,
       ].some(Boolean);
+      const status = error?.response?.status ?? 0;
+      if (canRetry(status)) {
+        incrementRetryCount();
+        if (retry?.delay) await wait(retry.delay);
+        const handledRequest = await beforeRetryHandler(error?.config);
+        loadingHandler(false);
+        return axios.request(handledRequest);
+      }
       !isCanceled && handleDeleteCancelDuplicated(error?.config);
       const result = await afterErrorHandler(error);
       loadingHandler(false);
+      resetRetryCount();
       !isCanceled && setError(result as Error);
       return Promise.reject(result);
     },
-    [loadingHandler, afterErrorHandler, handleDeleteCancelDuplicated]
+    [
+      axios,
+      loadingHandler,
+      afterErrorHandler,
+      handleDeleteCancelDuplicated,
+      beforeRetryHandler,
+      canRetry,
+      resetRetryCount,
+      incrementRetryCount,
+      retry,
+    ]
   );
 
   useEffect(() => {

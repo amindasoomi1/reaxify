@@ -13,15 +13,19 @@ export const AxiosContext = createContext<Context>({
   beforeRequest: [],
   afterResponse: [],
   afterError: [],
+  beforeRetry: [],
+  retry: null,
 });
 
 export default function AxiosProvider({
   config = {},
   cancelDuplicatedRequests = false,
   cancelOnUnmount = false,
+  beforeRetry = [],
   beforeRequest = [],
   afterResponse = [],
   afterError = [],
+  retry = null,
   children,
 }: Props) {
   return (
@@ -33,6 +37,8 @@ export default function AxiosProvider({
         beforeRequest,
         afterResponse,
         afterError,
+        beforeRetry,
+        retry,
       }}
     >
       {children}
