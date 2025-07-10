@@ -39,7 +39,11 @@ export default function useAxios(
       : axiosContext.cancelOnUnmount ?? false;
   }, [axiosConfig?.cancelOnUnmount, axiosContext.cancelOnUnmount]);
   const retry = useMemo(() => {
+    if (!axiosContext?.retry && !axiosConfig?.retry) return null;
     return {
+      count: 0,
+      delay: 0,
+      statuses: [],
       ...axiosContext.retry,
       ...axiosConfig?.retry,
     };
@@ -145,8 +149,10 @@ export default function useAxios(
   const canRetry = useCallback(
     (status: number) => {
       if (!retry) return false;
-      if (retry.count && retryCount.current >= retry.count) return false;
-      if (retry.statuses && !retry.statuses.includes(status)) return false;
+      const count = retry.count ?? 0;
+      const statuses = retry.statuses ?? [];
+      if (retryCount.current >= count) return false;
+      if (!statuses.includes(status)) return false;
       return true;
     },
     [retry]
@@ -191,7 +197,7 @@ export default function useAxios(
         error?.config?.signal?.reason === cancelMessage,
       ].some(Boolean);
       const status = error?.response?.status ?? 0;
-      if (canRetry(status)) {
+      if (!isCanceled && canRetry(status)) {
         incrementRetryCount();
         if (retry?.delay) await wait(retry.delay);
         const handledRequest = await beforeRetryHandler(error?.config);
@@ -213,7 +219,7 @@ export default function useAxios(
       canRetry,
       resetRetryCount,
       incrementRetryCount,
-      retry,
+      retry?.delay,
     ]
   );
 
