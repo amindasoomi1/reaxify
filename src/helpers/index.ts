@@ -13,5 +13,6 @@ export { default as matrixArray } from "./matrixArray";
 export { default as randomID } from "./randomID";
 export { default as replaceNonDigits } from "./replaceNonDigits";
 export { default as replacePersianNumbers } from "./replacePersianNumbers";
+export { default as scrollIntoView } from "./scrollIntoView";
 export { default as twoDigitNumber } from "./twoDigitNumber";
 export { default as wait } from "./wait";

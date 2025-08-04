@@ -198,11 +198,12 @@ export default function useAxios(
       ].some(Boolean);
       const status = error?.response?.status ?? 0;
       if (!isCanceled && canRetry(status)) {
-        incrementRetryCount();
         if (retry?.delay) await wait(retry.delay);
         const handledRequest = await beforeRetryHandler(error?.config);
-        loadingHandler(false);
-        return axios.request(handledRequest);
+        incrementRetryCount();
+        return axios
+          .request(handledRequest)
+          .finally(() => loadingHandler(false));
       }
       !isCanceled && handleDeleteCancelDuplicated(error?.config);
       const result = await afterErrorHandler(error);
