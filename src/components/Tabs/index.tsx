@@ -10,6 +10,7 @@ import {
   useEffect,
   useMemo,
   useRef,
+  useState,
 } from "react";
 import { twMerge } from "tailwind-merge";
 import { cn } from "../../helpers";
@@ -49,6 +50,7 @@ function TabIndicator({
   className,
   ...props
 }: Omit<ComponentProps<"span">, "children">) {
+  const [hasAnimated, setHasAnimated] = useState(false);
   const classes = useClasses((c) => c.tabs.indicator.base);
   const { active } = useContext(TabsContext);
   const indicatorRef = useRef<HTMLSpanElement>(null);
@@ -65,9 +67,9 @@ function TabIndicator({
     const buttonWidth = activeButton?.getBoundingClientRect().width ?? 0;
     const left = buttonOffsetLeft;
     const width = buttonWidth;
-    indicator.style.setProperty("left", `${left}px`);
-    indicator.style.setProperty("width", `${width}px`);
-    indicator.style.setProperty("padding", `0 ${buttonPaddingInline}`);
+    indicator.style.setProperty("--left", `${left}px`);
+    indicator.style.setProperty("--width", `${width}px`);
+    indicator.style.setProperty("--padding-x", `${buttonPaddingInline}`);
     activeButton?.scrollIntoView({
       inline: "center",
       block: "nearest",
@@ -84,12 +86,16 @@ function TabIndicator({
       window.removeEventListener("resize", handleResize);
     };
   }, [handleIndicator, debounce]);
-  useEffect(handleIndicator, [handleIndicator, active]);
+  useEffect(() => {
+    handleIndicator();
+    setHasAnimated(true);
+  }, [handleIndicator, active]);
   return (
     <span
       ref={indicatorRef}
       className={twMerge(
-        "absolute bottom-0 left-0 w-auto h-px transition-[width,left] overflow-hidden",
+        "absolute bottom-0 left-(--left,0px) rtl:left-(--left,100%) w-(--width,0px) px-(--padding-x,0px) h-px overflow-hidden",
+        hasAnimated ? "transition-[width,left,padding]" : "",
         classes,
         className
       )}

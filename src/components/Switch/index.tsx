@@ -101,7 +101,8 @@ export default function Switch({
         disabled={disabled}
         onChange={handleChange}
       />
-      <span className="inline-flex justify-center items-center size-(--height) rounded-full absolute inset-y-0 my-auto start-0 peer-checked:start-[calc(100%-var(--height))] transition-[inset-inline-start] z-[1]">
+      {/* <span className="inline-flex justify-center items-center size-(--height) rounded-full absolute inset-y-0 my-auto start-0 peer-checked:start-[calc(100%-var(--height))] transition-[inset-inline-start] z-[1]"> */}
+      <span className="inline-flex justify-center items-center size-(--height) rounded-full absolute inset-y-0 my-auto left-0 peer-checked:left-[calc(100%-var(--height))] transition-[left] z-[1]">
         <span className="absolute size-full inset-0 bg-black/5 rounded-full scale-(--scale) transition-[scale]" />
         <span
           className={cn(

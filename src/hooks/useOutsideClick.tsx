@@ -1,6 +1,6 @@
 import { Dispatch, RefObject, useEffect } from "react";
 
-type Ref = RefObject<HTMLElement> | HTMLElement | null;
+type Ref = RefObject<HTMLElement | null> | HTMLElement | null;
 
 export default function useOutsideClick(
   ref: Ref,

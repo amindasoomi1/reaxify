@@ -9,7 +9,7 @@ import Typography from "../Typography";
 const meta: Meta<typeof Tabs> = {
   title: "Component/Tabs",
   component: Tabs,
-  parameters: { layout: "centered" },
+  parameters: { layout: "padded" },
   tags: ["autodocs"],
 };
 
