@@ -1,5 +1,5 @@
 import { cn } from "@/helpers";
-import { useClasses } from "@/hooks";
+import { useClasses, useKeyDown } from "@/hooks";
 import { ComponentPropsWithAs, Size, ToggleProps } from "@/types";
 import { TransitionClasses } from "@/types/internal";
 
@@ -57,6 +57,7 @@ function Modal<E extends ElementType = "div">({
     exited: "opacity-0 pointer-events-none",
     unmounted: "",
   };
+  useKeyDown(onClose, "Escape", open);
   return (
     <Portal>
       <Transition nodeRef={divRef} in={open} timeout={duration} unmountOnExit>

@@ -1,4 +1,4 @@
-import { useClasses } from "@/hooks";
+import { useClasses, useKeyDown } from "@/hooks";
 import { ComponentPropsWithAs, ToggleProps } from "@/types";
 import { TransitionClasses } from "@/types/internal";
 import {
@@ -76,6 +76,7 @@ function Drawer<E extends ElementType = "div">({
     const anchorResult = result[anchor];
     return [anchorResult, classesResult];
   }, [anchor, classes?.anchor]);
+  useKeyDown(onClose, "Escape", open);
   return (
     <Portal>
       <Transition nodeRef={divRef} in={open} timeout={duration} unmountOnExit>

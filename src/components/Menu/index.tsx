@@ -1,4 +1,4 @@
-import { useClasses } from "@/hooks";
+import { useClasses, useKeyDown } from "@/hooks";
 import { ChildrenProps, ComponentPropsWithAs, ToggleProps } from "@/types";
 import { TransitionClasses } from "@/types/internal";
 import {
@@ -109,6 +109,7 @@ function Menu<E extends ElementType = "div">({
       window.removeEventListener("resize", handleResize);
     };
   }, [positionHandler]);
+  useKeyDown(onClose, "Escape", open);
   return (
     <Portal>
       <Transition nodeRef={menuRef} in={open} timeout={300} unmountOnExit>

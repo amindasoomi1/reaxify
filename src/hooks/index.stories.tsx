@@ -46,10 +46,17 @@ export function Debounce() {
   );
 }
 export function KeyDown() {
-  const key = useKeyDown("Enter", (key) => {
-    console.log(key);
+  useKeyDown(
+    (key) => {
+      console.log("Pressed key:", key);
+    },
+    ["Enter", "Escape"]
+  );
+
+  useKeyDown((key) => {
+    console.log("Any key pressed:", key);
   });
-  return <Typography>{key ?? "Press key"}</Typography>;
+  return <Typography>Press key and check console log</Typography>;
 }
 export function PersistedState() {
   const [count, setCount, clearCount] = usePersistedState("count", 0);

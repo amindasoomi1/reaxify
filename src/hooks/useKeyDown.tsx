@@ -1,40 +1,27 @@
-import { Dispatch, useEffect, useState } from "react";
+import { useEffect } from "react";
 
 export default function useKeyDown(
-  targetKey?: string | string[],
-  callback?: Dispatch<string>
+  callback?: (key: string) => void,
+  targetKey: null | string | string[] = null,
+  force: boolean = true
 ) {
-  const [key, setKey] = useState<string | null>(null);
-
   useEffect(() => {
+    if (!callback || !force) return;
     const isTargetKey = (pressedKey: string) => {
-      if (!targetKey) return false;
-      return Array.isArray(targetKey)
-        ? targetKey.includes(pressedKey)
-        : pressedKey === targetKey;
-    };
-
-    const handleSetKey = (e: KeyboardEvent) => {
-      setKey(e.key);
-      if (isTargetKey(e.key) && callback) {
-        callback(e.key);
+      if (!targetKey) return true;
+      if (Array.isArray(targetKey)) {
+        return targetKey.includes(pressedKey);
       }
+      return pressedKey === targetKey;
     };
-
-    const handleClearKey = () => {
-      setKey(null);
+    const handleSetKey = (e: KeyboardEvent) => {
+      if (isTargetKey(e.key)) callback(e.key);
     };
-
+    console.log("add");
     window.addEventListener("keydown", handleSetKey);
-    window.addEventListener("keyup", handleClearKey);
-    window.addEventListener("blur", handleClearKey);
-
     return () => {
+      console.log("remove");
       window.removeEventListener("keydown", handleSetKey);
-      window.removeEventListener("keyup", handleClearKey);
-      window.removeEventListener("blur", handleClearKey);
     };
-  }, [targetKey, callback]);
-
-  return key;
+  }, [callback, targetKey, force]);
 }
