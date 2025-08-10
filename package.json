@@ -40,8 +40,8 @@
       "types": "./dist/types/index.d.ts"
     },
     "./style.css": {
-      "require": "./dist/style.css",
-      "default": "./dist/style.css"
+      "require": "./dist/reaxify.css",
+      "default": "./dist/reaxify.css"
     }
   },
   "scripts": {
