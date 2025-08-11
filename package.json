@@ -1,7 +1,7 @@
 {
   "name": "reaxify",
   "private": false,
-  "version": "0.0.63",
+  "version": "0.0.64",
   "type": "module",
   "types": "./dist/index.d.ts",
   "files": [
@@ -88,7 +88,7 @@
     "eslint-plugin-storybook": "^0.10.1",
     "storybook": "^8.6.11",
     "typescript": "^5.7.2",
-    "vite": "^7.1.1",
+    "vite": "^6.3.5",
     "vite-plugin-static-copy": "^3.1.1"
   }
 }
