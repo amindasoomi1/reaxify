@@ -8,6 +8,7 @@ import {
   useCallback,
   useContext,
   useEffect,
+  useImperativeHandle,
   useRef,
 } from "react";
 import { Transition, TransitionStatus } from "react-transition-group";
@@ -37,6 +38,7 @@ const MenuContext = createContext<MenuContextType>({
 
 function Menu<E extends ElementType = "div">({
   as,
+  ref,
   open,
   onClose,
   closeOnClick = false,
@@ -109,6 +111,7 @@ function Menu<E extends ElementType = "div">({
       window.removeEventListener("resize", handleResize);
     };
   }, [positionHandler]);
+  useImperativeHandle(ref, () => menuRef.current);
   useKeyDown(onClose, "Escape", open);
   return (
     <Portal>

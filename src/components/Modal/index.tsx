@@ -8,6 +8,7 @@ import {
   createContext,
   ElementType,
   useContext,
+  useImperativeHandle,
   useMemo,
   useRef,
 } from "react";
@@ -39,6 +40,7 @@ export const ModalContext = createContext<Context>({
 
 function Modal<E extends ElementType = "div">({
   as,
+  ref,
   size = "md",
   open = false,
   onClose = () => {},
@@ -57,6 +59,7 @@ function Modal<E extends ElementType = "div">({
     exited: "opacity-0 pointer-events-none",
     unmounted: "",
   };
+  useImperativeHandle(ref, () => divRef.current);
   useKeyDown(onClose, "Escape", open);
   return (
     <Portal>

@@ -1,5 +1,6 @@
 body:has([data-open="true"]) {
   overflow: hidden;
+  @apply overscroll-none;
 }
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {

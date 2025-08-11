@@ -6,6 +6,7 @@ import {
   createContext,
   ElementType,
   useContext,
+  useImperativeHandle,
   useMemo,
   useRef,
 } from "react";
@@ -47,6 +48,7 @@ export const DrawerContext = createContext<Context>({
 
 function Drawer<E extends ElementType = "div">({
   as,
+  ref,
   open = false,
   onClose = () => {},
   duration = 300,
@@ -76,6 +78,7 @@ function Drawer<E extends ElementType = "div">({
     const anchorResult = result[anchor];
     return [anchorResult, classesResult];
   }, [anchor, classes?.anchor]);
+  useImperativeHandle(ref, () => divRef.current);
   useKeyDown(onClose, "Escape", open);
   return (
     <Portal>

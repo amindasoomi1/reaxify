@@ -17,10 +17,8 @@ export default function useKeyDown(
     const handleSetKey = (e: KeyboardEvent) => {
       if (isTargetKey(e.key)) callback(e.key);
     };
-    console.log("add");
     window.addEventListener("keydown", handleSetKey);
     return () => {
-      console.log("remove");
       window.removeEventListener("keydown", handleSetKey);
     };
   }, [callback, targetKey, force]);
