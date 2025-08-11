@@ -14,7 +14,7 @@ import {
 } from "react";
 import { twMerge } from "tailwind-merge";
 import { cn } from "../../helpers";
-import { useClasses, useDebounce } from "../../hooks";
+import { useClasses } from "../../hooks";
 import Button from "../Button";
 
 type TabsProps = {
@@ -54,7 +54,6 @@ function TabIndicator({
   const classes = useClasses((c) => c.tabs.indicator.base);
   const { active } = useContext(TabsContext);
   const indicatorRef = useRef<HTMLSpanElement>(null);
-  const debounce = useDebounce();
   const handleIndicator = useCallback(() => {
     const indicator = indicatorRef.current;
     const parent = indicator?.parentElement;
@@ -70,22 +69,7 @@ function TabIndicator({
     indicator.style.setProperty("--left", `${left}px`);
     indicator.style.setProperty("--width", `${width}px`);
     indicator.style.setProperty("--padding-x", `${buttonPaddingInline}`);
-    activeButton?.scrollIntoView({
-      inline: "center",
-      block: "nearest",
-      behavior: "smooth",
-    });
   }, []);
-  useEffect(() => {
-    const ms = 100;
-    const handleResize = () => {
-      debounce(() => handleIndicator(), ms);
-    };
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, [handleIndicator, debounce]);
   useEffect(() => {
     handleIndicator();
     setHasAnimated(true);
