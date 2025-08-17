@@ -32,16 +32,16 @@ export default function Spinner({
   }, [color, classes?.color]);
   const sizeClasses = useMemo(() => {
     const sizes = {
-      sm: "border-2 size-4",
-      md: "border-3 size-6",
-      lg: "border-4 size-8",
+      sm: "border-2 w-4",
+      md: "border-3 w-6",
+      lg: "border-4 w-8",
     };
     return [sizes?.[size], classes?.size?.[size]];
   }, [size, classes?.size]);
   return (
     <span
       className={twMerge(
-        "inline-block  align-middle rounded-full animate-spin",
+        "inline-block align-middle rounded-full animate-spin aspect-square",
         classes?.base,
         colorClasses,
         "border-l-transparent",

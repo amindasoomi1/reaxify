@@ -2,7 +2,6 @@ import type { Meta } from "@storybook/react";
 import { Fragment, useState } from "react";
 import Drawer from ".";
 import { useToggle } from "../..//hooks";
-import Box from "../Box";
 import Button from "../Button";
 import ButtonGroup from "../ButtonGroup";
 import Typography from "../Typography";
@@ -19,7 +18,7 @@ const meta: Meta<typeof Drawer> = {
 export function Default() {
   const [openDrawer, toggleDrawer, closeDrawer] = useToggle(false);
   return (
-    <Box>
+    <div>
       <Button type="button" onClick={toggleDrawer}>
         Show drawer
       </Button>
@@ -46,7 +45,7 @@ export function Default() {
           </Drawer.Footer>
         </Drawer.Menu>
       </Drawer>
-    </Box>
+    </div>
   );
 }
 

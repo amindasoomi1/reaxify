@@ -1,6 +1,5 @@
 import type { Meta } from "@storybook/react";
 import Tooltip from ".";
-import Box from "../Box";
 import Button from "../Button";
 import Stack from "../Stack";
 
@@ -15,11 +14,11 @@ const meta: Meta<typeof Tooltip> = {
 
 export function Default() {
   return (
-    <Box>
+    <div>
       <Tooltip title="Tooltip">
         <Button>Button</Button>
       </Tooltip>
-    </Box>
+    </div>
   );
 }
 export function Colors() {
@@ -54,7 +53,7 @@ export function Colors() {
 }
 export function Placement() {
   return (
-    <Stack dir="rtl" wrap className="items-center gap-4 py-10">
+    <Stack wrap className="items-center gap-4 py-10">
       <Tooltip title="Top" placement="top">
         <Button>Top</Button>
       </Tooltip>

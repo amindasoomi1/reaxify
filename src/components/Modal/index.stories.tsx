@@ -1,7 +1,6 @@
 import type { Meta } from "@storybook/react";
 import Modal from ".";
 import { useToggle } from "../..//hooks";
-import Box from "../Box";
 import Button from "../Button";
 import Typography from "../Typography";
 
@@ -17,7 +16,7 @@ const meta: Meta<typeof Modal> = {
 export function Default() {
   const [openModal, toggleModal, closeModal] = useToggle(false);
   return (
-    <Box>
+    <div>
       <Button type="button" onClick={toggleModal}>
         Show modal
       </Button>
@@ -44,7 +43,7 @@ export function Default() {
           </Modal.Footer>
         </Modal.Dialog>
       </Modal>
-    </Box>
+    </div>
   );
 }
 export default meta;

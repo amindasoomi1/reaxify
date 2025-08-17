@@ -72,7 +72,7 @@ function TabIndicator({
   }, []);
   useEffect(() => {
     handleIndicator();
-    setHasAnimated(true);
+    requestAnimationFrame(() => setHasAnimated(true));
   }, [handleIndicator, active]);
   return (
     <span

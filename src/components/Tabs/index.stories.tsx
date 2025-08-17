@@ -1,7 +1,6 @@
 import type { Meta } from "@storybook/react";
 import { useState } from "react";
 import Tabs from ".";
-import Box from "../Box";
 import ButtonGroup from "../ButtonGroup";
 import Stack from "../Stack";
 import Typography from "../Typography";
@@ -16,9 +15,9 @@ const meta: Meta<typeof Tabs> = {
 // type Story = StoryObj<typeof meta>;
 
 export function Default() {
-  const [active, setActive] = useState("basic-info");
+  const [active, setActive] = useState("contact-info");
   return (
-    <Box className="w-full space-y-4">
+    <div className="w-full space-y-4">
       <Tabs active={active} onChange={setActive}>
         <ButtonGroup>
           <Tabs.Indicator />
@@ -60,7 +59,7 @@ export function Default() {
           </Stack>
         </Tabs.Item>
       </Tabs>
-    </Box>
+    </div>
   );
 }
 
