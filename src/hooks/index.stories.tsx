@@ -59,10 +59,13 @@ export function KeyDown() {
   return <Typography>Press key and check console log</Typography>;
 }
 export function PersistedState() {
-  const [count, setCount, clearCount] = usePersistedState("count", 0);
+  const [count, setCount, clearCount] = usePersistedState(0, { name: "count" });
   return (
     <Stack className="gap-4">
       <Button type="button" onClick={() => setCount((p) => p + 1)}>
+        Count is {count}
+      </Button>
+      <Button type="button" onClick={() => setCount(count + 2)}>
         Count is {count}
       </Button>
       <Button type="button" onClick={() => window.location.reload()}>

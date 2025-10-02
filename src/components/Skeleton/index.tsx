@@ -11,15 +11,15 @@ export default function Skeleton({
 }: SkeletonProps) {
   const classes = useClasses((c) => c.skeleton.base);
   return (
-    <div
+    <span
       className={twMerge(
-        "size-10 rounded bg-gray-200 text-gray-200 animate-pulse",
+        "inline-block size-10 rounded bg-gray-200 text-gray-200 animate-pulse",
         classes,
         className
       )}
       {...props}
     >
       {children}
-    </div>
+    </span>
   );
 }

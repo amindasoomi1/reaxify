@@ -12,29 +12,29 @@
   },
   "exports": {
     "./axios": {
+      "types": "./dist/axios/index.d.ts",
       "import": "./dist/axios/index.es.js",
-      "require": "./dist/axios/index.cjs.js",
-      "types": "./dist/axios/index.d.ts"
+      "require": "./dist/axios/index.cjs.js"
     },
     "./components": {
+      "types": "./dist/components/index.d.ts",
       "import": "./dist/components/index.es.js",
-      "require": "./dist/components/index.cjs.js",
-      "types": "./dist/components/index.d.ts"
+      "require": "./dist/components/index.cjs.js"
     },
     "./helpers": {
+      "types": "./dist/helpers/index.d.ts",
       "import": "./dist/helpers/index.es.js",
-      "require": "./dist/helpers/index.cjs.js",
-      "types": "./dist/helpers/index.d.ts"
+      "require": "./dist/helpers/index.cjs.js"
     },
     "./hooks": {
+      "types": "./dist/hooks/index.d.ts",
       "import": "./dist/hooks/index.es.js",
-      "require": "./dist/hooks/index.cjs.js",
-      "types": "./dist/hooks/index.d.ts"
+      "require": "./dist/hooks/index.cjs.js"
     },
     "./providers": {
+      "types": "./dist/providers/index.d.ts",
       "import": "./dist/providers/index.es.js",
-      "require": "./dist/providers/index.cjs.js",
-      "types": "./dist/providers/index.d.ts"
+      "require": "./dist/providers/index.cjs.js"
     },
     "./types": {
       "types": "./dist/types/index.d.ts"
