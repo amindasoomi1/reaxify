@@ -132,17 +132,17 @@ export default function useAxios(
     [axiosContext.afterError, axiosConfig?.afterError]
   );
   const beforeRetryHandler = useCallback(
-    (request: InternalAxiosRequestConfig) => {
+    (error: Error) => {
       const handlers = [
         ...axiosContext.beforeRetry,
         ...(axiosConfig?.beforeRetry ?? []),
       ];
-      if (!handlers.length) return request;
+      if (!handlers.length) return error;
       return handlers.reduce(async (prevPromise, currentHandler) => {
         const prev = await prevPromise;
         const result = await currentHandler(prev);
         return result ?? prev;
-      }, Promise.resolve(request));
+      }, Promise.resolve(error));
     },
     [axiosContext.beforeRetry, axiosConfig?.beforeRetry]
   );
@@ -199,10 +199,10 @@ export default function useAxios(
       const status = error?.response?.status ?? 0;
       if (!isCanceled && canRetry(status)) {
         if (retry?.delay) await wait(retry.delay);
-        const handledRequest = await beforeRetryHandler(error?.config);
+        const handledError = await beforeRetryHandler(error);
         incrementRetryCount();
         return axios
-          .request(handledRequest)
+          .request(handledError?.config)
           .finally(() => loadingHandler(false));
       }
       !isCanceled && handleDeleteCancelDuplicated(error?.config);

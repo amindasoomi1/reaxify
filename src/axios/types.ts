@@ -18,7 +18,8 @@ export type AxiosConfig = {
   afterResponse: Callback<AxiosResponse>[];
   // eslint-disable-next-line
   afterError: Callback<any>[];
-  beforeRetry: Callback<InternalAxiosRequestConfig>[];
+  // eslint-disable-next-line
+  beforeRetry: Callback<any>[];
   retry: null | {
     count?: number;
     delay?: number;
