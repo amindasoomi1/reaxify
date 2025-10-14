@@ -31,5 +31,5 @@ export default function useAutoFill(callback: Dispatch<string | null>) {
     return () => {
       controller?.abort("signal has been aborted.");
     };
-  }, [callback]);
+  }, []);
 }
