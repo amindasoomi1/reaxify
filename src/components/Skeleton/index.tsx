@@ -13,7 +13,7 @@ export default function Skeleton({
   return (
     <span
       className={twMerge(
-        "inline-block size-10 rounded bg-gray-200 text-gray-200 animate-pulse",
+        "inline-block w-10 h-10 rounded bg-gray-200 text-gray-200 animate-pulse",
         classes,
         className
       )}

@@ -6,10 +6,15 @@ type OTPCredential = {
   id: string;
 };
 
-export default function useAutoFill(callback: Dispatch<string | null>) {
+export default function useAutoFill(
+  callback: Dispatch<string | null>,
+  options?: { skip?: boolean }
+) {
   const controllerRef = useRef<AbortController | null>(null);
 
   useEffect(() => {
+    if (options?.skip) return;
+
     controllerRef.current = new AbortController();
     const controller = controllerRef.current;
 
@@ -31,5 +36,5 @@ export default function useAutoFill(callback: Dispatch<string | null>) {
     return () => {
       controller?.abort("signal has been aborted.");
     };
-  }, []);
+  }, [options?.skip]);
 }

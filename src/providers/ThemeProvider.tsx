@@ -80,6 +80,9 @@ export type ThemeProviderContextType = {
     skeleton: {
       base: string;
     };
+    spacer: {
+      base: string;
+    };
     stack: {
       base: string;
       variants: { horizontal: string; vertical: string };
