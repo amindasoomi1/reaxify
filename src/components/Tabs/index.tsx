@@ -21,7 +21,12 @@ type TabsProps = {
   active?: null | string;
   onChange?: Dispatch<string>;
 } & ChildrenProps;
-type TabButtonProps = { eventKey: string; type?: never; ref?: never };
+type TabButtonProps = {
+  eventKey: string;
+  type?: never;
+  ref?: never;
+  className?: string | ((options?: { isActive: boolean }) => string);
+};
 type TabItemProps = { eventKey: string } & ChildrenProps;
 type TabsContextType = {
   active: null | string;
@@ -97,9 +102,16 @@ function TabButton({
   ...props
 }: TabButtonProps &
   Omit<ComponentProps<typeof Button<"button">>, keyof TabButtonProps>) {
-  const classes = useClasses((c) => c.tabs.button.base);
+  const baseClasses = useClasses((c) => c.tabs.button.base);
+  const activeClasses = useClasses((c) => c.tabs.button.active);
   const { active, onChange } = useContext(TabsContext);
   const isActive = eventKey === active;
+  const handleClassName = useMemo(() => {
+    if (typeof className === "function") {
+      return className({ isActive });
+    }
+    return className;
+  }, [isActive, className]);
   const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
     !isActive && onChange(eventKey);
     onClick?.(e);
@@ -112,7 +124,12 @@ function TabButton({
       onClick={handleClick}
       color={isActive ? "primary" : null}
       variant="text"
-      className={cn("shadow-none border-none", classes, className)}
+      className={cn(
+        "shadow-none border-none",
+        baseClasses,
+        isActive && activeClasses,
+        handleClassName
+      )}
       {...props}
     >
       {children}

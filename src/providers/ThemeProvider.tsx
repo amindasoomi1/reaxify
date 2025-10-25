@@ -99,7 +99,7 @@ export type ThemeProviderContextType = {
     tabs: {
       indicator: { base: string };
       buttonGroup: { base: string };
-      button: { base: string };
+      button: { base: string; active: string };
     };
     typography: {
       base: string;
