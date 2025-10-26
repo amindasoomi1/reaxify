@@ -25,7 +25,7 @@ type TabButtonProps = {
   eventKey: string;
   type?: never;
   ref?: never;
-  className?: string | ((options?: { isActive: boolean }) => string);
+  className?: string | ((options: { isActive: boolean }) => string | undefined);
 };
 type TabItemProps = { eventKey: string } & ChildrenProps;
 type TabsContextType = {

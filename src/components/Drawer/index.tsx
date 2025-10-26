@@ -124,10 +124,10 @@ function DrawerMenu({ children, className = "", ...props }: DrawerMenuProps) {
   const { anchor, duration, transitionState } = useContext(DrawerContext);
   const anchorClasses = useMemo(() => {
     const result: AnchorClasses = {
-      start: "w-[31.875rem] h-full max-w-[97.5%] rounded-e me-auto",
-      end: "w-[31.875rem] h-full max-w-[97.5%] rounded-s ms-auto",
-      top: "w-full h-[31.875rem] max-h-[97.5%] rounded-b mb-auto",
-      bottom: "w-full h-[31.875rem] max-h-[97.5%] rounded-t mt-auto",
+      start: "w-[31.875rem] h-full max-w-[92.5%] rounded-e me-auto",
+      end: "w-[31.875rem] h-full max-w-[92.5%] rounded-s ms-auto",
+      top: "w-full h-[31.875rem] max-h-[92.5%] rounded-b mb-auto",
+      bottom: "w-full h-[31.875rem] max-h-[92.5%] rounded-t mt-auto",
     };
     const classesResult = classes?.anchor?.[anchor];
     return [result[anchor], classesResult];

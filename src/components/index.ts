@@ -10,6 +10,7 @@ export { default as Modal } from "./Modal";
 export { default as Portal } from "./Portal";
 export { default as Progress } from "./Progress";
 export { default as Skeleton } from "./Skeleton";
+export { default as Spacer } from "./Spacer";
 export { default as Spinner } from "./Spinner";
 export { default as Stack } from "./Stack";
 export { default as Switch } from "./Switch";
