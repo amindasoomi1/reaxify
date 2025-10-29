@@ -1,4 +1,4 @@
-export function isEmpty(value: unknown) {
+export function isEmpty<T>(value: T): value is Extract<T, null | undefined> {
   return (
     isEmptyValue(value) ||
     isEmptyString(value) ||
@@ -6,18 +6,20 @@ export function isEmpty(value: unknown) {
     isEmptyArray(value)
   );
 }
-export function isEmptyValue(value: unknown) {
+export function isEmptyValue<T>(
+  value: T
+): value is Extract<T, null | undefined> {
   return value === null || value === undefined;
 }
-export function isEmptyString(value: unknown) {
+export function isEmptyString<T>(value: T) {
   return value === "";
 }
-export function isEmptyObject(value: unknown) {
+export function isEmptyObject<T>(value: T) {
   const isArray = Array.isArray(value);
   const isObject = typeof value === "object";
   return !isArray && isObject && !Object.keys(value ?? {}).length;
 }
-export function isEmptyArray(value: unknown) {
+export function isEmptyArray<T>(value: T) {
   const isArray = Array.isArray(value);
   return isArray && !value.length;
 }
