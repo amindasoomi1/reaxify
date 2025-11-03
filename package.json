@@ -1,7 +1,7 @@
 {
   "name": "reaxify",
   "private": false,
-  "version": "0.0.74",
+  "version": "0.0.76",
   "type": "module",
   "types": "./dist/index.d.ts",
   "files": [
@@ -54,17 +54,15 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
-    "@tailwindcss/vite": "^4.0.17",
-    "axios": "^1.8.4",
     "iconsax-react": "^0.0.8",
-    "react": "^19.1.0",
     "react-animate-height": "^3.2.3",
-    "react-dom": "^19.1.0",
     "react-transition-group": "^4.4.5",
-    "tailwind-merge": "^3.3.1",
-    "tailwindcss": "^4.0.17",
-    "vite-plugin-dts": "^4.3.0",
-    "vite-tsconfig-paths": "^5.0.1"
+    "tailwind-merge": "^3.3.1"
+  },
+  "peerDependencies": {
+    "react": ">=19.0.0",
+    "react-dom": ">=19.0.0",
+    "axios": ">=1.0.0"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^1.9.0",
@@ -76,19 +74,26 @@
     "@storybook/react": "^8.6.11",
     "@storybook/react-vite": "^8.6.11",
     "@storybook/test": "^8.6.11",
+    "@tailwindcss/vite": "^4.1.16",
     "@types/react": "^18.2.43",
     "@types/react-dom": "^18.2.17",
     "@types/react-transition-group": "^4.4.11",
     "@typescript-eslint/eslint-plugin": "^6.14.0",
     "@typescript-eslint/parser": "^6.14.0",
     "@vitejs/plugin-react-swc": "^3.5.0",
+    "axios": "^1.13.1",
     "eslint": "^8.55.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.5",
     "eslint-plugin-storybook": "^0.10.1",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
     "storybook": "^8.6.11",
+    "tailwindcss": "^4.1.16",
     "typescript": "^5.7.2",
     "vite": "^6.3.5",
-    "vite-plugin-static-copy": "^3.1.1"
+    "vite-plugin-dts": "^4.5.4",
+    "vite-plugin-static-copy": "^3.1.1",
+    "vite-tsconfig-paths": "^5.1.4"
   }
 }

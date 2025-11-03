@@ -23,7 +23,7 @@ export function Single() {
       <Accordion activeKey={active} onChange={handleChange}>
         <Accordion.Item eventKey="one">
           <Accordion.Toggle>
-            <Stack>
+            <Stack className="w-full">
               <Typography as="span" className="flex-1">
                 Accordion #1
               </Typography>
@@ -43,7 +43,7 @@ export function Single() {
         </Accordion.Item>
         <Accordion.Item eventKey="two">
           <Accordion.Toggle>
-            <Stack>
+            <Stack className="w-full">
               <Typography as="span" className="flex-1">
                 Accordion #2
               </Typography>
@@ -79,7 +79,7 @@ export function Multiple() {
       <Accordion activeKey={active} onChange={handleChange}>
         <Accordion.Item eventKey="one">
           <Accordion.Toggle>
-            <Stack>
+            <Stack className="w-full">
               <Typography as="span" className="flex-1">
                 Accordion #1
               </Typography>
@@ -99,7 +99,7 @@ export function Multiple() {
         </Accordion.Item>
         <Accordion.Item eventKey="two">
           <Accordion.Toggle>
-            <Stack>
+            <Stack className="w-full">
               <Typography as="span" className="flex-1">
                 Accordion #2
               </Typography>
@@ -119,7 +119,7 @@ export function Multiple() {
         </Accordion.Item>
         <Accordion.Item eventKey="three">
           <Accordion.Toggle>
-            <Stack>
+            <Stack className="w-full">
               <Typography as="span" className="flex-1">
                 Accordion #3
               </Typography>

@@ -10,6 +10,8 @@
   --color-dark: #1e2129;
   --color-light: #f8f9fa;
 
+  --radius: 0.5rem;
+
   --default-transition-duration: 300ms;
 }
 

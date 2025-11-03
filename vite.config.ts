@@ -31,7 +31,7 @@ export default defineConfig({
       formats: ["es", "cjs"],
     },
     rollupOptions: {
-      external: ["react", "react-dom", "axios"],
+      external: ["react", "react-dom", "react/jsx-runtime", "axios"],
       output: {
         banner: '"use client";',
         dir: "dist",
