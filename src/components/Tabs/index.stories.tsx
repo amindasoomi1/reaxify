@@ -15,7 +15,7 @@ const meta: Meta<typeof Tabs> = {
 // type Story = StoryObj<typeof meta>;
 
 export function Default() {
-  const [active, setActive] = useState("contact-info");
+  const [active, setActive] = useState("basic-info");
   return (
     <div className="w-full space-y-4">
       <Tabs active={active} onChange={setActive}>
