@@ -3,13 +3,11 @@ import { useState } from "react";
 import {
   cn,
   copy,
-  getByPath,
   isEmpty,
   isEmptyArray,
   isEmptyObject,
   isEmptyString,
   isEmptyValue,
-  matrixArray,
   randomID,
   replaceNonDigits,
   twoDigitNumber,
@@ -83,14 +81,6 @@ export function IsEmpty() {
     </Stack>
   );
 }
-export function MatrixArray() {
-  const array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
-  return (
-    <Typography>
-      {JSON.stringify(array)} {`=>`} {JSON.stringify(matrixArray(array, 3))}
-    </Typography>
-  );
-}
 export function RandomID() {
   const [id, setID] = useState("");
   return (
@@ -135,20 +125,6 @@ export function Wait() {
       Click me!
     </Button>
   );
-}
-export function GetByPath() {
-  const data = {
-    user: {
-      profile: {
-        name: "Ali",
-        age: 28,
-      },
-    },
-  };
-  const name = getByPath(data, "user.profile.name");
-  const age = getByPath(data, "user.profile.age");
-  const unknownValue = getByPath(data, "user.profile.height", 170);
-  return <Typography>{JSON.stringify({ name, age, unknownValue })}</Typography>;
 }
 
 export default meta;

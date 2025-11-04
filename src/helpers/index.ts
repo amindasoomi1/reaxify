@@ -1,6 +1,5 @@
 export { default as cn } from "./cn";
 export { default as copy } from "./copy";
-export { default as getByPath } from "./getByPath";
 export {
   isEmpty,
   isEmptyArray,
@@ -9,7 +8,6 @@ export {
   isEmptyValue,
 } from "./isEmpty";
 export { default as isServer } from "./isServer";
-export { default as matrixArray } from "./matrixArray";
 export { default as randomID } from "./randomID";
 export { default as replaceNonDigits } from "./replaceNonDigits";
 export { default as replacePersianNumbers } from "./replacePersianNumbers";
