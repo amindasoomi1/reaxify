@@ -51,7 +51,8 @@
     "release": "npm run build && npm version patch --no-git-tag-version --no-commit-hooks && npm publish",
     "preview": "vite preview",
     "storybook": "storybook dev -p 3000",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "build-vercel": "git config --global user.name 'Vercel Bot' && git config --global user.email 'bot@vercel.com' && storybook build"
   },
   "dependencies": {
     "iconsax-react": "^0.0.8",
