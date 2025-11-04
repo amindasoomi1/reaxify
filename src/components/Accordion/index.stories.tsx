@@ -14,13 +14,10 @@ const meta: Meta<typeof Accordion> = {
 // type Story = StoryObj<typeof meta>;
 
 export function Single() {
-  const [active, setActive] = useState("");
-  const handleChange = (key: string) => {
-    setActive((prev) => (prev === key ? "" : key));
-  };
+  const [active, setActive] = useState<string | null>(null);
   return (
     <Stack variant="vertical" className="gap-4">
-      <Accordion activeKey={active} onChange={handleChange}>
+      <Accordion activeKey={active} variant="single" onChange={setActive}>
         <Accordion.Item eventKey="one">
           <Accordion.Toggle>
             <Stack className="w-full">
@@ -67,16 +64,9 @@ export function Single() {
 }
 export function Multiple() {
   const [active, setActive] = useState<string[]>([]);
-  const handleChange = (key: string) => {
-    setActive((prev) => {
-      const has = prev.includes(key);
-      if (has) return prev.filter((e) => e !== key);
-      return [...prev, key];
-    });
-  };
   return (
     <Stack variant="vertical" className="gap-4">
-      <Accordion activeKey={active} onChange={handleChange}>
+      <Accordion activeKey={active} variant="multiple" onChange={setActive}>
         <Accordion.Item eventKey="one">
           <Accordion.Toggle>
             <Stack className="w-full">

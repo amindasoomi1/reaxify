@@ -14,47 +14,91 @@ import AnimateHeight from "react-animate-height";
 import { twMerge } from "tailwind-merge";
 import { randomID } from "../../helpers";
 
+// ---------------- Types ----------------
+
 type EventKey = string;
-type AccordionContextType = {
-  activeKey: null | EventKey | EventKey[];
-  onChange: Dispatch<EventKey>;
-};
-type AccordionItemContextType = {
-  eventKey: null | EventKey;
-  active: boolean;
-};
-type AccordionProps<T extends EventKey> = {
-  activeKey?: null | T | T[];
-  onChange?: Dispatch<EventKey>;
-};
+
+type AccordionSingleProps<T extends EventKey> = {
+  variant?: "single";
+  activeKey?: T | null;
+  onChange?: Dispatch<T | null>;
+} & ChildrenProps;
+
+type AccordionMultipleProps<T extends EventKey> = {
+  variant: "multiple";
+  activeKey?: T[];
+  onChange?: Dispatch<T[]>;
+} & ChildrenProps;
+
+type AccordionProps<T extends EventKey> =
+  | AccordionSingleProps<T>
+  | AccordionMultipleProps<T>;
+
 type AccordionItemProps = {
-  eventKey?: null | EventKey;
+  eventKey?: EventKey | null;
 };
+
 type AccordionCollapseProps = {
   duration?: number;
 } & ChildrenProps;
 
-const AccordionContext = createContext<AccordionContextType>({
+type AccordionContextType<T extends EventKey> = {
+  activeKey: T | T[] | null;
+  handleChange: (eventKey: T) => void;
+  variant: "single" | "multiple";
+};
+
+type AccordionItemContextType<T extends EventKey> = {
+  eventKey: T | null;
+  active: boolean;
+};
+
+// ---------------- Contexts ----------------
+// eslint-disable-next-line
+const AccordionContext = createContext<AccordionContextType<any>>({
   activeKey: null,
-  onChange: () => {},
+  handleChange: () => {},
+  variant: "single",
 });
-const AccordionItemContext = createContext<AccordionItemContextType>({
+// eslint-disable-next-line
+const AccordionItemContext = createContext<AccordionItemContextType<any>>({
   active: false,
   eventKey: null,
 });
 
-function Accordion<T extends EventKey = "string">({
+// ---------------- Components ----------------
+
+function Accordion<T extends EventKey>({
+  variant = "single",
   activeKey = null,
   onChange = () => {},
   children,
-}: ChildrenProps & AccordionProps<T>) {
+}: AccordionProps<T>) {
+  const handleChange = (eventKey: T) => {
+    if (variant === "single") {
+      const isActive = activeKey === eventKey;
+      (onChange as (key: T | null) => void)(isActive ? null : eventKey);
+    } else {
+      const arr = Array.isArray(activeKey) ? activeKey : [];
+      const isActive = arr.includes(eventKey);
+      const newKeys = isActive
+        ? arr.filter((k) => k !== eventKey)
+        : [...arr, eventKey];
+      (onChange as (key: T[]) => void)(newKeys);
+    }
+  };
+
   return (
-    <AccordionContext.Provider value={{ activeKey, onChange }}>
+    <AccordionContext.Provider value={{ activeKey, handleChange, variant }}>
       {children}
     </AccordionContext.Provider>
   );
 }
-function AccordionItem<E extends ElementType = "div">({
+
+function AccordionItem<
+  E extends ElementType = "div",
+  T extends EventKey = string
+>({
   as,
   eventKey: initEventKey = null,
   className,
@@ -62,15 +106,16 @@ function AccordionItem<E extends ElementType = "div">({
   ...props
 }: ComponentPropsWithAs<E, AccordionItemProps>) {
   const classes = useClasses((s) => s.accordion.item.base);
-  const { activeKey } = useContext(AccordionContext);
+  const { activeKey } = useContext(AccordionContext) as AccordionContextType<T>;
   const Component = as || "div";
   const ID = useMemo(() => randomID(), []);
-  const eventKey = initEventKey || ID;
+  const eventKey = (initEventKey || ID) as T;
+
   const active = useMemo(() => {
-    const isArray = Array.isArray(activeKey);
-    if (isArray) return activeKey.includes(eventKey);
-    return eventKey === activeKey;
+    if (Array.isArray(activeKey)) return activeKey.includes(eventKey);
+    return activeKey === eventKey;
   }, [activeKey, eventKey]);
+
   return (
     <Component
       className={twMerge(
@@ -86,8 +131,9 @@ function AccordionItem<E extends ElementType = "div">({
     </Component>
   );
 }
+
 function AccordionToggle({
-  type,
+  type = "button",
   className,
   children,
   onClick,
@@ -95,11 +141,13 @@ function AccordionToggle({
 }: ComponentProps<"button">) {
   const classes = useClasses((s) => s.accordion.toggle.base);
   const { eventKey } = useContext(AccordionItemContext);
-  const { onChange } = useContext(AccordionContext);
+  const { handleChange } = useContext(AccordionContext);
+
   const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
-    !!eventKey && onChange(eventKey);
+    if (eventKey) handleChange(eventKey);
     onClick?.(e);
   };
+
   return (
     <button
       type={type}
@@ -115,12 +163,14 @@ function AccordionToggle({
     </button>
   );
 }
+
 function AccordionIcon({
   className,
   ...props
 }: Omit<ComponentProps<"svg">, "ref" | "children">) {
   const classes = useClasses((s) => s.accordion.icon);
   const { active } = useContext(AccordionItemContext);
+
   return (
     <ArrowDown2
       color="currentColor"
@@ -135,11 +185,13 @@ function AccordionIcon({
     />
   );
 }
+
 function AccordionCollapse({
   duration = 300,
   children,
 }: AccordionCollapseProps) {
   const { active } = useContext(AccordionItemContext);
+
   return (
     <AnimateHeight
       duration={duration}
@@ -162,12 +214,14 @@ function AccordionCollapse({
     </AnimateHeight>
   );
 }
+
 function AccordionBody({
   className,
   children,
   ...props
 }: ComponentProps<"div">) {
   const classes = useClasses((s) => s.accordion.body.base);
+
   return (
     <div
       className={twMerge(
@@ -181,6 +235,8 @@ function AccordionBody({
     </div>
   );
 }
+
+// ---------------- Composition ----------------
 
 Accordion.Item = AccordionItem;
 Accordion.Toggle = AccordionToggle;
