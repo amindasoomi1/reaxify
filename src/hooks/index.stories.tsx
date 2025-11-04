@@ -1,13 +1,5 @@
 import type { Meta } from "@storybook/react";
-import { useRef } from "react";
-import {
-  useCreateRipple,
-  useDebounce,
-  useKeyDown,
-  useMouse,
-  useOutsideClick,
-  usePersistedState,
-} from ".";
+import { useCreateRipple, useDebounce, useKeyDown, usePersistedState } from ".";
 import { Button, Stack, Typography } from "../components";
 
 const meta: Meta = {
@@ -74,28 +66,6 @@ export function PersistedState() {
       <Button type="button" onClick={clearCount}>
         Clear count
       </Button>
-    </Stack>
-  );
-}
-export function Mouse() {
-  const [x, y] = useMouse();
-  return (
-    <Stack className="gap-4">
-      <Typography>X is: {x}</Typography>
-      <Typography>Y is: {y}</Typography>
-    </Stack>
-  );
-}
-export function OutsideClick() {
-  const ref = useRef<HTMLButtonElement>(null);
-  useOutsideClick(ref, () => {
-    // do something
-  });
-  return (
-    <Stack className="gap-4">
-      <button ref={ref} type="button">
-        Click outside me!
-      </button>
     </Stack>
   );
 }
