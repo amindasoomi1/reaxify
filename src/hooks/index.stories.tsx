@@ -42,7 +42,7 @@ export function KeyDown() {
     (key) => {
       console.log("Pressed key:", key);
     },
-    ["Enter", "Escape"]
+    { targetKey: ["Enter", "Escape"] }
   );
 
   useKeyDown((key) => {

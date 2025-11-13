@@ -79,7 +79,12 @@ function Drawer<E extends ElementType = "div">({
     return [anchorResult, classesResult];
   }, [anchor, classes?.anchor]);
   useImperativeHandle(ref, () => divRef.current);
-  useKeyDown(onClose, "Escape", open);
+  useKeyDown(
+    () => {
+      onClose?.();
+    },
+    { skip: !open, targetKey: "Escape" }
+  );
   return (
     <Portal>
       <Transition nodeRef={divRef} in={open} timeout={duration} unmountOnExit>

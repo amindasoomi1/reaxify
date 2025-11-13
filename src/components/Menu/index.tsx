@@ -112,7 +112,12 @@ function Menu<E extends ElementType = "div">({
     };
   }, [positionHandler]);
   useImperativeHandle(ref, () => menuRef.current);
-  useKeyDown(onClose, "Escape", open);
+  useKeyDown(
+    () => {
+      onClose?.();
+    },
+    { skip: !open, targetKey: "Escape" }
+  );
   return (
     <Portal>
       <Transition nodeRef={menuRef} in={open} timeout={300} unmountOnExit>
