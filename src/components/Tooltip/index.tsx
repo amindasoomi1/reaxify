@@ -57,15 +57,15 @@ export default function Tooltip({
     return [colors?.[color], classes?.color?.[color]];
   }, [color, classes?.color]);
   const placementClasses = useMemo(() => {
+    const base =
+      "size-0 min-w-(--width) min-h-(--height) top-(--top) right-(--right) bottom-(--bottom) left-(--left) justify-end items-center p-1.5";
     const placements = {
-      top: "w-(--width) top-(--top) left-(--left) right-(--right) translate-y-[calc(-100%-0.5rem)] flex-col origin-bottom",
-      end: "h-(--height) top-(--top) bottom-(--bottom) left-(--right) translate-x-[0.5rem] flex-row-reverse origin-start",
-      bottom:
-        "w-(--width) top-(--bottom) left-(--left) right-(--right) translate-y-[0.5rem] flex-col-reverse origin-top",
-      start:
-        "h-(--height) top-(--top) bottom-(--bottom) left-(--left) translate-x-[calc(var(--ratio)*-100%-0.5rem)] flex-row origin-start",
+      top: "-translate-y-full flex-col origin-bottom",
+      end: "translate-x-full flex-row-reverse origin-start",
+      bottom: "translate-y-full flex-col-reverse origin-top",
+      start: "-translate-x-full flex-row origin-start",
     };
-    return [placements[placement], classes?.placement?.[placement]];
+    return [base, placements[placement], classes?.placement?.[placement]];
   }, [placement, classes?.placement]);
   const transitionClasses: TransitionClasses = {
     entering: "scale-100 opacity-100",
@@ -150,7 +150,7 @@ export default function Tooltip({
               ref={divRef}
               style={position}
               className={cn(
-                "fixed flex justify-center items-center z-10 pointer-events-none transition-[scale,opacity] [--ratio:1] rtl:[--ratio:-1]",
+                "fixed flex justify-center items-center z-10 pointer-events-none transition-[scale,opacity]",
                 ...placementClasses,
                 transitionClasses[state]
               )}
