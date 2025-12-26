@@ -21,7 +21,7 @@ type Sizes = {
 export default function Badge<E extends ElementType = "span">({
   as,
   variant = "solid",
-  color = null,
+  color = "primary",
   size = "md",
   className,
   children,
