@@ -89,7 +89,7 @@ function Menu<E extends ElementType = "div">({
     left = Math.min(Math.max(left, offset), viewportWidth - menuWidth - offset);
     right = Math.min(
       Math.max(viewportWidth - rect.right, offset),
-      viewportWidth - menuWidth - offset
+      viewportWidth - menuWidth - offset,
     );
     top = Math.min(Math.max(top, offset), viewportHeight - menuHeight - offset);
 
@@ -116,7 +116,7 @@ function Menu<E extends ElementType = "div">({
     () => {
       onClose?.();
     },
-    { skip: !open, targetKey: "Escape" }
+    { skip: !open, targetKey: "Escape" },
   );
   return (
     <Portal>
@@ -139,7 +139,7 @@ function Menu<E extends ElementType = "div">({
                   "w-fit min-w-[12.5rem] bg-white shadow rounded p-2 transition-[scale,opacity] absolute top-[var(--top)] left-[var(--left)] right-auto origin-top-left rtl:left-auto rtl:right-[var(--right)] rtl:origin-top-right",
                   classes,
                   transitionClasses[state],
-                  className
+                  className,
                 )}
                 {...props}
               >
@@ -165,7 +165,7 @@ function Container({ children }: ChildrenProps) {
     <div
       className={twMerge(
         "fixed inset-0 size-full flex flex-col bg-transparent transition-opacity overflow-hidden z-10",
-        classes[transitionState]
+        classes[transitionState],
       )}
     >
       {children}
@@ -185,13 +185,13 @@ function Backdrop() {
 function MenuItem<E extends ElementType = "button">({
   as,
   closeOnClick: itemCloseOnClick,
-  type = "button",
   className,
   children,
   onClick,
   ...props
 }: ComponentPropsWithAs<E, MenuItemProps>) {
-  const Component = as || "div";
+  const Component = as || "button";
+  const handleType = Component === "button" ? "button" : undefined;
   const classes = useClasses((c) => c.menu.item.base);
   const { closeOnClick: menuCloseOnClick, onClose } = useContext(MenuContext);
   const closeOnClick = itemCloseOnClick ?? menuCloseOnClick;
@@ -201,11 +201,11 @@ function MenuItem<E extends ElementType = "button">({
   };
   return (
     <Component
-      type={type}
+      type={handleType}
       className={twMerge(
-        "flex items-center px-3 py-2 w-full text-dark text-base font-normal rounded transition-colors hover:bg-dark hover:text-white",
+        "flex items-center px-3 py-2 w-full text-dark text-base font-normal rounded cursor-pointer transition-colors hover:bg-dark hover:text-white",
         classes,
-        className
+        className,
       )}
       onClick={handleClick}
       {...props}
