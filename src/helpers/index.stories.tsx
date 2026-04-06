@@ -10,6 +10,7 @@ import {
   isEmptyValue,
   randomID,
   replaceNonDigits,
+  scrollIntoView,
   twoDigitNumber,
   wait,
 } from ".";
@@ -124,6 +125,33 @@ export function Wait() {
     <Button type="button" onClick={handleClick}>
       Click me!
     </Button>
+  );
+}
+export function ScrollIntoView() {
+  const handleClick = () => {
+    scrollIntoView("#element");
+  };
+  return (
+    <Stack variant="vertical" className="gap-4 items-start">
+      <Button type="button" onClick={handleClick}>
+        Scroll to element
+      </Button>
+      {[...Array(50).keys()].map((key) => {
+        const isActive = key === 30;
+        return (
+          <Typography
+            key={key}
+            id={isActive ? "element" : undefined}
+            className={cn(isActive && "underline font-bold")}
+          >
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatum
+            commodi sunt perspiciatis id, culpa tenetur officia! Est molestias,
+            deserunt aut illo delectus vel accusamus perferendis ex, quo
+            doloremque recusandae rerum!
+          </Typography>
+        );
+      })}
+    </Stack>
   );
 }
 

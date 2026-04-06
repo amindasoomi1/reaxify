@@ -1,10 +1,12 @@
 export default function scrollIntoView(
-  element: HTMLElement,
-  option: ScrollIntoViewOptions = {
+  el: HTMLElement | string,
+  option: ScrollIntoViewOptions | boolean | undefined = {
     block: "center",
     inline: "center",
     behavior: "smooth",
-  }
+  },
 ) {
-  element.scrollIntoView(option);
+  const isString = typeof el === "string";
+  const element = isString ? document.querySelector(el) : el;
+  element?.scrollIntoView(option);
 }
