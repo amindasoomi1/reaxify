@@ -3,6 +3,5 @@ export { default as useCreateRipple } from "./useCreateRipple";
 export { default as useDebounce } from "./useDebounce";
 export { default as useDocumentVisible } from "./useDocumentVisible";
 export { default as useIsOffline } from "./useIsOffline";
-export { default as useKeyDown } from "./useKeyDown";
 export { default as usePersistedState } from "./usePersistedState";
 export { default as useToggle } from "./useToggle";

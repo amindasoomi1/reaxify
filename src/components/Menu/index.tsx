@@ -1,6 +1,7 @@
-import { useClasses, useKeyDown } from "@/hooks";
+import { useClasses } from "@/hooks";
 import { ChildrenProps, ComponentPropsWithAs, ToggleProps } from "@/types";
 import { TransitionClasses } from "@/types/internal";
+import { useHotkey } from "@tanstack/react-hotkeys";
 import {
   createContext,
   ElementType,
@@ -27,7 +28,7 @@ type MenuItemProps = {
 type MenuContextType = {
   transitionState: TransitionStatus;
   closeOnClick: boolean;
-} & ToggleProps;
+} & Partial<ToggleProps>;
 
 const MenuContext = createContext<MenuContextType>({
   open: false,
@@ -112,12 +113,7 @@ function Menu<E extends ElementType = "div">({
     };
   }, [positionHandler]);
   useImperativeHandle(ref, () => menuRef.current);
-  useKeyDown(
-    () => {
-      onClose?.();
-    },
-    { skip: !open, targetKey: "Escape" },
-  );
+  useHotkey("Escape", () => onClose?.(), { enabled: open });
   return (
     <Portal>
       <Transition nodeRef={menuRef} in={open} timeout={300} unmountOnExit>

@@ -1,8 +1,9 @@
 import { cn } from "@/helpers";
-import { useClasses, useKeyDown } from "@/hooks";
+import { useClasses } from "@/hooks";
 import { ComponentPropsWithAs, Size, ToggleProps } from "@/types";
 import { TransitionClasses } from "@/types/internal";
 
+import { useHotkey } from "@tanstack/react-hotkeys";
 import {
   ComponentProps,
   createContext,
@@ -24,7 +25,7 @@ type Context = {
   transitionState: TransitionStatus;
   duration: number;
 };
-type ModalProps = { size?: Size; duration?: number } & ToggleProps;
+type ModalProps = { size?: Size; duration?: number } & Partial<ToggleProps>;
 type ModalDialogProps = Omit<ComponentProps<"div">, "as" | "ref">;
 type ModalHeaderProps = ComponentProps<"div">;
 type ModalBodyProps = ComponentProps<"div">;
@@ -60,12 +61,7 @@ function Modal<E extends ElementType = "div">({
     unmounted: "",
   };
   useImperativeHandle(ref, () => divRef.current);
-  useKeyDown(
-    () => {
-      onClose?.();
-    },
-    { skip: !open, targetKey: "Escape" }
-  );
+  useHotkey("Escape", () => onClose(), { enabled: open });
   return (
     <Portal>
       <Transition nodeRef={divRef} in={open} timeout={duration} unmountOnExit>
@@ -78,7 +74,7 @@ function Modal<E extends ElementType = "div">({
               "modal fixed size-full inset-0 flex flex-col z-10 bg-black/20 transition-opacity backdrop-blur p-4",
               classes,
               transitionClasses[state],
-              className
+              className,
             )}
             {...props}
           >
@@ -125,7 +121,7 @@ function ModalDialog({ className, children, ...props }: ModalDialogProps) {
         classes?.base,
         modalSize,
         transitionClasses[transitionState],
-        className
+        className,
       )}
       {...props}
     >

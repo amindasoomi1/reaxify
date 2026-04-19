@@ -1,6 +1,6 @@
 import type { Meta } from "@storybook/react";
-import { useCreateRipple, useDebounce, useKeyDown, usePersistedState } from ".";
-import { Button, Stack, Typography } from "../components";
+import { useCreateRipple, useDebounce, usePersistedState } from ".";
+import { Button, Stack } from "../components";
 
 const meta: Meta = {
   title: "Hooks",
@@ -36,19 +36,6 @@ export function Debounce() {
       }}
     />
   );
-}
-export function KeyDown() {
-  useKeyDown(
-    (key) => {
-      console.log("Pressed key:", key);
-    },
-    { targetKey: ["Enter", "Escape"] }
-  );
-
-  useKeyDown((key) => {
-    console.log("Any key pressed:", key);
-  });
-  return <Typography>Press key and check console log</Typography>;
 }
 export function PersistedState() {
   const [count, setCount, clearCount] = usePersistedState(0, { name: "count" });

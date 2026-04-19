@@ -1,6 +1,7 @@
-import { useClasses, useKeyDown } from "@/hooks";
+import { useClasses } from "@/hooks";
 import { ComponentPropsWithAs, ToggleProps } from "@/types";
 import { TransitionClasses } from "@/types/internal";
+import { useHotkey } from "@tanstack/react-hotkeys";
 import {
   ComponentProps,
   createContext,
@@ -27,7 +28,7 @@ type Context = {
 type DrawerBaseProps = {
   anchor?: Anchor;
   duration?: number;
-} & ToggleProps;
+} & Partial<ToggleProps>;
 type DrawerProps<E extends ElementType> = ComponentPropsWithAs<
   E,
   DrawerBaseProps
@@ -79,12 +80,7 @@ function Drawer<E extends ElementType = "div">({
     return [anchorResult, classesResult];
   }, [anchor, classes?.anchor]);
   useImperativeHandle(ref, () => divRef.current);
-  useKeyDown(
-    () => {
-      onClose?.();
-    },
-    { skip: !open, targetKey: "Escape" }
-  );
+  useHotkey("Escape", () => onClose(), { enabled: open });
   return (
     <Portal>
       <Transition nodeRef={divRef} in={open} timeout={duration} unmountOnExit>
@@ -98,7 +94,7 @@ function Drawer<E extends ElementType = "div">({
               classes?.base,
               transitionClasses[state],
               anchorClasses,
-              className
+              className,
             )}
             {...props}
           >
@@ -131,8 +127,8 @@ function DrawerMenu({ children, className = "", ...props }: DrawerMenuProps) {
     const result: AnchorClasses = {
       start: "w-[31.875rem] h-full max-w-[92.5%] rounded-e me-auto",
       end: "w-[31.875rem] h-full max-w-[92.5%] rounded-s ms-auto",
-      top: "w-full h-[31.875rem] max-h-[92.5%] rounded-b mb-auto",
-      bottom: "w-full h-[31.875rem] max-h-[92.5%] rounded-t mt-auto",
+      top: "w-full max-h-[92.5%] rounded-b mb-auto",
+      bottom: "w-full max-h-[92.5%] rounded-t mt-auto",
     };
     const classesResult = classes?.anchor?.[anchor];
     return [result[anchor], classesResult];
@@ -179,7 +175,7 @@ function DrawerMenu({ children, className = "", ...props }: DrawerMenuProps) {
         classes?.base,
         transitionClasses[transitionState],
         anchorClasses,
-        className
+        className,
       )}
       {...props}
     >
