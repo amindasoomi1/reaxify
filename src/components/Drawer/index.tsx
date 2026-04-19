@@ -19,12 +19,10 @@ import Portal from "../Portal";
 
 type Anchor = "start" | "end" | "top" | "bottom";
 type Context = {
-  open: boolean;
-  onClose: VoidFunction;
   duration: number;
   anchor: Anchor;
   transitionState: TransitionStatus;
-};
+} & ToggleProps;
 type DrawerBaseProps = {
   anchor?: Anchor;
   duration?: number;

@@ -20,11 +20,9 @@ import Portal from "../Portal";
 
 type Context = {
   size: Size;
-  open: boolean;
-  onClose: VoidFunction;
   transitionState: TransitionStatus;
   duration: number;
-};
+} & ToggleProps;
 type ModalProps = { size?: Size; duration?: number } & Partial<ToggleProps>;
 type ModalDialogProps = Omit<ComponentProps<"div">, "as" | "ref">;
 type ModalHeaderProps = ComponentProps<"div">;

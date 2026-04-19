@@ -17,10 +17,10 @@ import { twMerge } from "tailwind-merge";
 import Portal from "../Portal";
 
 type Position = { left: number; top: number; right: number };
-type MenuProps = ToggleProps & {
+type MenuProps = {
   anchorEl?: HTMLElement | null;
   closeOnClick?: boolean;
-};
+} & ToggleProps;
 type MenuItemProps = {
   closeOnClick?: boolean;
 };
