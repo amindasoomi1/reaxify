@@ -87,6 +87,9 @@ export type ThemeProviderContextType = {
       base: string;
       variants: { horizontal: string; vertical: string };
     };
+    fill: {
+      base: string;
+    };
     table: {
       base: string;
       container: { base: string };

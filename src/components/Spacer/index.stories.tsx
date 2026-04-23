@@ -1,10 +1,10 @@
 import type { Meta } from "@storybook/react";
-import { default as Skeleton, default as Spacer } from ".";
+import { default as Spacer } from ".";
 import Stack from "../Stack";
 
-const meta: Meta<typeof Skeleton> = {
+const meta: Meta<typeof Spacer> = {
   title: "Component/Spacer",
-  component: Skeleton,
+  component: Spacer,
   parameters: { layout: "padded" },
   tags: ["autodocs"],
 };
