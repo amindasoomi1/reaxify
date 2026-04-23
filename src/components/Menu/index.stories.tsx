@@ -74,4 +74,25 @@ export function CloseOnClickOneItem() {
     </Fragment>
   );
 }
+export function PreventClose() {
+  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+  const open = !!anchorEl;
+  const handleClick = (e: MouseEvent<HTMLElement>) => {
+    setAnchorEl(e.currentTarget);
+  };
+  const handleCLose = () => {
+    setAnchorEl(null);
+  };
+  return (
+    <Fragment>
+      <Button onClick={handleClick}>Dropdown</Button>
+      <Menu anchorEl={anchorEl} open={open} onClose={handleCLose} preventClose>
+        <Menu.Item onClick={handleCLose}>Item #1</Menu.Item>
+        <Menu.Item>Item #2</Menu.Item>
+        <Menu.Item>Item #3</Menu.Item>
+        <Menu.Item>Item #4</Menu.Item>
+      </Menu>
+    </Fragment>
+  );
+}
 export default meta;

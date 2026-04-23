@@ -110,4 +110,42 @@ export function Anchor() {
     </ButtonGroup>
   );
 }
+export function PreventClose() {
+  const [openDrawer, toggleDrawer, closeDrawer] = useToggle(false);
+  return (
+    <div>
+      <Button type="button" onClick={toggleDrawer}>
+        Show drawer
+      </Button>
+      <Drawer open={openDrawer} onClose={closeDrawer} preventClose>
+        <Drawer.Menu>
+          <Drawer.Header>
+            <Typography variant="heading-6">Drawer header</Typography>
+          </Drawer.Header>
+          <Drawer.Body>
+            <Typography variant="body-1">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              Consequatur atque debitis fugiat voluptatum facere, voluptate
+              sapiente accusantium, dolor dicta mollitia corporis quas possimus
+              omnis minus sequi, recusandae earum deserunt? Doloremque.
+            </Typography>
+          </Drawer.Body>
+          <Drawer.Footer className="flex items-center *:flex-1 gap-4">
+            <Button
+              type="button"
+              variant="outline"
+              color="danger"
+              onClick={closeDrawer}
+            >
+              Cancel
+            </Button>
+            <Button type="button" variant="solid" color="success">
+              Understood
+            </Button>
+          </Drawer.Footer>
+        </Drawer.Menu>
+      </Drawer>
+    </div>
+  );
+}
 export default meta;

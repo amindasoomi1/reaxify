@@ -121,11 +121,11 @@ export default function Button<E extends ElementType = "button">({
     if (loading)
       return cn(
         "disabled:opacity-100 disabled:cursor-wait disabled:text-transparent",
-        classes?.loading?.active
+        classes?.loading?.active,
       );
     return cn(
       "disabled:opacity-75 disabled:cursor-not-allowed",
-      classes?.loading?.inactive
+      classes?.loading?.inactive,
     );
   }, [loading, classes?.loading]);
   const handleClick = (e: MouseEvent<HTMLElement>) => {
@@ -139,7 +139,7 @@ export default function Button<E extends ElementType = "button">({
   return (
     <Component
       className={twMerge(
-        "relative inline-block no-underline whitespace-nowrap font-medium text-center rounded border border-[#e8eaee] cursor-pointer transition-[box-shadow,opacity,color,background-color,border-color]",
+        "relative inline-block no-underline whitespace-nowrap font-medium text-center rounded border border-[#e8eaee] cursor-pointer transition-[box-shadow,opacity,color,background-color,border-color] [user-select:none]",
         // "focus:outline-none focus:ring-2 focus:ring-offset-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
         // variant === "solid"
         //   ? "shadow hover:shadow-md active:shadow-lg"
@@ -150,7 +150,7 @@ export default function Button<E extends ElementType = "button">({
         sizeClasses,
         loadingDisabledClasses,
         buttonGroupContext.buttonClasses,
-        className
+        className,
       )}
       onClick={handleClick}
       disabled={disabled || loading}

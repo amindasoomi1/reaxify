@@ -1,3 +1,4 @@
+import { cn } from "@/helpers";
 import { useClasses } from "@/hooks";
 import { ChildrenProps, ComponentPropsWithAs, ToggleProps } from "@/types";
 import { TransitionClasses } from "@/types/internal";
@@ -20,6 +21,7 @@ type Position = { left: number; top: number; right: number };
 type MenuProps = {
   anchorEl?: HTMLElement | null;
   closeOnClick?: boolean;
+  preventClose?: boolean;
 } & ToggleProps;
 type MenuItemProps = {
   closeOnClick?: boolean;
@@ -28,6 +30,7 @@ type MenuItemProps = {
 type MenuContextType = {
   transitionState: TransitionStatus;
   closeOnClick: boolean;
+  preventClose: boolean;
 } & Partial<ToggleProps>;
 
 const MenuContext = createContext<MenuContextType>({
@@ -35,6 +38,7 @@ const MenuContext = createContext<MenuContextType>({
   onClose: () => {},
   transitionState: "unmounted",
   closeOnClick: false,
+  preventClose: false,
 });
 
 function Menu<E extends ElementType = "div">({
@@ -43,6 +47,7 @@ function Menu<E extends ElementType = "div">({
   open,
   onClose,
   closeOnClick = false,
+  preventClose = false,
   anchorEl = null,
   className,
   children,
@@ -97,6 +102,10 @@ function Menu<E extends ElementType = "div">({
     setPosition({ left, right, top });
     setPositionProperty({ left, right, top });
   }, [open, anchorEl, setPosition, setPositionProperty]);
+  const handleCLose = () => {
+    if (preventClose) return;
+    onClose?.();
+  };
 
   useEffect(() => {
     positionHandler();
@@ -113,7 +122,7 @@ function Menu<E extends ElementType = "div">({
     };
   }, [positionHandler]);
   useImperativeHandle(ref, () => menuRef.current);
-  useHotkey("Escape", () => onClose?.(), { enabled: open });
+  useHotkey("Escape", () => onClose?.(), { enabled: open && !preventClose });
   return (
     <Portal>
       <Transition nodeRef={menuRef} in={open} timeout={300} unmountOnExit>
@@ -121,9 +130,10 @@ function Menu<E extends ElementType = "div">({
           <MenuContext.Provider
             value={{
               open,
-              onClose,
+              onClose: handleCLose,
               transitionState: state,
               closeOnClick,
+              preventClose,
             }}
           >
             <Container>
@@ -132,7 +142,7 @@ function Menu<E extends ElementType = "div">({
                 ref={menuRef}
                 data-open={open}
                 className={twMerge(
-                  "w-fit min-w-[12.5rem] bg-white shadow rounded p-2 transition-[scale,opacity] absolute top-[var(--top)] left-[var(--left)] right-auto origin-top-left rtl:left-auto rtl:right-[var(--right)] rtl:origin-top-right",
+                  "w-fit min-w-52 bg-white shadow rounded p-2 transition-[scale,opacity] absolute top-(--top) left-(--left) right-auto origin-top-left rtl:left-auto rtl:right-(--right) rtl:origin-top-right",
                   classes,
                   transitionClasses[state],
                   className,
@@ -169,11 +179,14 @@ function Container({ children }: ChildrenProps) {
   );
 }
 function Backdrop() {
-  const { onClose } = useContext(MenuContext);
+  const { onClose, preventClose } = useContext(MenuContext);
   return (
     <button
       type="button"
-      className="w-full flex-1 opacity-0 cursor-default lg:absolute lg:size-full lg:inset-0"
+      className={cn(
+        "w-full flex-1 opacity-0 cursor-default lg:absolute lg:size-full lg:inset-0",
+        preventClose && "[&:active~*]:scale-95",
+      )}
       onClick={onClose}
     ></button>
   );

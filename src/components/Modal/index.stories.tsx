@@ -46,4 +46,42 @@ export function Default() {
     </div>
   );
 }
+export function PreventClose() {
+  const [openModal, toggleModal, closeModal] = useToggle(false);
+  return (
+    <div>
+      <Button type="button" onClick={toggleModal}>
+        Show modal
+      </Button>
+      <Modal open={openModal} onClose={closeModal} preventClose>
+        <Modal.Dialog>
+          <Modal.Header>
+            <Typography variant="heading-6">Modal header</Typography>
+          </Modal.Header>
+          <Modal.Body>
+            <Typography variant="body-1">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              Consequatur atque debitis fugiat voluptatum facere, voluptate
+              sapiente accusantium, dolor dicta mollitia corporis quas possimus
+              omnis minus sequi, recusandae earum deserunt? Doloremque.
+            </Typography>
+          </Modal.Body>
+          <Modal.Footer className="flex items-center *:flex-1 gap-4">
+            <Button
+              type="button"
+              variant="outline"
+              color="danger"
+              onClick={closeModal}
+            >
+              Cancel
+            </Button>
+            <Button type="button" variant="solid" color="success">
+              Accept
+            </Button>
+          </Modal.Footer>
+        </Modal.Dialog>
+      </Modal>
+    </div>
+  );
+}
 export default meta;

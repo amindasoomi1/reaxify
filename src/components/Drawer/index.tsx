@@ -22,10 +22,12 @@ type Context = {
   duration: number;
   anchor: Anchor;
   transitionState: TransitionStatus;
+  preventClose: boolean;
 } & ToggleProps;
 type DrawerBaseProps = {
   anchor?: Anchor;
   duration?: number;
+  preventClose?: boolean;
 } & Partial<ToggleProps>;
 type DrawerProps<E extends ElementType> = ComponentPropsWithAs<
   E,
@@ -43,6 +45,7 @@ export const DrawerContext = createContext<Context>({
   duration: 300,
   anchor: "start",
   transitionState: "unmounted",
+  preventClose: false,
 });
 
 function Drawer<E extends ElementType = "div">({
@@ -51,6 +54,7 @@ function Drawer<E extends ElementType = "div">({
   open = false,
   onClose = () => {},
   duration = 300,
+  preventClose = false,
   anchor = "end",
   className = "",
   children,
@@ -77,8 +81,12 @@ function Drawer<E extends ElementType = "div">({
     const anchorResult = result[anchor];
     return [anchorResult, classesResult];
   }, [anchor, classes?.anchor]);
+  const handleClose = () => {
+    if (preventClose) return;
+    onClose();
+  };
   useImperativeHandle(ref, () => divRef.current);
-  useHotkey("Escape", () => onClose(), { enabled: open });
+  useHotkey("Escape", () => onClose(), { enabled: open && !preventClose });
   return (
     <Portal>
       <Transition nodeRef={divRef} in={open} timeout={duration} unmountOnExit>
@@ -98,16 +106,20 @@ function Drawer<E extends ElementType = "div">({
           >
             <button
               type="button"
-              onClick={() => onClose()}
-              className="absolute inset-0 size-full cursor-default opacity-0"
+              onClick={handleClose}
+              className={cn(
+                "absolute inset-0 size-full cursor-default opacity-0",
+                preventClose && "[&:active~*]:scale-95",
+              )}
             />
             <DrawerContext.Provider
               value={{
                 open,
-                onClose,
+                onClose: handleClose,
                 transitionState: state,
                 duration,
                 anchor,
+                preventClose,
               }}
             >
               {children}
@@ -120,7 +132,8 @@ function Drawer<E extends ElementType = "div">({
 }
 function DrawerMenu({ children, className = "", ...props }: DrawerMenuProps) {
   const classes = useClasses((c) => c.drawer.menu);
-  const { anchor, duration, transitionState } = useContext(DrawerContext);
+  const { anchor, duration, transitionState, preventClose } =
+    useContext(DrawerContext);
   const anchorClasses = useMemo(() => {
     const result: AnchorClasses = {
       start: "w-[31.875rem] h-full max-w-[92.5%] rounded-e me-auto",
@@ -170,6 +183,7 @@ function DrawerMenu({ children, className = "", ...props }: DrawerMenuProps) {
       style={{ transitionDuration: `${duration}ms` }}
       className={twMerge(
         "relative flex flex-col transition-[translate,width] rounded-none",
+        preventClose && "transition-transform",
         classes?.base,
         transitionClasses[transitionState],
         anchorClasses,

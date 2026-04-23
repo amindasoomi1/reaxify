@@ -23,7 +23,11 @@ type Context = {
   transitionState: TransitionStatus;
   duration: number;
 } & ToggleProps;
-type ModalProps = { size?: Size; duration?: number } & Partial<ToggleProps>;
+type ModalProps = {
+  size?: Size;
+  duration?: number;
+  preventClose?: boolean;
+} & Partial<ToggleProps>;
 type ModalDialogProps = Omit<ComponentProps<"div">, "as" | "ref">;
 type ModalHeaderProps = ComponentProps<"div">;
 type ModalBodyProps = ComponentProps<"div">;
@@ -44,6 +48,7 @@ function Modal<E extends ElementType = "div">({
   open = false,
   onClose = () => {},
   duration = 300,
+  preventClose = false,
   className,
   children,
   ...props
@@ -58,8 +63,12 @@ function Modal<E extends ElementType = "div">({
     exited: "opacity-0 pointer-events-none",
     unmounted: "",
   };
+  const handleClose = () => {
+    if (preventClose) return;
+    onClose();
+  };
   useImperativeHandle(ref, () => divRef.current);
-  useHotkey("Escape", () => onClose(), { enabled: open });
+  useHotkey("Escape", () => onClose(), { enabled: open && !preventClose });
   return (
     <Portal>
       <Transition nodeRef={divRef} in={open} timeout={duration} unmountOnExit>
@@ -78,11 +87,20 @@ function Modal<E extends ElementType = "div">({
           >
             <button
               type="button"
-              onClick={() => onClose()}
-              className="absolute inset-0 cursor-default opacity-0"
+              onClick={handleClose}
+              className={cn(
+                "absolute inset-0 cursor-default opacity-0",
+                preventClose && "[&:active~*]:scale-95",
+              )}
             />
             <ModalContext.Provider
-              value={{ size, open, onClose, transitionState: state, duration }}
+              value={{
+                size,
+                open,
+                onClose: handleClose,
+                transitionState: state,
+                duration,
+              }}
             >
               {children}
             </ModalContext.Provider>
