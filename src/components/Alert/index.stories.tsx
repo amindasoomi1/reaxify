@@ -16,10 +16,10 @@ const meta: Meta<typeof Alert> = {
   tags: ["autodocs"],
 };
 
-export function Solid() {
+export function Soft() {
   return (
     <Stack variant="vertical" className="gap-4">
-      <Alert color="success" variant="solid">
+      <Alert color="success" variant="soft">
         <Alert.Icon>
           <TickCircle color="currentColor" variant="Linear" />
         </Alert.Icon>
@@ -28,17 +28,13 @@ export function Solid() {
           <Alert.Description>This is a success alert.</Alert.Description>
         </Alert.Content>
         <Alert.Action>
-          <Button type="button">
-            <CloseCircle
-              color="currentColor"
-              variant="Linear"
-              className="size-5"
-            />
+          <Button type="button" size="icon">
+            <CloseCircle color="currentColor" variant="Linear" />
           </Button>
         </Alert.Action>
       </Alert>
 
-      <Alert color="info" variant="solid">
+      <Alert color="info" variant="soft">
         <Alert.Icon>
           <InfoCircle color="currentColor" variant="Linear" />
         </Alert.Icon>
@@ -47,17 +43,13 @@ export function Solid() {
           <Alert.Description>This is an info alert.</Alert.Description>
         </Alert.Content>
         <Alert.Action>
-          <Button type="button">
-            <CloseCircle
-              color="currentColor"
-              variant="Linear"
-              className="size-5"
-            />
+          <Button type="button" size="icon">
+            <CloseCircle color="currentColor" variant="Linear" />
           </Button>
         </Alert.Action>
       </Alert>
 
-      <Alert color="warning" variant="solid">
+      <Alert color="warning" variant="soft">
         <Alert.Icon>
           <Information color="currentColor" variant="Linear" />
         </Alert.Icon>
@@ -66,17 +58,13 @@ export function Solid() {
           <Alert.Description>This is a warning alert.</Alert.Description>
         </Alert.Content>
         <Alert.Action>
-          <Button type="button">
-            <CloseCircle
-              color="currentColor"
-              variant="Linear"
-              className="size-5"
-            />
+          <Button type="button" size="icon">
+            <CloseCircle color="currentColor" variant="Linear" />
           </Button>
         </Alert.Action>
       </Alert>
 
-      <Alert color="danger" variant="solid">
+      <Alert color="danger" variant="soft">
         <Alert.Icon>
           <CloseCircle color="currentColor" variant="Linear" />
         </Alert.Icon>
@@ -85,12 +73,8 @@ export function Solid() {
           <Alert.Description>This is a danger alert.</Alert.Description>
         </Alert.Content>
         <Alert.Action>
-          <Button type="button">
-            <CloseCircle
-              color="currentColor"
-              variant="Linear"
-              className="size-5"
-            />
+          <Button type="button" size="icon">
+            <CloseCircle color="currentColor" variant="Linear" />
           </Button>
         </Alert.Action>
       </Alert>
@@ -109,12 +93,8 @@ export function Outline() {
           <Alert.Description>This is a success alert.</Alert.Description>
         </Alert.Content>
         <Alert.Action>
-          <Button type="button">
-            <CloseCircle
-              color="currentColor"
-              variant="Linear"
-              className="size-5"
-            />
+          <Button type="button" size="icon">
+            <CloseCircle color="currentColor" variant="Linear" />
           </Button>
         </Alert.Action>
       </Alert>
@@ -128,12 +108,8 @@ export function Outline() {
           <Alert.Description>This is an info alert.</Alert.Description>
         </Alert.Content>
         <Alert.Action>
-          <Button type="button">
-            <CloseCircle
-              color="currentColor"
-              variant="Linear"
-              className="size-5"
-            />
+          <Button type="button" size="icon">
+            <CloseCircle color="currentColor" variant="Linear" />
           </Button>
         </Alert.Action>
       </Alert>
@@ -147,12 +123,8 @@ export function Outline() {
           <Alert.Description>This is a warning alert.</Alert.Description>
         </Alert.Content>
         <Alert.Action>
-          <Button type="button">
-            <CloseCircle
-              color="currentColor"
-              variant="Linear"
-              className="size-5"
-            />
+          <Button type="button" size="icon">
+            <CloseCircle color="currentColor" variant="Linear" />
           </Button>
         </Alert.Action>
       </Alert>
@@ -166,22 +138,18 @@ export function Outline() {
           <Alert.Description>This is a danger alert.</Alert.Description>
         </Alert.Content>
         <Alert.Action>
-          <Button type="button">
-            <CloseCircle
-              color="currentColor"
-              variant="Linear"
-              className="size-5"
-            />
+          <Button type="button" size="icon">
+            <CloseCircle color="currentColor" variant="Linear" />
           </Button>
         </Alert.Action>
       </Alert>
     </Stack>
   );
 }
-export function Soft() {
+export function Solid() {
   return (
     <Stack variant="vertical" className="gap-4">
-      <Alert color="success" variant="soft">
+      <Alert color="success" variant="solid">
         <Alert.Icon>
           <TickCircle color="currentColor" variant="Linear" />
         </Alert.Icon>
@@ -190,17 +158,13 @@ export function Soft() {
           <Alert.Description>This is a success alert.</Alert.Description>
         </Alert.Content>
         <Alert.Action>
-          <Button type="button">
-            <CloseCircle
-              color="currentColor"
-              variant="Linear"
-              className="size-5"
-            />
+          <Button type="button" size="icon">
+            <CloseCircle color="currentColor" variant="Linear" />
           </Button>
         </Alert.Action>
       </Alert>
 
-      <Alert color="info" variant="soft">
+      <Alert color="info" variant="solid">
         <Alert.Icon>
           <InfoCircle color="currentColor" variant="Linear" />
         </Alert.Icon>
@@ -209,17 +173,13 @@ export function Soft() {
           <Alert.Description>This is an info alert.</Alert.Description>
         </Alert.Content>
         <Alert.Action>
-          <Button type="button">
-            <CloseCircle
-              color="currentColor"
-              variant="Linear"
-              className="size-5"
-            />
+          <Button type="button" size="icon">
+            <CloseCircle color="currentColor" variant="Linear" />
           </Button>
         </Alert.Action>
       </Alert>
 
-      <Alert color="warning" variant="soft">
+      <Alert color="warning" variant="solid">
         <Alert.Icon>
           <Information color="currentColor" variant="Linear" />
         </Alert.Icon>
@@ -228,17 +188,13 @@ export function Soft() {
           <Alert.Description>This is a warning alert.</Alert.Description>
         </Alert.Content>
         <Alert.Action>
-          <Button type="button">
-            <CloseCircle
-              color="currentColor"
-              variant="Linear"
-              className="size-5"
-            />
+          <Button type="button" size="icon">
+            <CloseCircle color="currentColor" variant="Linear" />
           </Button>
         </Alert.Action>
       </Alert>
 
-      <Alert color="danger" variant="soft">
+      <Alert color="danger" variant="solid">
         <Alert.Icon>
           <CloseCircle color="currentColor" variant="Linear" />
         </Alert.Icon>
@@ -247,12 +203,8 @@ export function Soft() {
           <Alert.Description>This is a danger alert.</Alert.Description>
         </Alert.Content>
         <Alert.Action>
-          <Button type="button">
-            <CloseCircle
-              color="currentColor"
-              variant="Linear"
-              className="size-5"
-            />
+          <Button type="button" size="icon">
+            <CloseCircle color="currentColor" variant="Linear" />
           </Button>
         </Alert.Action>
       </Alert>

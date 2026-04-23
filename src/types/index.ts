@@ -50,6 +50,7 @@ export type TypographyVariant =
   | keyof ExtendTypographyVariant;
 export type Color = BaseColor | keyof ExtendColor;
 export type Size = BaseSize | keyof ExtendSize;
+export type ButtonSize = BaseSize | "icon" | keyof ExtendSize;
 
 export type ClassNameProps = { className?: string };
 export type ChildrenProps = { children?: ReactNode };

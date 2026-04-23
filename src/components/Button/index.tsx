@@ -1,8 +1,14 @@
-import { ButtonVariant, Color, ComponentPropsWithAs, Size } from "@/types";
+import {
+  ButtonSize,
+  ButtonVariant,
+  Color,
+  ComponentPropsWithAs,
+} from "@/types";
 import { ElementType, MouseEvent, useContext, useMemo } from "react";
 import { twMerge } from "tailwind-merge";
 import { cn } from "../../helpers";
 import { useClasses, useCreateRipple } from "../../hooks";
+import { AlertContext } from "../Alert";
 import { ButtonGroupContext } from "../ButtonGroup";
 import { DrawerContext } from "../Drawer";
 import { ModalContext } from "../Modal";
@@ -11,7 +17,7 @@ import Spinner from "../Spinner";
 export type ButtonProps = {
   variant?: ButtonVariant;
   color?: Color;
-  size?: Size;
+  size?: ButtonSize;
   loading?: boolean;
   stopPropagation?: boolean;
   preventDefault?: boolean;
@@ -24,13 +30,13 @@ type Colors = {
   };
 };
 type Sizes = {
-  [key in Size]?: string;
+  [key in ButtonSize]?: string;
 };
 
 export default function Button<E extends ElementType = "button">({
   as,
-  variant: initVariant = "solid",
-  color: initColor = "primary",
+  variant: initVariant,
+  color: initColor,
   size: initSize,
   loading: initLoading,
   stopPropagation = false,
@@ -47,14 +53,16 @@ export default function Button<E extends ElementType = "button">({
   const buttonGroupContext = useContext(ButtonGroupContext);
   const modalContext = useContext(ModalContext);
   const drawerContext = useContext(DrawerContext);
+  const alertContext = useContext(AlertContext);
   const createRipple = useCreateRipple();
   const Component = as || "button";
-  const variant = initVariant ?? buttonGroupContext.variant ?? "solid";
-  const color = useMemo(() => {
-    if (initColor !== undefined) return initColor;
-    if (buttonGroupContext.color !== undefined) return buttonGroupContext.color;
-    return "primary";
-  }, [initColor, buttonGroupContext.color]);
+  const variant =
+    initVariant ??
+    buttonGroupContext.variant ??
+    alertContext.buttonVariant ??
+    "solid";
+  const color =
+    initColor ?? buttonGroupContext.color ?? alertContext.color ?? "primary";
   const size = initSize ?? buttonGroupContext.size ?? "md";
   const loading = initLoading ?? buttonGroupContext.loading ?? false;
   const colorClasses = useMemo(() => {
@@ -114,6 +122,7 @@ export default function Button<E extends ElementType = "button">({
       sm: "text-base py-1 px-3.5",
       md: "text-base py-1.5 px-4",
       lg: "text-lg py-2 px-6",
+      icon: "size-9 p-0 inline-flex items-center justify-center rounded-full [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-5",
     };
     return [sizes?.[size], classes?.size?.[size]];
   }, [size, classes?.size]);
@@ -160,7 +169,11 @@ export default function Button<E extends ElementType = "button">({
       {children}
       {loading && (
         <span className="absolute inset-0 size-full flex items-center justify-center bg-transparent p-2">
-          <Spinner size={size} color={null} className={loadingClasses} />
+          <Spinner
+            size={size === "icon" ? "sm" : size}
+            color={null}
+            className={loadingClasses}
+          />
         </span>
       )}
       <span className="ripple-group absolute size-full inset-0 overflow-hidden rounded-[inherit] pointer-events-none"></span>

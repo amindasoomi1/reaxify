@@ -1,6 +1,7 @@
 import {
   AlertVariant,
   BadgeVariant,
+  ButtonSize,
   ButtonVariant,
   ChildrenProps,
   Color,
@@ -12,6 +13,7 @@ import { createContext } from "react";
 
 type ColorClasses<T> = Record<Color, T>;
 type SizeClasses = Record<Size, string>;
+type ButtonSizeClasses = Record<ButtonSize, string>;
 type ActiveClasses = { active: string; inactive: string };
 
 export type ThemeProviderContextType = {
@@ -31,7 +33,7 @@ export type ThemeProviderContextType = {
     button: {
       base: string;
       color: ColorClasses<Record<ButtonVariant, string>>;
-      size: SizeClasses;
+      size: ButtonSizeClasses;
       loading: ActiveClasses;
     };
     alert: {

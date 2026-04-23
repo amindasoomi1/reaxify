@@ -2,6 +2,7 @@ import { cn } from "@/helpers";
 import { useClasses } from "@/hooks";
 import {
   AlertVariant,
+  ButtonVariant,
   Color,
   ComponentPropsWithAs,
   ComponentPropsWithoutAs,
@@ -17,7 +18,8 @@ type AlertProps = {
   color?: Color;
 };
 type AlertContextType = {
-  color: Color;
+  buttonVariant?: ButtonVariant;
+  color?: Color;
 };
 type Colors = {
   [key in Color]?: {
@@ -25,7 +27,7 @@ type Colors = {
   };
 };
 
-const AlertContext = createContext<AlertContextType>({ color: "primary" });
+export const AlertContext = createContext<AlertContextType>({});
 
 function Alert<E extends ElementType = "div">({
   as,
@@ -84,6 +86,10 @@ function Alert<E extends ElementType = "div">({
     const colorResult = colors?.[color]?.[variant];
     return twMerge(colorResult, classesResult);
   }, [color, variant, classes?.color]);
+  const buttonVariant: ButtonVariant = useMemo(() => {
+    if (variant === "solid") return "solid";
+    return "text";
+  }, [variant]);
   return (
     <Stack
       as={as as ElementType}
@@ -95,7 +101,7 @@ function Alert<E extends ElementType = "div">({
       )}
       {...props}
     >
-      <AlertContext.Provider value={{ color }}>
+      <AlertContext.Provider value={{ color, buttonVariant }}>
         {children}
       </AlertContext.Provider>
     </Stack>
@@ -106,10 +112,12 @@ function AlertIcon({
   className,
   ...props
 }: ComponentPropsWithoutAs<"div">) {
+  const classes = useClasses((c) => c.alert?.icon?.base);
   return (
     <div
       className={twMerge(
         "flex flex-col py-2 items-start justify-start *:size-[1.375rem] *:text-current",
+        classes,
         className,
       )}
       {...props}
@@ -123,10 +131,11 @@ function AlertContent({
   className,
   ...props
 }: ComponentPropsWithoutAs<"div">) {
+  const classes = useClasses((c) => c.alert?.content.base);
   return (
     <Fill
       as="div"
-      className={twMerge("py-2 space-y-0.5", className)}
+      className={twMerge("py-2 space-y-0.5", classes, className)}
       {...props}
     >
       {children}
@@ -138,11 +147,12 @@ function AlertTitle({
   className,
   ...props
 }: ComponentPropsWithoutAs<typeof Typography<"h6">>) {
+  const classes = useClasses((c) => c.alert?.title.base);
   return (
     <Typography
       as="h6"
       variant="body-1"
-      className={twMerge("w-full -mt-px font-medium", className)}
+      className={twMerge("w-full -mt-px font-medium", classes, className)}
       {...props}
     >
       {children}
@@ -154,10 +164,11 @@ function AlertDescription({
   className,
   ...props
 }: ComponentPropsWithoutAs<typeof Typography<"p">>) {
+  const classes = useClasses((c) => c.alert?.description.base);
   return (
     <Typography
       variant="body-2"
-      className={twMerge("w-full font-normal", className)}
+      className={twMerge("w-full font-normal", classes, className)}
       {...props}
     >
       {children}
@@ -169,8 +180,12 @@ function AlertAction({
   className,
   ...props
 }: ComponentPropsWithoutAs<"div">) {
+  const classes = useClasses((c) => c.alert?.action?.base);
   return (
-    <div className={twMerge("", className)} {...props}>
+    <div
+      className={twMerge("self-center size-fit", classes, className)}
+      {...props}
+    >
       {children}
     </div>
   );
