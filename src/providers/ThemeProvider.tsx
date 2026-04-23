@@ -1,4 +1,5 @@
 import {
+  AlertVariant,
   BadgeVariant,
   ButtonVariant,
   ChildrenProps,
@@ -32,6 +33,15 @@ export type ThemeProviderContextType = {
       color: ColorClasses<Record<ButtonVariant, string>>;
       size: SizeClasses;
       loading: ActiveClasses;
+    };
+    alert: {
+      base: string;
+      color: ColorClasses<Record<AlertVariant, string>>;
+      icon: { base: string };
+      content: { base: string };
+      title: { base: string };
+      description: { base: string };
+      action: { base: string };
     };
     buttonGroup: {
       base: string;

@@ -10,7 +10,7 @@ import Spinner from "../Spinner";
 
 export type ButtonProps = {
   variant?: ButtonVariant;
-  color?: Color | null;
+  color?: Color;
   size?: Size;
   loading?: boolean;
   stopPropagation?: boolean;
@@ -29,8 +29,8 @@ type Sizes = {
 
 export default function Button<E extends ElementType = "button">({
   as,
-  variant: initVariant,
-  color: initColor,
+  variant: initVariant = "solid",
+  color: initColor = "primary",
   size: initSize,
   loading: initLoading,
   stopPropagation = false,

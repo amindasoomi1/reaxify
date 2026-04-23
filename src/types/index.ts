@@ -13,12 +13,14 @@ export type ComponentPropsWithAs<
 
 export interface ExtendBadgeVariant {}
 export interface ExtendButtonVariant {}
+export interface ExtendAlertVariant {}
 export interface ExtendTypographyVariant {}
 export interface ExtendColor {}
 export interface ExtendSize {}
 
 type BaseBadgeVariant = "solid" | "outline" | "soft";
 type BaseButtonVariant = "solid" | "outline" | "text";
+type BaseAlertVariant = "solid" | "outline" | "soft";
 type BaseTypographyVariant =
   | "heading-1"
   | "heading-2"
@@ -42,6 +44,7 @@ type BaseSize = "sm" | "md" | "lg";
 
 export type BadgeVariant = BaseBadgeVariant | keyof ExtendBadgeVariant;
 export type ButtonVariant = BaseButtonVariant | keyof ExtendButtonVariant;
+export type AlertVariant = BaseAlertVariant | keyof ExtendAlertVariant;
 export type TypographyVariant =
   | BaseTypographyVariant
   | keyof ExtendTypographyVariant;
