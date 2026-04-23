@@ -204,7 +204,7 @@ function MenuItem<E extends ElementType = "button">({
   const classes = useClasses((c) => c.menu.item.base);
   const { closeOnClick: menuCloseOnClick, onClose } = useContext(MenuContext);
   const closeOnClick = itemCloseOnClick ?? menuCloseOnClick;
-  const handleClick: typeof onClick = (e: MouseEvent<E>) => {
+  const handleClick = (e: MouseEvent<E>) => {
     closeOnClick && onClose?.();
     onClick?.(e);
   };
@@ -216,7 +216,7 @@ function MenuItem<E extends ElementType = "button">({
         classes,
         className,
       )}
-      onClick={handleClick}
+      onClick={handleClick as typeof onClick}
       {...props}
     >
       {children}
