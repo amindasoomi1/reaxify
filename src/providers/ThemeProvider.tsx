@@ -45,6 +45,15 @@ export type ThemeProviderContextType = {
       description: { base: string };
       action: { base: string };
     };
+    avatar: {
+      base: string;
+      size: SizeClasses;
+      group: { base: string };
+      image: { base: string };
+      fallback: { base: string; size: SizeClasses };
+      badge: { base: string; size: SizeClasses };
+      count: { base: string; size: SizeClasses };
+    };
     buttonGroup: {
       base: string;
       orientation: { horizontal: string; vertical: string };
