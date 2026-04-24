@@ -11,7 +11,7 @@ const meta: Meta<typeof Badge> = {
 
 // type Story = StoryObj<typeof meta>;
 
-export function Colors() {
+export function Solid() {
   return (
     <Stack wrap className="items-center gap-4">
       <Badge color="primary" variant="solid">
@@ -32,26 +32,53 @@ export function Colors() {
       <Badge color="danger" variant="solid">
         Danger
       </Badge>
-      <Badge color="dark" variant="solid">
-        Dark
+    </Stack>
+  );
+}
+export function Outline() {
+  return (
+    <Stack wrap className="items-center gap-4">
+      <Badge color="primary" variant="outline">
+        Primary
       </Badge>
-      <Badge color="light" variant="solid">
-        Light
+      <Badge color="secondary" variant="outline">
+        Secondary
+      </Badge>
+      <Badge color="success" variant="outline">
+        Success
+      </Badge>
+      <Badge color="info" variant="outline">
+        Info
+      </Badge>
+      <Badge color="warning" variant="outline">
+        Warning
+      </Badge>
+      <Badge color="danger" variant="outline">
+        Danger
       </Badge>
     </Stack>
   );
 }
-export function Variants() {
+export function Soft() {
   return (
     <Stack wrap className="items-center gap-4">
-      <Badge color="primary" variant="solid">
-        Solid
-      </Badge>
-      <Badge color="primary" variant="outline">
-        Outline
-      </Badge>
       <Badge color="primary" variant="soft">
-        Soft
+        Primary
+      </Badge>
+      <Badge color="secondary" variant="soft">
+        Secondary
+      </Badge>
+      <Badge color="success" variant="soft">
+        Success
+      </Badge>
+      <Badge color="info" variant="soft">
+        Info
+      </Badge>
+      <Badge color="warning" variant="soft">
+        Warning
+      </Badge>
+      <Badge color="danger" variant="soft">
+        Danger
       </Badge>
     </Stack>
   );
@@ -59,13 +86,13 @@ export function Variants() {
 export function Sizes() {
   return (
     <Stack wrap className="items-center gap-4">
-      <Badge color="primary" variant="solid" size="sm">
+      <Badge color="success" variant="solid" size="sm">
         Small
       </Badge>
-      <Badge color="primary" variant="solid" size="md">
+      <Badge color="success" variant="solid" size="md">
         Medium
       </Badge>
-      <Badge color="primary" variant="solid" size="lg">
+      <Badge color="success" variant="solid" size="lg">
         Large
       </Badge>
     </Stack>

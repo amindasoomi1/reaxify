@@ -127,9 +127,9 @@ export default function Button<E extends ElementType = "button">({
   const sizeClasses = useMemo(() => {
     if (!size) return null;
     const sizes: Sizes = {
-      sm: "text-base py-1 px-3.5",
+      sm: "text-sm py-1 px-3.5",
       md: "text-base py-1.5 px-4",
-      lg: "text-lg py-2 px-6",
+      lg: "text-xl py-1.5 px-6",
       icon: "size-9 p-0 inline-flex items-center justify-center rounded-full [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-5",
     };
     return [sizes?.[size], classes?.size?.[size]];

@@ -11,8 +11,7 @@ const meta: Meta<typeof Button> = {
 };
 
 // type Story = StoryObj<typeof meta>;
-
-export function Colors() {
+export function Solid() {
   return (
     <Stack wrap className="items-center gap-4">
       <Button color="primary" variant="solid">
@@ -33,29 +32,77 @@ export function Colors() {
       <Button color="danger" variant="solid">
         Danger
       </Button>
-      <Button color="dark" variant="solid">
-        Dark
+    </Stack>
+  );
+}
+export function Outline() {
+  return (
+    <Stack wrap className="items-center gap-4">
+      <Button color="primary" variant="outline">
+        Primary
       </Button>
-      <Button color="light" variant="solid">
-        Light
+      <Button color="secondary" variant="outline">
+        Secondary
+      </Button>
+      <Button color="success" variant="outline">
+        Success
+      </Button>
+      <Button color="info" variant="outline">
+        Info
+      </Button>
+      <Button color="warning" variant="outline">
+        Warning
+      </Button>
+      <Button color="danger" variant="outline">
+        Danger
       </Button>
     </Stack>
   );
 }
-export function Variants() {
+export function Soft() {
   return (
     <Stack wrap className="items-center gap-4">
-      <Button color="primary" variant="solid">
-        Solid
-      </Button>
-      <Button color="primary" variant="outline">
-        Outline
-      </Button>
-      <Button color="primary" variant="text">
-        Text
-      </Button>
       <Button color="primary" variant="soft">
-        Soft
+        Primary
+      </Button>
+      <Button color="secondary" variant="soft">
+        Secondary
+      </Button>
+      <Button color="success" variant="soft">
+        Success
+      </Button>
+      <Button color="info" variant="soft">
+        Info
+      </Button>
+      <Button color="warning" variant="soft">
+        Warning
+      </Button>
+      <Button color="danger" variant="soft">
+        Danger
+      </Button>
+    </Stack>
+  );
+}
+export function Text() {
+  return (
+    <Stack wrap className="items-center gap-4">
+      <Button color="primary" variant="text">
+        Primary
+      </Button>
+      <Button color="secondary" variant="text">
+        Secondary
+      </Button>
+      <Button color="success" variant="text">
+        Success
+      </Button>
+      <Button color="info" variant="text">
+        Info
+      </Button>
+      <Button color="warning" variant="text">
+        Warning
+      </Button>
+      <Button color="danger" variant="text">
+        Danger
       </Button>
     </Stack>
   );
@@ -63,16 +110,16 @@ export function Variants() {
 export function Sizes() {
   return (
     <Stack wrap className="items-center gap-4">
-      <Button color="primary" variant="solid" size="icon">
+      <Button color="success" variant="solid" size="icon">
         <Send2 color="currentColor" variant="Bold" />
       </Button>
-      <Button color="primary" variant="solid" size="sm">
+      <Button color="success" variant="solid" size="sm">
         Small
       </Button>
-      <Button color="primary" variant="solid" size="md">
+      <Button color="success" variant="solid" size="md">
         Medium
       </Button>
-      <Button color="primary" variant="solid" size="lg">
+      <Button color="success" variant="solid" size="lg">
         Large
       </Button>
     </Stack>
@@ -81,13 +128,13 @@ export function Sizes() {
 export function Loading() {
   return (
     <Stack wrap className="items-center gap-4">
-      <Button color="primary" variant="solid" loading>
+      <Button color="success" variant="solid" loading>
         Button
       </Button>
-      <Button color="primary" variant="outline" loading>
+      <Button color="success" variant="outline" loading>
         Button
       </Button>
-      <Button color="primary" variant="text" loading>
+      <Button color="success" variant="text" loading>
         Button
       </Button>
     </Stack>
