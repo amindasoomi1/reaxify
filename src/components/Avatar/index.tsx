@@ -1,10 +1,20 @@
 import { useClasses } from "@/hooks";
 import { ComponentPropsWithAs, ComponentPropsWithoutAs, Size } from "@/types";
-import { createContext, ElementType, useContext, useMemo } from "react";
+import {
+  createContext,
+  Dispatch,
+  ElementType,
+  SyntheticEvent,
+  useContext,
+  useMemo,
+  useState,
+} from "react";
 import { twMerge } from "tailwind-merge";
 
 type AvatarContextType = {
   size: Size;
+  isImageLoaded: boolean | null;
+  setIsImageLoaded: Dispatch<boolean>;
 };
 type AvatarProps = {
   size?: Size;
@@ -13,7 +23,11 @@ type Sizes = {
   [key in Size]?: string;
 };
 
-const AvatarContext = createContext<AvatarContextType>({ size: "md" });
+const AvatarContext = createContext<AvatarContextType>({
+  size: "md",
+  isImageLoaded: null,
+  setIsImageLoaded: () => {},
+});
 
 function AvatarGroup<E extends ElementType = "div">({
   as,
@@ -25,11 +39,7 @@ function AvatarGroup<E extends ElementType = "div">({
   const Component = as || "div";
   return (
     <Component
-      className={twMerge(
-        "flex -space-x-2 *:ring-2 *:ring-light",
-        classes,
-        className,
-      )}
+      className={twMerge("flex -space-x-2", classes, className)}
       {...props}
     >
       {children}
@@ -45,41 +55,52 @@ function Avatar<E extends ElementType = "div">({
 }: ComponentPropsWithAs<E, AvatarProps>) {
   const classes = useClasses((c) => c.avatar);
   const Component = as || "div";
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
   const sizeClasses = useMemo(() => {
     if (!size) return null;
     const sizes: Sizes = {
-      sm: "size-6",
-      md: "size-8",
-      lg: "size-10",
+      sm: "size-6 [&_svg]:size-3",
+      md: "size-8 [&_svg]:size-4",
+      lg: "size-10 [&_svg]:size-5",
     };
     return [sizes?.[size], classes?.size?.[size]];
   }, [size, classes?.size]);
   return (
     <Component
       className={twMerge(
-        "relative flex rounded-full select-none",
+        "relative flex items-center justify-center bg-light ring-2 ring-light rounded-full select-none",
         classes?.base,
         sizeClasses,
         className,
       )}
       {...props}
     >
-      <AvatarContext.Provider value={{ size }}>
+      <AvatarContext.Provider value={{ size, isImageLoaded, setIsImageLoaded }}>
         {children}
       </AvatarContext.Provider>
     </Component>
   );
 }
-function AvatarImage({ className, ...props }: ComponentPropsWithoutAs<"img">) {
+function AvatarImage({
+  className,
+  onLoad,
+  ...props
+}: ComponentPropsWithoutAs<"img", { loading?: never }>) {
   const classes = useClasses((c) => c.avatar.image.base);
+  const { isImageLoaded, setIsImageLoaded } = useContext(AvatarContext);
+  const handleLoad = (e: SyntheticEvent<HTMLImageElement>) => {
+    setIsImageLoaded(true);
+    onLoad?.(e);
+  };
   return (
     <img
       className={twMerge(
         "aspect-square size-full rounded-full object-cover",
+        isImageLoaded ? "block" : "hidden",
         classes,
         className,
       )}
-      loading="lazy"
+      onLoad={handleLoad}
       {...props}
     />
   );
@@ -90,7 +111,7 @@ function AvatarFallback({
   ...props
 }: ComponentPropsWithoutAs<"div">) {
   const classes = useClasses((c) => c.avatar.fallback);
-  const { size } = useContext(AvatarContext);
+  const { size, isImageLoaded } = useContext(AvatarContext);
   const sizeClasses = useMemo(() => {
     if (!size) return null;
     const sizes: Sizes = {
@@ -103,7 +124,8 @@ function AvatarFallback({
   return (
     <div
       className={twMerge(
-        "flex size-full items-center justify-center rounded-full bg-light text-dark",
+        "flex size-full items-center justify-center rounded-full text-dark",
+        isImageLoaded ? "hidden" : "flex",
         classes?.base,
         sizeClasses,
         className,
@@ -149,20 +171,10 @@ function AvatarCount({
   children,
   ...props
 }: ComponentPropsWithoutAs<"span">) {
-  const classes = useClasses((c) => c.avatar.count);
-  const { size } = useContext(AvatarContext);
-  const sizeClasses = useMemo(() => {
-    if (!size) return null;
-    const sizes: Sizes = {
-      sm: "[&_svg]:size-3",
-      md: "[&_svg]:size-4",
-      lg: "[&_svg]:size-5",
-    };
-    return [sizes?.[size], classes?.size?.[size]];
-  }, [size, classes?.size]);
+  const classes = useClasses((c) => c.avatar.count.base);
   return (
     <span
-      className={twMerge("text-sm", classes?.base, sizeClasses, className)}
+      className={twMerge("text-sm text-dark font-medium", classes, className)}
       {...props}
     >
       {children}

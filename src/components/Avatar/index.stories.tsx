@@ -1,5 +1,5 @@
 import type { Meta } from "@storybook/react";
-import { Profile2User } from "iconsax-react";
+import { Add, Profile } from "iconsax-react";
 import Avatar from ".";
 import Stack from "../Stack";
 
@@ -20,9 +20,10 @@ export function Default() {
           alt="Reaxify Avatar"
         />
         <Avatar.Fallback>CN</Avatar.Fallback>
+        <Avatar.Badge className="bg-danger" />
       </Avatar>
       <Avatar>
-        <Profile2User color="currentColor" />
+        <Profile color="currentColor" />
       </Avatar>
       <Avatar>
         <Avatar.Image
@@ -30,9 +31,11 @@ export function Default() {
           alt="Reaxify Avatar"
         />
         <Avatar.Fallback>ER</Avatar.Fallback>
-        <Avatar.Badge className="bg-green-600 dark:bg-green-800" />
+        <Avatar.Badge>
+          <Add color="currentColor" />
+        </Avatar.Badge>
       </Avatar>
-      <Avatar.Group className="grayscale">
+      <Avatar.Group>
         <Avatar>
           <Avatar.Image
             src="https://randomuser.me/api/portraits/women/3.jpg"

@@ -52,7 +52,7 @@ export type ThemeProviderContextType = {
       image: { base: string };
       fallback: { base: string; size: SizeClasses };
       badge: { base: string; size: SizeClasses };
-      count: { base: string; size: SizeClasses };
+      count: { base: string };
     };
     buttonGroup: {
       base: string;
