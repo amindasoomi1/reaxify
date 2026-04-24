@@ -86,7 +86,7 @@ function TabIndicator({
         "absolute bottom-0 left-(--left,0px) rtl:left-(--left,100%) w-(--width,0px) px-(--padding-x,0px) h-px overflow-hidden",
         hasAnimated ? "transition-[width,left,padding]" : "",
         classes,
-        className
+        className,
       )}
       {...props}
     >
@@ -122,13 +122,13 @@ function TabButton({
       type="button"
       data-active={isActive}
       onClick={handleClick}
-      color={isActive ? "primary" : null}
+      color={isActive ? "primary" : "dark"}
       variant="text"
       className={cn(
         "shadow-none border-none",
         baseClasses,
         isActive && activeClasses,
-        handleClassName
+        handleClassName,
       )}
       {...props}
     >
