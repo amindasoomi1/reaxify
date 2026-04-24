@@ -1,4 +1,5 @@
 import type { Meta } from "@storybook/react";
+import { Send2 } from "iconsax-react";
 import Button from ".";
 import Stack from "../Stack";
 
@@ -53,12 +54,18 @@ export function Variants() {
       <Button color="primary" variant="text">
         Text
       </Button>
+      <Button color="primary" variant="soft">
+        Soft
+      </Button>
     </Stack>
   );
 }
 export function Sizes() {
   return (
     <Stack wrap className="items-center gap-4">
+      <Button color="primary" variant="solid" size="icon">
+        <Send2 color="currentColor" variant="Bold" />
+      </Button>
       <Button color="primary" variant="solid" size="sm">
         Small
       </Button>

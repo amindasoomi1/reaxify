@@ -19,7 +19,7 @@ export interface ExtendColor {}
 export interface ExtendSize {}
 
 type BaseBadgeVariant = "solid" | "outline" | "soft";
-type BaseButtonVariant = "solid" | "outline" | "text";
+type BaseButtonVariant = "solid" | "outline" | "text" | "soft";
 type BaseAlertVariant = "solid" | "outline" | "soft";
 type BaseTypographyVariant =
   | "heading-1"

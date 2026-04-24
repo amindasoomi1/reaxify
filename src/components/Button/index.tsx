@@ -72,41 +72,49 @@ export default function Button<E extends ElementType = "button">({
         solid: "bg-primary text-white border-primary",
         outline: "bg-transparent text-primary border-primary",
         text: "bg-transparent text-primary border-transparent",
+        soft: "bg-light-primary text-dark-primary border-light-primary",
       },
       secondary: {
         solid: "bg-secondary text-white border-secondary",
         outline: "bg-transparent text-secondary border-secondary",
         text: "bg-transparent text-secondary border-transparent",
+        soft: "bg-light-secondary text-dark-secondary border-light-secondary",
       },
       success: {
         solid: "bg-success text-white border-success",
         outline: "bg-transparent text-success border-success",
         text: "bg-transparent text-success border-transparent",
+        soft: "bg-light-success text-dark-success border-light-success",
       },
       info: {
         solid: "bg-info text-white border-info",
         outline: "bg-transparent text-info border-info",
         text: "bg-transparent text-info border-transparent",
+        soft: "bg-light-info text-dark-info border-light-info",
       },
       warning: {
         solid: "bg-warning text-white border-warning",
         outline: "bg-transparent text-warning border-warning",
         text: "bg-transparent text-warning border-transparent",
+        soft: "bg-light-warning text-dark-warning border-light-warning",
       },
       danger: {
         solid: "bg-danger text-white border-danger",
         outline: "bg-transparent text-danger border-danger",
         text: "bg-transparent text-danger border-transparent",
+        soft: "bg-light-danger text-dark-danger border-light-danger",
       },
       dark: {
         solid: "bg-dark text-white border-dark",
         outline: "bg-transparent text-dark border-dark",
         text: "bg-transparent text-dark border-transparent",
+        soft: "bg-dark text-light border-dark",
       },
       light: {
         solid: "bg-light text-dark border-light",
         outline: "bg-transparent text-dark border-light",
         text: "bg-transparent text-dark border-transparent",
+        soft: "bg-light- text-dark border-dark",
       },
     };
     const classesResult = classes?.color?.[color]?.[variant];
