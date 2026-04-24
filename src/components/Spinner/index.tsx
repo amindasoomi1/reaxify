@@ -44,9 +44,9 @@ export default function Spinner({
         "inline-block align-middle rounded-full animate-spin aspect-square",
         classes?.base,
         colorClasses,
-        "border-l-transparent",
+        "border-l-transparent!",
         sizeClasses,
-        className
+        className,
       )}
       {...props}
     />

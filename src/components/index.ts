@@ -1,9 +1,12 @@
 export { default as Accordion } from "./Accordion";
+export { default as Alert } from "./Alert";
+export { default as Avatar } from "./Avatar";
 export { default as Badge } from "./Badge";
 export { default as Button } from "./Button";
 export { default as ButtonGroup } from "./ButtonGroup";
 export { default as Card } from "./Card";
 export { default as Drawer } from "./Drawer";
+export { default as Fill } from "./Fill";
 export { default as InputGroup } from "./InputGroup";
 export { default as Menu } from "./Menu";
 export { default as Modal } from "./Modal";

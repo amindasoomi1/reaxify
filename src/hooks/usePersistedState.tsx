@@ -13,7 +13,7 @@ export default function usePersistedState<T>(initialValue: T, config: Config) {
   const name = useMemo(() => config.name, [config.name]);
   const storage = useMemo(
     () => config.storage ?? "localStorage",
-    [config.storage]
+    [config.storage],
   );
   const version = useMemo(() => config.version ?? 1, [config.version]);
 
@@ -26,7 +26,7 @@ export default function usePersistedState<T>(initialValue: T, config: Config) {
         console.error(error);
       }
     },
-    [name, storage, version]
+    [name, storage, version],
   );
 
   const getItem = useCallback(() => {
@@ -58,13 +58,13 @@ export default function usePersistedState<T>(initialValue: T, config: Config) {
         return newValue;
       });
     },
-    [setItem]
+    [setItem],
   );
 
   const clearState = useCallback(() => {
     setState(initialValue);
-    localStorage.removeItem(name);
-  }, [initialValue, name]);
+    window[storage].removeItem(name);
+  }, [initialValue, storage, name]);
 
   return [state, setPersistedState, clearState] as const;
 }

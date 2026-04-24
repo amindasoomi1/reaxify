@@ -1,7 +1,7 @@
 {
   "name": "reaxify",
   "private": false,
-  "version": "0.0.87",
+  "version": "0.0.89",
   "type": "module",
   "types": "./dist/index.d.ts",
   "files": [
@@ -88,7 +88,7 @@
     "react-dom": "^19.2.0",
     "storybook": "^8.6.14",
     "tailwindcss": "^4.1.16",
-    "typescript": "^6.0.3",
+    "typescript": "^5.7.2",
     "vite": "^6.3.5",
     "vite-plugin-dts": "^4.5.4",
     "vite-plugin-static-copy": "^4.1.0",
