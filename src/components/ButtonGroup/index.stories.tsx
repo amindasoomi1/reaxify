@@ -16,7 +16,7 @@ const label = "Button";
 
 export function Colors() {
   return (
-    <Stack variant="vertical" className="gap-4">
+    <Stack direction="column" className="gap-4">
       <ButtonGroup color="primary">
         <Button>{label}</Button>
         <Button>{label}</Button>
@@ -32,7 +32,7 @@ export function Colors() {
 }
 export function Variants() {
   return (
-    <Stack variant="vertical" className="gap-4">
+    <Stack direction="column" className="gap-4">
       <ButtonGroup variant="outline">
         <Button>{label}</Button>
         <Button>{label}</Button>
@@ -48,7 +48,7 @@ export function Variants() {
 }
 export function Sizes() {
   return (
-    <Stack variant="vertical" className="gap-4">
+    <Stack direction="column" className="gap-4">
       <ButtonGroup size="lg">
         <Button>{label}</Button>
         <Button>{label}</Button>
@@ -74,7 +74,7 @@ export function Sizes() {
 }
 export function Loading() {
   return (
-    <Stack variant="vertical" className="gap-4">
+    <Stack direction="column" className="gap-4">
       <ButtonGroup loading>
         <Button>{label}</Button>
         <Button>{label}</Button>
@@ -90,7 +90,7 @@ export function Loading() {
 }
 export function Orientations() {
   return (
-    <Stack variant="vertical" className="gap-4">
+    <Stack direction="column" className="gap-4">
       <ButtonGroup orientation="horizontal">
         <Button color="primary" variant="solid">
           {label}

@@ -13,7 +13,7 @@ const meta: Meta<typeof Card> = {
 
 export function Default() {
   return (
-    <Stack variant="vertical" className="lg:flex-row gap-4">
+    <Stack direction="column" className="lg:flex-row gap-4">
       {[...Array(3).keys()].map((key) => (
         <Card key={key} className="lg:flex-1">
           <Card.Header>

@@ -97,7 +97,7 @@ export type ThemeProviderContextType = {
     };
     stack: {
       base: string;
-      variants: { horizontal: string; vertical: string };
+      directions: { row: string; column: string };
     };
     fill: {
       base: string;

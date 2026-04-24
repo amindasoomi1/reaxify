@@ -11,7 +11,7 @@ const meta: Meta<typeof InputGroup> = {
 
 export function Default() {
   return (
-    <Stack variant="vertical" className="gap-4">
+    <Stack direction="column" className="gap-4">
       <InputGroup>
         <InputGroup.Label>Email address</InputGroup.Label>
         <InputGroup.Stack>

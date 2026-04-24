@@ -10,7 +10,7 @@ const meta: Meta = {
 
 export function Theme() {
   return (
-    <Stack variant="vertical" className="items-start gap-4">
+    <Stack direction="column" className="items-start gap-4">
       <Button variant="solid" color="primary">
         Primary
       </Button>

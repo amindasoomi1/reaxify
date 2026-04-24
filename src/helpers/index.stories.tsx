@@ -54,7 +54,7 @@ export function Copy() {
 }
 export function IsEmpty() {
   return (
-    <Stack variant="vertical" className="gap-4">
+    <Stack direction="column" className="gap-4">
       <Typography>
         isEmpty({`null`}): {String(isEmpty(null))}
       </Typography>
@@ -100,7 +100,7 @@ export function ReplaceNonDigits() {
 }
 export function TwoDigitNumber() {
   return (
-    <Stack variant="vertical" className="gap-4">
+    <Stack direction="column" className="gap-4">
       <Typography>
         0 {`=>`} {twoDigitNumber(0)}
       </Typography>
@@ -132,7 +132,7 @@ export function ScrollIntoView() {
     scrollIntoView("#element");
   };
   return (
-    <Stack variant="vertical" className="gap-4 items-start">
+    <Stack direction="column" className="gap-4 items-start">
       <Button type="button" onClick={handleClick}>
         Scroll to element
       </Button>

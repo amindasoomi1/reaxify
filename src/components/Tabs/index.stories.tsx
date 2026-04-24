@@ -26,7 +26,7 @@ export function Default() {
           <Tabs.Button eventKey="notes">Notes</Tabs.Button>
         </ButtonGroup>
         <Tabs.Item eventKey="basic-info">
-          <Stack variant="vertical" className="gap-4">
+          <Stack direction="column" className="gap-4">
             <Typography variant="heading-6">Basic info</Typography>
             <Typography variant="body-1">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed,
@@ -37,7 +37,7 @@ export function Default() {
           </Stack>
         </Tabs.Item>
         <Tabs.Item eventKey="contact-info">
-          <Stack variant="vertical" className="gap-4">
+          <Stack direction="column" className="gap-4">
             <Typography variant="heading-6">Contact info</Typography>
             <Typography variant="body-1">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed,
@@ -48,7 +48,7 @@ export function Default() {
           </Stack>
         </Tabs.Item>
         <Tabs.Item eventKey="notes">
-          <Stack variant="vertical" className="gap-4">
+          <Stack direction="column" className="gap-4">
             <Typography variant="heading-6">Notes</Typography>
             <Typography variant="body-1">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed,

@@ -4,17 +4,17 @@ import { ComponentPropsWithAs } from "@/types";
 import { ElementType, useMemo } from "react";
 import { twMerge } from "tailwind-merge";
 
-type Variants = "vertical" | "horizontal";
+type Directions = "row" | "column";
 type StackProps = {
-  variant?: Variants;
+  direction?: Directions;
   wrap?: boolean | "reverse";
   reverse?: boolean;
 };
-type VariantsObject = { [key in Variants]: string | undefined };
+type DirectionsObject = { [key in Directions]: string | undefined };
 
 export default function Stack<E extends ElementType = "div">({
   as,
-  variant = "horizontal",
+  direction = "row",
   wrap = false,
   reverse = false,
   className,
@@ -23,21 +23,21 @@ export default function Stack<E extends ElementType = "div">({
 }: ComponentPropsWithAs<E, StackProps>) {
   const classes = useClasses((c) => c.stack);
   const Component = as || "div";
-  const variantClasses = useMemo(() => {
-    const variants: VariantsObject = {
-      horizontal: cn(
+  const directionClasses = useMemo(() => {
+    const directions: DirectionsObject = {
+      row: cn(
         "*:min-w-0",
         reverse ? "flex-row-reverse" : "flex-row",
-        classes?.variants?.horizontal
+        classes?.directions?.row,
       ),
-      vertical: cn(
+      column: cn(
         "*:min-h-0",
         reverse ? "flex-col-reverse" : "flex-col",
-        classes?.variants?.vertical
+        classes?.directions?.column,
       ),
     };
-    return variants[variant];
-  }, [variant, reverse, classes?.variants]);
+    return directions[direction];
+  }, [direction, reverse, classes?.directions]);
   const wrapClasses = useMemo(() => {
     if (wrap === "reverse") return "flex-wrap-reverse";
     if (wrap) return "flex-wrap";
@@ -48,9 +48,9 @@ export default function Stack<E extends ElementType = "div">({
       className={twMerge(
         "flex",
         classes?.base,
-        variantClasses,
+        directionClasses,
         wrapClasses,
-        className
+        className,
       )}
       {...props}
     >

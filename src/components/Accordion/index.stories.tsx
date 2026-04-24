@@ -16,7 +16,7 @@ const meta: Meta<typeof Accordion> = {
 export function Single() {
   const [active, setActive] = useState<string | null>(null);
   return (
-    <Stack variant="vertical" className="gap-4">
+    <Stack direction="column" className="gap-4">
       <Accordion activeKey={active} variant="single" onChange={setActive}>
         <Accordion.Item eventKey="one">
           <Accordion.Toggle>
@@ -65,7 +65,7 @@ export function Single() {
 export function Multiple() {
   const [active, setActive] = useState<string[]>([]);
   return (
-    <Stack variant="vertical" className="gap-4">
+    <Stack direction="column" className="gap-4">
       <Accordion activeKey={active} variant="multiple" onChange={setActive}>
         <Accordion.Item eventKey="one">
           <Accordion.Toggle>

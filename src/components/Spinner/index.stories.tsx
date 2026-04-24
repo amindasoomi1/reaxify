@@ -14,7 +14,7 @@ export function Default() {
 }
 export function Color() {
   return (
-    <Stack variant="horizontal" className="gap-4">
+    <Stack direction="row" className="gap-4">
       <Spinner color="primary" />
       <Spinner color="secondary" />
       <Spinner color="success" />
@@ -28,7 +28,7 @@ export function Color() {
 }
 export function Size() {
   return (
-    <Stack variant="horizontal" className="items-center gap-4">
+    <Stack direction="row" className="items-center gap-4">
       <Spinner size="sm" />
       <Spinner size="md" />
       <Spinner size="lg" />

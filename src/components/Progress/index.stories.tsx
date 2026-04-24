@@ -11,7 +11,7 @@ const meta: Meta<typeof Progress> = {
 
 export function Value() {
   return (
-    <Stack variant="vertical" className="gap-4">
+    <Stack direction="column" className="gap-4">
       <Progress value={10} color="primary" />
       <Progress value={20} color="secondary" />
       <Progress value={30} color="success" />

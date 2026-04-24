@@ -11,7 +11,7 @@ const meta: Meta<typeof Typography> = {
 
 export function Default() {
   return (
-    <Stack variant="vertical" className="gap-4">
+    <Stack direction="column" className="gap-4">
       <Typography as="h1" variant="heading-1">
         Heading 1
       </Typography>

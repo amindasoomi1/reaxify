@@ -18,7 +18,7 @@ const meta: Meta<typeof Alert> = {
 
 export function Soft() {
   return (
-    <Stack variant="vertical" className="gap-4">
+    <Stack direction="column" className="gap-4">
       <Alert color="success" variant="soft">
         <Alert.Icon>
           <TickCircle color="currentColor" variant="Linear" />
@@ -83,7 +83,7 @@ export function Soft() {
 }
 export function Outline() {
   return (
-    <Stack variant="vertical" className="gap-4">
+    <Stack direction="column" className="gap-4">
       <Alert color="success" variant="outline">
         <Alert.Icon>
           <TickCircle color="currentColor" variant="Linear" />
@@ -148,7 +148,7 @@ export function Outline() {
 }
 export function Solid() {
   return (
-    <Stack variant="vertical" className="gap-4">
+    <Stack direction="column" className="gap-4">
       <Alert color="success" variant="solid">
         <Alert.Icon>
           <TickCircle color="currentColor" variant="Linear" />
