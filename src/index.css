@@ -7,6 +7,25 @@
   --color-info: #0084d1;
   --color-warning: #f59200;
   --color-danger: #f8285a;
+
+  --color-light-primary: color-mix(in srgb, var(--color-primary), white 90%);
+  --color-light-secondary: color-mix(
+    in srgb,
+    var(--color-secondary),
+    white 90%
+  );
+  --color-light-success: color-mix(in srgb, var(--color-success), white 90%);
+  --color-light-info: color-mix(in srgb, var(--color-info), white 90%);
+  --color-light-warning: color-mix(in srgb, var(--color-warning), white 90%);
+  --color-light-danger: color-mix(in srgb, var(--color-danger), white 90%);
+
+  --color-dark-primary: color-mix(in srgb, var(--color-primary), black 40%);
+  --color-dark-secondary: color-mix(in srgb, var(--color-secondary), black 40%);
+  --color-dark-success: color-mix(in srgb, var(--color-success), black 40%);
+  --color-dark-info: color-mix(in srgb, var(--color-info), black 40%);
+  --color-dark-warning: color-mix(in srgb, var(--color-warning), black 40%);
+  --color-dark-danger: color-mix(in srgb, var(--color-danger), black 40%);
+
   --color-dark: #1e2129;
   --color-light: #f8f9fa;
 

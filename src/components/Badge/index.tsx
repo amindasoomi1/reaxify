@@ -35,42 +35,42 @@ export default function Badge<E extends ElementType = "span">({
       primary: {
         solid: "bg-primary text-white border-primary",
         outline: "bg-transparent text-primary border-primary",
-        soft: "bg-primary/10 text-primary border-primary/10",
+        soft: "bg-light-primary text-dark-primary border-light-primary",
       },
       secondary: {
         solid: "bg-secondary text-white border-secondary",
         outline: "bg-transparent text-secondary border-secondary",
-        soft: "bg-secondary/10 text-secondary border-secondary/10",
+        soft: "bg-light-secondary text-dark-secondary border-light-secondary",
       },
       success: {
         solid: "bg-success text-white border-success",
         outline: "bg-transparent text-success border-success",
-        soft: "bg-success/10 text-success border-success/10",
+        soft: "bg-light-success text-dark-success border-light-success",
       },
       info: {
         solid: "bg-info text-white border-info",
         outline: "bg-transparent text-info border-info",
-        soft: "bg-info/10 text-info border-info/10",
+        soft: "bg-light-info text-dark-info border-light-info",
       },
       warning: {
         solid: "bg-warning text-white border-warning",
         outline: "bg-transparent text-warning border-warning",
-        soft: "bg-warning/10 text-warning border-warning/10",
+        soft: "bg-light-warning text-dark-warning border-light-warning",
       },
       danger: {
         solid: "bg-danger text-white border-danger",
         outline: "bg-transparent text-danger border-danger",
-        soft: "bg-danger/10 text-danger border-danger/10",
+        soft: "bg-light-danger text-dark-danger border-light-danger",
       },
       dark: {
         solid: "bg-dark text-white border-dark",
         outline: "bg-transparent text-dark border-dark",
-        soft: "bg-dark/10 text-dark border-dark/10",
+        soft: "bg-dark text-dark border-dark",
       },
       light: {
         solid: "bg-light text-dark border-light",
         outline: "bg-transparent text-dark border-light",
-        soft: "bg-light/10 text-dark border-light/10",
+        soft: "bg-light text-dark border-light",
       },
     };
     const colorResult = colors?.[color]?.[variant];
@@ -93,7 +93,7 @@ export default function Badge<E extends ElementType = "span">({
         classes?.base,
         colorClasses,
         sizeClasses,
-        className
+        className,
       )}
       {...props}
     >

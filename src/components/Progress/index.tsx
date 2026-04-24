@@ -34,14 +34,14 @@ export default function Progress({
   const colorClasses = useMemo(() => {
     if (!color) return "border-transparent";
     const colors: Colors = {
-      primary: "bg-primary/15 text-primary",
-      secondary: "bg-secondary/15 text-secondary",
-      success: "bg-success/15 text-success",
-      info: "bg-info/15 text-info",
-      warning: "bg-warning/15 text-warning",
-      danger: "bg-danger/15 text-danger",
-      dark: "bg-dark/15 text-dark",
-      light: "bg-light/15 text-light",
+      primary: "bg-light-primary text-primary",
+      secondary: "bg-light-secondary text-secondary",
+      success: "bg-light-success text-success",
+      info: "bg-light-info text-info",
+      warning: "bg-light-warning text-warning",
+      danger: "bg-light-danger text-danger",
+      dark: "bg-dark/10 text-dark",
+      light: "bg-light/10 text-light",
     };
     const classesResult = classes?.color?.[color];
     return [colors?.[color], classesResult];
@@ -56,7 +56,7 @@ export default function Progress({
         "relative block w-full h-1.5 rounded-full overflow-hidden",
         classes?.base,
         colorClasses,
-        className
+        className,
       )}
       {...props}
     >
@@ -64,7 +64,7 @@ export default function Progress({
         style={{ width }}
         className={cn(
           "absolute h-full max-w-full bg-current rounded-[inherit] top-0 bottom-0 start-0",
-          animate ? "animate-linear-progress-1" : "transition-[width]"
+          animate ? "animate-linear-progress-1" : "transition-[width]",
         )}
       />
       {animate && (

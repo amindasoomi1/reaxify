@@ -89,7 +89,7 @@ export default function Switch({
         "inline-flex w-(--width) h-(--height) overflow-hidden p-3 relative align-middle",
         disabled && "opacity-75",
         checkedClasses,
-        className
+        className,
       )}
       {...props}
     >
@@ -103,18 +103,18 @@ export default function Switch({
       />
       {/* <span className="inline-flex justify-center items-center size-(--height) rounded-full absolute inset-y-0 my-auto start-0 peer-checked:start-[calc(100%-var(--height))] transition-[inset-inline-start] z-[1]"> */}
       <span className="inline-flex justify-center items-center size-(--height) rounded-full absolute inset-y-0 my-auto left-0 peer-checked:left-[calc(100%-var(--height))] transition-[left] z-[1]">
-        <span className="absolute size-full inset-0 bg-black/5 rounded-full scale-(--scale) transition-[scale]" />
+        <span className="absolute size-full inset-0 bg-black/10 rounded-full scale-(--scale) transition-[scale]" />
         <span
           className={cn(
             "absolute size-(--thumb) inset-0 m-auto border rounded-full shadow transition-colors",
-            colorClasses
+            colorClasses,
           )}
         />
       </span>
       <span
         className={cn(
           "size-full rounded-full opacity-35 transition-colors",
-          trackColorClasses
+          trackColorClasses,
         )}
       />
     </span>
