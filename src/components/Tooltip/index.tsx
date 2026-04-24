@@ -23,7 +23,7 @@ type Props = {
   color?: Color;
   duration?: number;
   placement?: Placement;
-  children?: ReactElement;
+  children?: ReactElement<any>;
 };
 type Colors = {
   [key in Color]?: string;
@@ -92,19 +92,19 @@ export default function Tooltip({
         // if (typeof children.ref === "function") children.ref(el);
         // else if (children.ref) (children.ref as any).current = el;
       },
-      onMouseEnter: (e: React.MouseEvent) => {
+      onMouseEnter: (e: React.MouseEvent<HTMLElement>) => {
         children.props.onMouseEnter?.(e);
         setOpen(true);
       },
-      onMouseLeave: (e: React.MouseEvent) => {
+      onMouseLeave: (e: React.MouseEvent<HTMLElement>) => {
         children.props.onMouseLeave?.(e);
         setOpen(false);
       },
-      onFocus: (e: React.FocusEvent) => {
+      onFocus: (e: React.FocusEvent<HTMLElement>) => {
         children.props.onFocus?.(e);
         setOpen(true);
       },
-      onBlur: (e: React.FocusEvent) => {
+      onBlur: (e: React.FocusEvent<HTMLElement>) => {
         children.props.onBlur?.(e);
         setOpen(false);
       },
@@ -153,7 +153,7 @@ export default function Tooltip({
               className={cn(
                 "fixed flex justify-center items-center z-10 pointer-events-none transition-[scale,opacity] [--ratio:1] rtl:[--ratio:-1]",
                 ...placementClasses,
-                transitionClasses[state]
+                transitionClasses[state],
               )}
             >
               <span
@@ -161,7 +161,7 @@ export default function Tooltip({
                   "relative block size-fit min-w-fit min-h-fit bg-dark text-sm rounded px-2 py-px whitespace-nowrap z-[1]",
                   classes?.base,
                   colorClasses,
-                  className
+                  className,
                 )}
                 {...props}
               >
@@ -171,7 +171,7 @@ export default function Tooltip({
                 className={twMerge(
                   "block size-3 min-w-3 min-h-3 bg-dark rotate-45",
                   arrowPlacementClasses,
-                  colorClasses
+                  colorClasses,
                 )}
               ></span>
             </div>
