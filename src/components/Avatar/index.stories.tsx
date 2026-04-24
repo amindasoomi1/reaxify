@@ -10,8 +10,7 @@ const meta: Meta<typeof Avatar> = {
   tags: ["autodocs"],
 };
 
-// type Story = StoryObj<typeof meta>;
-export function Default() {
+export function Basic() {
   return (
     <Stack wrap className="gap-6">
       <Avatar>
@@ -65,23 +64,147 @@ export function Default() {
   );
 }
 
-// export function Sizes() {
-//   return (
-//     <Stack wrap className="items-center gap-4">
-//       <Avatar. color="success" variant="solid" size="icon">
-//         <Send2 color="currentColor" variant="Bold" />
-//       </Avatar.>
-//       <Avatar. color="success" variant="solid" size="sm">
-//         Small
-//       </Avatar.>
-//       <Avatar. color="success" variant="solid" size="md">
-//         Medium
-//       </Avatar.>
-//       <Avatar. color="success" variant="solid" size="lg">
-//         Large
-//       </Avatar.>
-//     </Stack>
-//   );
-// }
+export function Badge() {
+  return (
+    <Avatar>
+      <Avatar.Image
+        src="https://randomuser.me/api/portraits/women/3.jpg"
+        alt="Reaxify Avatar"
+      />
+      <Avatar.Fallback>CN</Avatar.Fallback>
+      <Avatar.Badge />
+    </Avatar>
+  );
+}
+export function BadgeWithIcon() {
+  return (
+    <Avatar>
+      <Avatar.Image
+        src="https://randomuser.me/api/portraits/women/3.jpg"
+        alt="Reaxify Avatar"
+      />
+      <Avatar.Fallback>CN</Avatar.Fallback>
+      <Avatar.Badge className="bg-dark">
+        <Add color="white" />
+      </Avatar.Badge>
+    </Avatar>
+  );
+}
+export function AvatarGroup() {
+  return (
+    <Avatar.Group>
+      <Avatar>
+        <Avatar.Image
+          src="https://randomuser.me/api/portraits/women/3.jpg"
+          alt="Reaxify Avatar"
+        />
+        <Avatar.Fallback>CN</Avatar.Fallback>
+      </Avatar>
+      <Avatar>
+        <Avatar.Image
+          src="https://randomuser.me/api/portraits/men/4.jpg"
+          alt="Reaxify Avatar"
+        />
+        <Avatar.Fallback>LR</Avatar.Fallback>
+      </Avatar>
+      <Avatar>
+        <Avatar.Image
+          src="https://randomuser.me/api/portraits/women/5.jpg"
+          alt="Reaxify Avatar"
+        />
+        <Avatar.Fallback>ER</Avatar.Fallback>
+      </Avatar>
+    </Avatar.Group>
+  );
+}
+export function AvatarGroupCount() {
+  return (
+    <Avatar.Group>
+      <Avatar>
+        <Avatar.Image
+          src="https://randomuser.me/api/portraits/women/3.jpg"
+          alt="Reaxify Avatar"
+        />
+        <Avatar.Fallback>CN</Avatar.Fallback>
+      </Avatar>
+      <Avatar>
+        <Avatar.Image
+          src="https://randomuser.me/api/portraits/men/4.jpg"
+          alt="Reaxify Avatar"
+        />
+        <Avatar.Fallback>LR</Avatar.Fallback>
+      </Avatar>
+      <Avatar>
+        <Avatar.Image
+          src="https://randomuser.me/api/portraits/women/5.jpg"
+          alt="Reaxify Avatar"
+        />
+        <Avatar.Fallback>ER</Avatar.Fallback>
+      </Avatar>
+      <Avatar>
+        <Avatar.Count>+4</Avatar.Count>
+      </Avatar>
+    </Avatar.Group>
+  );
+}
+export function AvatarGroupWithIcon() {
+  return (
+    <Avatar.Group>
+      <Avatar>
+        <Avatar.Image
+          src="https://randomuser.me/api/portraits/women/3.jpg"
+          alt="Reaxify Avatar"
+        />
+        <Avatar.Fallback>CN</Avatar.Fallback>
+      </Avatar>
+      <Avatar>
+        <Avatar.Image
+          src="https://randomuser.me/api/portraits/men/4.jpg"
+          alt="Reaxify Avatar"
+        />
+        <Avatar.Fallback>LR</Avatar.Fallback>
+      </Avatar>
+      <Avatar>
+        <Avatar.Image
+          src="https://randomuser.me/api/portraits/women/5.jpg"
+          alt="Reaxify Avatar"
+        />
+        <Avatar.Fallback>ER</Avatar.Fallback>
+      </Avatar>
+      <Avatar>
+        <Avatar.Count>
+          <Add color="currentColor" />
+        </Avatar.Count>
+      </Avatar>
+    </Avatar.Group>
+  );
+}
+export function Sizes() {
+  return (
+    <Stack wrap className="items-center gap-4">
+      <Avatar size="sm">
+        <Avatar.Image
+          src="https://randomuser.me/api/portraits/women/3.jpg"
+          alt="Reaxify Avatar"
+        />
+        <Avatar.Fallback>CN</Avatar.Fallback>
+      </Avatar>
+      <Avatar>
+        <Avatar.Image
+          src="https://randomuser.me/api/portraits/men/4.jpg"
+          alt="Reaxify Avatar"
+        />
+        <Avatar.Fallback>CN</Avatar.Fallback>
+      </Avatar>
+      <Avatar size="lg">
+        <Avatar.Image
+          src="https://randomuser.me/api/portraits/women/5.jpg"
+          alt="Reaxify Avatar"
+        />
+        <Avatar.Fallback>CN</Avatar.Fallback>
+      </Avatar>
+    </Stack>
+  );
+}
 
 export default meta;
