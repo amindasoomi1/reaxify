@@ -30,8 +30,8 @@ export default function Divider<E extends ElementType = "hr">({
   const Component = as ?? "hr";
   const orientationClasses = useMemo(() => {
     const orientations: Orientations = {
-      horizontal: "w-full h-0 border-b",
-      vertical: `${flexItem ? "h-auto" : "h-full"} w-0 border-s`,
+      horizontal: `${flexItem ? "w-auto self-stretch" : "w-full"} h-0 border-b`,
+      vertical: `${flexItem ? "h-auto self-stretch" : "h-full"} w-0 border-s`,
     };
     return [orientations?.[orientation], classes?.orientation?.[orientation]];
   }, [orientation, classes?.orientation, flexItem]);
@@ -46,7 +46,7 @@ export default function Divider<E extends ElementType = "hr">({
   return (
     <Component
       className={twMerge(
-        "border-border self-stretch border-0",
+        "border-border border-0",
         classes?.base,
         orientationClasses,
         variantClasses,
