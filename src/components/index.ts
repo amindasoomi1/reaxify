@@ -5,6 +5,7 @@ export { default as Badge } from "./Badge";
 export { default as Button } from "./Button";
 export { default as ButtonGroup } from "./ButtonGroup";
 export { default as Card } from "./Card";
+export { default as Divider } from "./Divider";
 export { default as Drawer } from "./Drawer";
 export { default as Fill } from "./Fill";
 export { default as InputGroup } from "./InputGroup";
