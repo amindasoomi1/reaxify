@@ -1,10 +1,9 @@
 import { cn } from "@/helpers";
 import { useClasses } from "@/hooks";
 import { ComponentPropsWithAs } from "@/types";
-import { createContext, ElementType, useContext, useMemo } from "react";
+import { createContext, ElementType, useMemo } from "react";
 import { twMerge } from "tailwind-merge";
 import { ButtonProps } from "../Button";
-import { TabsContext } from "../Tabs";
 
 type ButtonGroupProps = {
   orientation?: "vertical" | "horizontal";
@@ -28,7 +27,6 @@ export default function ButtonGroup<E extends ElementType = "div">({
 }: ComponentPropsWithAs<E, ButtonGroupProps>) {
   const Component = as || "div";
   const classes = useClasses((c) => c.buttonGroup);
-  const { buttonGroupClasses } = useContext(TabsContext);
   const orientationClasses = useMemo(() => {
     const orientations = {
       horizontal: "flex-row",
@@ -52,8 +50,7 @@ export default function ButtonGroup<E extends ElementType = "div">({
         "w-fit flex items-stretch justify-center",
         classes?.base,
         orientationClasses,
-        buttonGroupClasses,
-        className
+        className,
       )}
       {...props}
     >

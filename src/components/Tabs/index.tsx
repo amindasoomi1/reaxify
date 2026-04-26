@@ -1,4 +1,4 @@
-import { ChildrenProps } from "@/types";
+import { ChildrenProps, ComponentPropsWithoutAs } from "@/types";
 import {
   ComponentProps,
   createContext,
@@ -16,37 +16,35 @@ import { twMerge } from "tailwind-merge";
 import { cn } from "../../helpers";
 import { useClasses } from "../../hooks";
 import Button from "../Button";
+import ButtonGroup from "../ButtonGroup";
 
 type TabsProps = {
   active?: null | string;
   onChange?: Dispatch<string>;
 } & ChildrenProps;
+type TabButtonGroupProps = {
+  as?: never;
+};
 type TabButtonProps = {
-  eventKey: string;
+  as?: never;
   type?: never;
-  ref?: never;
+  eventKey: string;
   className?: string | ((options: { isActive: boolean }) => string | undefined);
 };
 type TabItemProps = { eventKey: string } & ChildrenProps;
 type TabsContextType = {
   active: null | string;
   onChange: Dispatch<string>;
-  buttonGroupClasses: string;
 };
 
 export const TabsContext = createContext<TabsContextType>({
   active: null,
   onChange: () => {},
-  buttonGroupClasses: "",
 });
 
 function Tabs({ active = null, onChange = () => {}, children }: TabsProps) {
-  const classes = useClasses((c) => c.tabs.buttonGroup.base);
-  const buttonGroupClasses = useMemo(() => {
-    return cn("relative flex items-center", classes) as string;
-  }, [classes]);
   return (
-    <TabsContext.Provider value={{ active, onChange, buttonGroupClasses }}>
+    <TabsContext.Provider value={{ active, onChange }}>
       {children}
     </TabsContext.Provider>
   );
@@ -94,14 +92,29 @@ function TabIndicator({
     </span>
   );
 }
+function TabButtonGroup({
+  className,
+  children,
+  ...props
+}: ComponentPropsWithoutAs<typeof ButtonGroup<"div">, TabButtonGroupProps>) {
+  const classes = useClasses((c) => c.tabs.buttonGroup.base);
+  return (
+    <ButtonGroup
+      as="div"
+      className={cn("relative flex items-center", classes, className)}
+      {...props}
+    >
+      {children}
+    </ButtonGroup>
+  );
+}
 function TabButton({
   eventKey,
   className,
   children,
   onClick,
   ...props
-}: TabButtonProps &
-  Omit<ComponentProps<typeof Button<"button">>, keyof TabButtonProps>) {
+}: ComponentPropsWithoutAs<typeof Button<"button">, TabButtonProps>) {
   const baseClasses = useClasses((c) => c.tabs.button.base);
   const activeClasses = useClasses((c) => c.tabs.button.active);
   const { active, onChange } = useContext(TabsContext);
@@ -143,6 +156,7 @@ function TabItem({ eventKey, children }: TabItemProps) {
 }
 
 Tabs.Indicator = TabIndicator;
+Tabs.ButtonGroup = TabButtonGroup;
 Tabs.Button = TabButton;
 Tabs.Item = TabItem;
 

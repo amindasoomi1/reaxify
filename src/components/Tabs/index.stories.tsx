@@ -1,7 +1,6 @@
 import type { Meta } from "@storybook/react";
 import { useState } from "react";
 import Tabs from ".";
-import ButtonGroup from "../ButtonGroup";
 import Stack from "../Stack";
 import Typography from "../Typography";
 
@@ -19,12 +18,12 @@ export function Default() {
   return (
     <div className="w-full space-y-4">
       <Tabs active={active} onChange={setActive}>
-        <ButtonGroup>
+        <Tabs.ButtonGroup>
           <Tabs.Indicator />
           <Tabs.Button eventKey="basic-info">Basic info</Tabs.Button>
           <Tabs.Button eventKey="contact-info">Contact info</Tabs.Button>
           <Tabs.Button eventKey="notes">Notes</Tabs.Button>
-        </ButtonGroup>
+        </Tabs.ButtonGroup>
         <Tabs.Item eventKey="basic-info">
           <Stack direction="column" className="gap-4">
             <Typography variant="heading-6">Basic info</Typography>
