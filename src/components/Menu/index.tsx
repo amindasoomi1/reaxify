@@ -15,6 +15,7 @@ import {
 } from "react";
 import { Transition, TransitionStatus } from "react-transition-group";
 import { twMerge } from "tailwind-merge";
+import Button from "../Button";
 import Portal from "../Portal";
 
 type Position = { left: number; top: number; right: number };
@@ -41,7 +42,7 @@ const MenuContext = createContext<MenuContextType>({
   preventClose: false,
 });
 
-function Menu<E extends ElementType = "div">({
+function Menu<E extends ElementType = "ul">({
   as,
   ref,
   open,
@@ -54,9 +55,9 @@ function Menu<E extends ElementType = "div">({
   ...props
 }: ComponentPropsWithAs<E, MenuProps>) {
   const classes = useClasses((c) => c.menu.base);
-  const Component = as || "div";
+  const Component = as || "ul";
   const offset = 16;
-  const menuRef = useRef<HTMLDivElement | null>(null);
+  const menuRef = useRef<HTMLUListElement | null>(null);
   const positionRef = useRef<Position>({
     left: offset,
     right: offset,
@@ -140,9 +141,11 @@ function Menu<E extends ElementType = "div">({
               <Backdrop />
               <Component
                 ref={menuRef}
+                autoFocus
                 data-open={open}
+                role="menu"
                 className={twMerge(
-                  "w-fit min-w-52 bg-white shadow rounded p-2 transition-[scale,opacity] absolute top-(--top) left-(--left) right-auto origin-top-left rtl:left-auto rtl:right-(--right) rtl:origin-top-right",
+                  "w-fit min-w-52 bg-white shadow-lg rounded py-2 transition-[scale,opacity] absolute top-(--top) left-(--left) right-auto origin-top-left rtl:left-auto rtl:right-(--right) rtl:origin-top-right",
                   classes,
                   transitionClasses[state],
                   className,
@@ -181,14 +184,13 @@ function Container({ children }: ChildrenProps) {
 function Backdrop() {
   const { onClose, preventClose } = useContext(MenuContext);
   return (
-    <button
-      type="button"
+    <div
       className={cn(
         "w-full flex-1 opacity-0 cursor-default lg:absolute lg:size-full lg:inset-0",
         preventClose && "[&:active~*]:scale-95",
       )}
       onClick={onClose}
-    ></button>
+    ></div>
   );
 }
 function MenuItem<E extends ElementType = "button">({
@@ -199,8 +201,6 @@ function MenuItem<E extends ElementType = "button">({
   onClick,
   ...props
 }: ComponentPropsWithAs<E, MenuItemProps>) {
-  const Component = as || "button";
-  const handleType = Component === "button" ? "button" : undefined;
   const classes = useClasses((c) => c.menu.item.base);
   const { closeOnClick: menuCloseOnClick, onClose } = useContext(MenuContext);
   const closeOnClick = itemCloseOnClick ?? menuCloseOnClick;
@@ -209,10 +209,13 @@ function MenuItem<E extends ElementType = "button">({
     onClick?.(e);
   };
   return (
-    <Component
-      type={handleType}
+    <Button
+      as={(as as ElementType) ?? "li"}
+      color="light"
+      variant="text"
+      role="menuitem"
       className={twMerge(
-        "flex items-center px-3 py-2 w-full text-dark text-base font-normal rounded cursor-pointer transition-colors hover:bg-dark hover:text-white",
+        "w-full flex items-center justify-start align-middle px-4 py-1.5 bg-transparent text-base font-normal rounded-none whitespace-nowrap transition-colors hover:bg-dark/5",
         classes,
         className,
       )}
@@ -220,7 +223,7 @@ function MenuItem<E extends ElementType = "button">({
       {...props}
     >
       {children}
-    </Component>
+    </Button>
   );
 }
 

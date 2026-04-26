@@ -85,8 +85,7 @@ function Modal<E extends ElementType = "div">({
             )}
             {...props}
           >
-            <button
-              type="button"
+            <div
               onClick={handleClose}
               className={cn(
                 "absolute inset-0 cursor-default opacity-0",

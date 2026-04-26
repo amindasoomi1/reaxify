@@ -104,8 +104,7 @@ function Drawer<E extends ElementType = "div">({
             )}
             {...props}
           >
-            <button
-              type="button"
+            <div
               onClick={handleClose}
               className={cn(
                 "absolute inset-0 size-full cursor-default opacity-0",
