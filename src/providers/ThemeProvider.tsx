@@ -29,7 +29,6 @@ export type ThemeProviderContextType = {
       color: ColorClasses<Record<BadgeVariant, string>>;
       size: SizeClasses;
     };
-    box: { base: string };
     button: {
       base: string;
       color: ColorClasses<Record<ButtonVariant, string>>;
@@ -64,6 +63,11 @@ export type ThemeProviderContextType = {
       header: { base: string };
       body: { base: string };
       footer: { base: string };
+    };
+    divider: {
+      base: string;
+      orientation: { vertical: string; horizontal: string };
+      variant: { solid: string; dashed: string; dotted: string };
     };
     drawer: {
       base: string;
