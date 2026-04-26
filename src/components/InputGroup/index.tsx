@@ -30,7 +30,7 @@ function InputGroupLabel<E extends ElementType = "h6">({
       className={twMerge(
         "block font-normal text-start mb-0.5 px-0.5 text-sm",
         classes,
-        className
+        className,
       )}
       {...props}
     >
@@ -49,9 +49,9 @@ function InputGroupStack<E extends ElementType = "div">({
   return (
     <Component
       className={twMerge(
-        "flex items-stretch border border-[#e8eaee] rounded divide-x divide-[#e8eaee] transition-[border-color,box-shadow] [&>*:first-child]:rounded-s [&>*:last-child]:rounded-e focus-within:border-primary focus-within:divide-primary",
+        "flex items-stretch border border-border rounded divide-x divide-border transition-[border-color,box-shadow] [&>*:first-child]:rounded-s [&>*:last-child]:rounded-e focus-within:border-primary focus-within:divide-primary",
         classes,
-        className
+        className,
       )}
       {...props}
     >
@@ -72,7 +72,7 @@ function InputGroupText<E extends ElementType = "span">({
       className={twMerge(
         "flex items-center text-base py-1.5 px-3 font-normal text-center whitespace-nowrap",
         classes,
-        className
+        className,
       )}
       {...props}
     >
@@ -95,7 +95,7 @@ function InputGroupFormControl<E extends ElementType = "input">({
         "text-start flex-1 leading-10 text-base py-1.5 px-3 focus:outline-none bg-transparent border-0",
         isTextarea ? "min-h-[7.5rem] field-sizing-content" : "h-10",
         classes,
-        className
+        className,
       )}
       {...props}
     >

@@ -62,7 +62,7 @@ function Table({
       className={twMerge(
         "min-w-full border-collapse border-spacing-0",
         classes,
-        className
+        className,
       )}
       {...props}
     >
@@ -85,7 +85,7 @@ function TableHeader({
         classes?.base,
         sticky && "sticky top-0 left-0 right-0 z-[2]",
         sticky && classes?.sticky,
-        className
+        className,
       )}
       {...props}
     >
@@ -112,7 +112,7 @@ function TableRow({ className, children, ...props }: TableRowProps) {
       className={twMerge(
         "bg-white",
         classes?.base,
-        hasBordered && "border-b border-solid border-[#e8eaee]",
+        hasBordered && "border-b border-solid border-border",
         isDashed && "border-dashed",
         isSolid && "border-solid",
         hasBordered && classes?.bordered,
@@ -120,7 +120,7 @@ function TableRow({ className, children, ...props }: TableRowProps) {
         hover && classes?.hover,
         striped && "even:bg-gray-100",
         striped && classes?.hover,
-        className
+        className,
       )}
       {...props}
     >
@@ -139,7 +139,7 @@ function TableHeaderCell({
       className={twMerge(
         "font-medium text-sm py-2 px-4 whitespace-nowrap text-center first:text-start last:text-end",
         sticky && "bg-inherit sticky end-0 z-[1]",
-        className
+        className,
       )}
       {...props}
     >
@@ -158,7 +158,7 @@ function TableDataCell({
       className={twMerge(
         "font-normal text-sm py-2 px-4 whitespace-nowrap text-center first:text-start last:text-end",
         sticky && "bg-inherit sticky end-0 z-[1]",
-        className
+        className,
       )}
       {...props}
     >

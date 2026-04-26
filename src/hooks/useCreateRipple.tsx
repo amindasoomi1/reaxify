@@ -4,7 +4,8 @@ export default function useCreateRipple() {
   // const ref = useRef<HTMLSpanElement | null>(null);
   const createRipple = useCallback((e: MouseEvent<HTMLElement>) => {
     const parent =
-      e.currentTarget.querySelector(".ripple-group") || e.currentTarget;
+      e.currentTarget.querySelector("[data-name='ripple-group']") ||
+      e.currentTarget;
     const parentRect = parent.getBoundingClientRect();
     const left = e.clientX - parentRect.left;
     const top = e.clientY - parentRect.top;

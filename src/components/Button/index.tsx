@@ -119,7 +119,7 @@ export default function Button<E extends ElementType = "button">({
     };
     const classesResult = classes?.color?.[color]?.[variant];
     const colorResult = colors?.[color]?.[variant];
-    return twMerge(colorResult, classesResult);
+    return cn(colorResult, classesResult);
   }, [color, variant, classes?.color]);
   const loadingClasses = useMemo(() => {
     return colorClasses?.split(" ").find((e) => e.startsWith("text-"));
@@ -136,14 +136,14 @@ export default function Button<E extends ElementType = "button">({
   }, [size, classes?.size]);
   const loadingDisabledClasses = useMemo(() => {
     if (loading)
-      return cn(
+      return [
         "disabled:opacity-100 disabled:cursor-wait disabled:text-transparent",
         classes?.loading?.active,
-      );
-    return cn(
+      ];
+    return [
       "disabled:opacity-75 disabled:cursor-not-allowed",
       classes?.loading?.inactive,
-    );
+    ];
   }, [loading, classes?.loading]);
   const handleClick = (e: MouseEvent<HTMLElement>) => {
     createRipple(e);
@@ -157,12 +157,8 @@ export default function Button<E extends ElementType = "button">({
     <Component
       role="button"
       className={twMerge(
-        "relative inline-block no-underline whitespace-nowrap font-medium text-center rounded border border-[#e8eaee] cursor-pointer transition-[box-shadow,opacity,color,background-color,border-color] [user-select:none]",
-        // "focus:outline-none focus:ring-2 focus:ring-offset-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
-        // variant === "solid"
-        //   ? "shadow hover:shadow-md active:shadow-lg"
-        //   : "shadow-none",
-        // color ? "ring-2 ring-offset-2 ring-transparent" : null,
+        "relative inline-block no-underline whitespace-nowrap font-medium text-center rounded border border-border cursor-pointer transition-[box-shadow,opacity,color,background-color,border-color] [user-select:none]",
+        "focus-visible:outline-none after:content-[''] after:bg-current after:opacity-25 after:absolute after:-inset-y-px after:inset-x-2 after:rounded-full after:mx-auto after:pointer-events-none after:scale-0 focus-visible:after:scale-100 after:transition-transform after:[corner-shape:squircle]",
         classes?.base,
         colorClasses,
         sizeClasses,
@@ -184,7 +180,10 @@ export default function Button<E extends ElementType = "button">({
           />
         </span>
       )}
-      <span className="ripple-group absolute size-full inset-0 overflow-hidden rounded-[inherit] pointer-events-none"></span>
+      <span
+        data-name="ripple-group"
+        className="absolute size-full inset-0 overflow-hidden rounded-[inherit] pointer-events-none"
+      ></span>
     </Component>
   );
 }

@@ -97,7 +97,7 @@ function Accordion<T extends EventKey>({
 
 function AccordionItem<
   E extends ElementType = "div",
-  T extends EventKey = string
+  T extends EventKey = string,
 >({
   as,
   eventKey: initEventKey = null,
@@ -119,9 +119,9 @@ function AccordionItem<
   return (
     <Component
       className={twMerge(
-        "block w-full border border-[#e8eaee] rounded",
+        "block w-full border border-border rounded",
         classes,
-        className
+        className,
       )}
       {...props}
     >
@@ -154,7 +154,7 @@ function AccordionToggle({
       className={twMerge(
         "w-full flex items-center text-start text-base px-5 py-4 rounded-t cursor-pointer",
         classes,
-        className
+        className,
       )}
       onClick={handleClick}
       {...props}
@@ -179,7 +179,7 @@ function AccordionIcon({
         classes?.base,
         active ? "-rotate-180" : "rotate-0",
         active ? classes?.active : classes?.inactive,
-        className
+        className,
       )}
       {...props}
     />
@@ -227,7 +227,7 @@ function AccordionBody({
       className={twMerge(
         "w-full block px-5 py-4 rounded-b",
         classes,
-        className
+        className,
       )}
       {...props}
     >

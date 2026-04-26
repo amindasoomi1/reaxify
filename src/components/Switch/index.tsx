@@ -37,22 +37,16 @@ export default function Switch({
   }, [checked]);
   const colorClasses = useMemo(() => {
     const colors = {
-      primary: checked
-        ? "bg-primary border-primary"
-        : "bg-white border-[#e8eaee]",
+      primary: checked ? "bg-primary border-primary" : "bg-white border-border",
       secondary: checked
         ? "bg-secondary border-secondary"
-        : "bg-white border-[#e8eaee]",
-      success: checked
-        ? "bg-success border-success"
-        : "bg-white border-[#e8eaee]",
-      info: checked ? "bg-info border-info" : "bg-white border-[#e8eaee]",
-      warning: checked
-        ? "bg-warning border-warning"
-        : "bg-white border-[#e8eaee]",
-      danger: checked ? "bg-danger border-danger" : "bg-white border-[#e8eaee]",
-      dark: checked ? "bg-dark border-dark" : "bg-white border-[#e8eaee]",
-      light: checked ? "bg-light border-light" : "bg-white border-[#e8eaee]",
+        : "bg-white border-border",
+      success: checked ? "bg-success border-success" : "bg-white border-border",
+      info: checked ? "bg-info border-info" : "bg-white border-border",
+      warning: checked ? "bg-warning border-warning" : "bg-white border-border",
+      danger: checked ? "bg-danger border-danger" : "bg-white border-border",
+      dark: checked ? "bg-dark border-dark" : "bg-white border-border",
+      light: checked ? "bg-light border-light" : "bg-white border-border",
     };
     return colors?.[color];
   }, [color, checked]);
