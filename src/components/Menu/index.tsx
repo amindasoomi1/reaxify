@@ -123,7 +123,11 @@ function Menu<E extends ElementType = "ul">({
     };
   }, [positionHandler]);
   useImperativeHandle(ref, () => menuRef.current);
-  useHotkey("Escape", () => onClose?.(), { enabled: open && !preventClose });
+  useHotkey("Escape", () => onClose(), {
+    conflictBehavior: "allow",
+    ignoreInputs: true,
+    enabled: open && !preventClose,
+  });
   return (
     <Portal>
       <Transition nodeRef={menuRef} in={open} timeout={300} unmountOnExit>

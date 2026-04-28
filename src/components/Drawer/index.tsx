@@ -86,7 +86,11 @@ function Drawer<E extends ElementType = "div">({
     onClose();
   };
   useImperativeHandle(ref, () => divRef.current);
-  useHotkey("Escape", () => onClose(), { enabled: open && !preventClose });
+  useHotkey("Escape", () => onClose(), {
+    conflictBehavior: "allow",
+    ignoreInputs: true,
+    enabled: open && !preventClose,
+  });
   return (
     <Portal>
       <Transition nodeRef={divRef} in={open} timeout={duration} unmountOnExit>
