@@ -108,13 +108,13 @@ export default function Button<E extends ElementType = "button">({
         solid: "bg-dark text-white border-dark",
         outline: "bg-transparent text-dark border-dark",
         text: "bg-transparent text-dark border-transparent",
-        soft: "bg-dark text-light border-dark",
+        soft: "bg-dark text-white border-dark",
       },
       light: {
         solid: "bg-light text-dark border-light",
         outline: "bg-transparent text-dark border-light",
         text: "bg-transparent text-dark border-transparent",
-        soft: "bg-light- text-dark border-dark",
+        soft: "bg-light text-dark border-light",
       },
     };
     const classesResult = classes?.color?.[color]?.[variant];

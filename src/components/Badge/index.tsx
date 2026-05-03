@@ -65,7 +65,7 @@ export default function Badge<E extends ElementType = "span">({
       dark: {
         solid: "bg-dark text-white border-dark",
         outline: "bg-transparent text-dark border-dark",
-        soft: "bg-dark text-dark border-dark",
+        soft: "bg-dark text-white border-dark",
       },
       light: {
         solid: "bg-light text-dark border-light",
