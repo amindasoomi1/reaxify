@@ -23,6 +23,7 @@ type Props = {
   color?: Color;
   duration?: number;
   placement?: Placement;
+  // eslint-disable-next-line
   children?: ReactElement<any>;
 };
 type Colors = {

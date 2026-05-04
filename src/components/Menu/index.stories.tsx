@@ -67,7 +67,7 @@ export function CloseOnClickOneItem() {
       <Button onClick={handleClick}>Close on click one item</Button>
       <Menu anchorEl={anchorEl} open={open} onClose={handleCLose}>
         <Menu.Item>Item #1</Menu.Item>
-        <Menu.Item closeOnClick>Item #2 (ClickOnClose)</Menu.Item>
+        <Menu.Item closeOnClick>Item #2 (Click On Close)</Menu.Item>
         <Menu.Item>Item #3</Menu.Item>
         <Menu.Item>Item #4</Menu.Item>
       </Menu>
@@ -87,7 +87,7 @@ export function PreventClose() {
     <Fragment>
       <Button onClick={handleClick}>Dropdown</Button>
       <Menu anchorEl={anchorEl} open={open} onClose={handleCLose} preventClose>
-        <Menu.Item onClick={handleCLose}>Item #1</Menu.Item>
+        <Menu.Item onClick={handleCLose}>Item #1 (Click This)</Menu.Item>
         <Menu.Item>Item #2</Menu.Item>
         <Menu.Item>Item #3</Menu.Item>
         <Menu.Item>Item #4</Menu.Item>

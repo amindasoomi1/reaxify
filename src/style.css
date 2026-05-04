@@ -1,6 +1,8 @@
+html:has([role="menu"][data-open="true"]) {
+  scrollbar-gutter: stable;
+}
 body:has([data-open="true"]) {
-  overflow: hidden;
-  @apply overscroll-none;
+  @apply overflow-hidden overscroll-none;
 }
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
