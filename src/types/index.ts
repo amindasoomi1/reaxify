@@ -55,6 +55,14 @@ export type ButtonSize = BaseSize | "icon" | keyof ExtendSize;
 export type ClassNameProps = { className?: string };
 export type ChildrenProps = { children?: ReactNode };
 export type ToggleProps = { open: boolean; onClose: VoidFunction };
+export type ToggleEventProps = {
+  onEnter: VoidFunction;
+  onEntering: VoidFunction;
+  onEntered: VoidFunction;
+  onExit: VoidFunction;
+  onExiting: VoidFunction;
+  onExited: VoidFunction;
+};
 export type RecursivePartial<T> = {
   [P in keyof T]?: RecursivePartial<T[P]>;
 };

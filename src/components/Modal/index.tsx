@@ -1,6 +1,11 @@
 import { cn } from "@/helpers";
 import { useClasses } from "@/hooks";
-import { ComponentPropsWithAs, Size, ToggleProps } from "@/types";
+import {
+  ComponentPropsWithAs,
+  Size,
+  ToggleEventProps,
+  ToggleProps,
+} from "@/types";
 import { TransitionClasses } from "@/types/internal";
 
 import { useHotkey } from "@tanstack/react-hotkeys";
@@ -27,7 +32,8 @@ type ModalProps = {
   size?: Size;
   duration?: number;
   preventClose?: boolean;
-} & Partial<ToggleProps>;
+} & Partial<ToggleEventProps> &
+  Partial<ToggleProps>;
 type ModalDialogProps = Omit<ComponentProps<"div">, "as" | "ref">;
 type ModalHeaderProps = ComponentProps<"div">;
 type ModalBodyProps = ComponentProps<"div">;
@@ -47,6 +53,12 @@ function Modal<E extends ElementType = "div">({
   size = "md",
   open = false,
   onClose = () => {},
+  onEnter,
+  onEntering,
+  onEntered,
+  onExit,
+  onExiting,
+  onExited,
   duration = 300,
   preventClose = false,
   className,
@@ -75,7 +87,18 @@ function Modal<E extends ElementType = "div">({
   });
   return (
     <Portal>
-      <Transition nodeRef={divRef} in={open} timeout={duration} unmountOnExit>
+      <Transition
+        nodeRef={divRef}
+        in={open}
+        timeout={duration}
+        unmountOnExit
+        onEnter={onEnter}
+        onEntering={onEntering}
+        onEntered={onEntered}
+        onExit={onExit}
+        onExiting={onExiting}
+        onExited={onExited}
+      >
         {(state) => (
           <Component
             ref={divRef}

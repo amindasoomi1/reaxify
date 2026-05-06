@@ -1,5 +1,5 @@
 import { useClasses } from "@/hooks";
-import { ComponentPropsWithAs, ToggleProps } from "@/types";
+import { ComponentPropsWithAs, ToggleEventProps, ToggleProps } from "@/types";
 import { TransitionClasses } from "@/types/internal";
 import { useHotkey } from "@tanstack/react-hotkeys";
 import {
@@ -28,7 +28,8 @@ type DrawerBaseProps = {
   anchor?: Anchor;
   duration?: number;
   preventClose?: boolean;
-} & Partial<ToggleProps>;
+} & Partial<ToggleEventProps> &
+  Partial<ToggleProps>;
 type DrawerProps<E extends ElementType> = ComponentPropsWithAs<
   E,
   DrawerBaseProps
@@ -53,6 +54,12 @@ function Drawer<E extends ElementType = "div">({
   ref,
   open = false,
   onClose = () => {},
+  onEnter,
+  onEntering,
+  onEntered,
+  onExit,
+  onExiting,
+  onExited,
   duration = 300,
   preventClose = false,
   anchor = "end",
@@ -93,7 +100,18 @@ function Drawer<E extends ElementType = "div">({
   });
   return (
     <Portal>
-      <Transition nodeRef={divRef} in={open} timeout={duration} unmountOnExit>
+      <Transition
+        nodeRef={divRef}
+        in={open}
+        timeout={duration}
+        unmountOnExit
+        onEnter={onEnter}
+        onEntering={onEntering}
+        onEntered={onEntered}
+        onExit={onExit}
+        onExiting={onExiting}
+        onExited={onExited}
+      >
         {(state) => (
           <Component
             ref={divRef}

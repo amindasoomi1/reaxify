@@ -1,6 +1,11 @@
 import { cn } from "@/helpers";
 import { useClasses } from "@/hooks";
-import { ChildrenProps, ComponentPropsWithAs, ToggleProps } from "@/types";
+import {
+  ChildrenProps,
+  ComponentPropsWithAs,
+  ToggleEventProps,
+  ToggleProps,
+} from "@/types";
 import { TransitionClasses } from "@/types/internal";
 import { useHotkey } from "@tanstack/react-hotkeys";
 import {
@@ -23,7 +28,9 @@ type MenuProps = {
   anchorEl?: HTMLElement | null;
   closeOnClick?: boolean;
   preventClose?: boolean;
-} & ToggleProps;
+  duration?: number;
+} & Partial<ToggleEventProps> &
+  ToggleProps;
 type MenuItemProps = {
   closeOnClick?: boolean;
 };
@@ -46,7 +53,14 @@ function Menu<E extends ElementType = "ul">({
   as,
   ref,
   open,
+  duration = 300,
   onClose,
+  onEnter,
+  onEntering,
+  onEntered,
+  onExit,
+  onExiting,
+  onExited,
   closeOnClick = false,
   preventClose = false,
   anchorEl = null,
@@ -130,7 +144,18 @@ function Menu<E extends ElementType = "ul">({
   });
   return (
     <Portal>
-      <Transition nodeRef={menuRef} in={open} timeout={300} unmountOnExit>
+      <Transition
+        nodeRef={menuRef}
+        in={open}
+        timeout={duration}
+        unmountOnExit
+        onEnter={onEnter}
+        onEntering={onEntering}
+        onEntered={onEntered}
+        onExit={onExit}
+        onExiting={onExiting}
+        onExited={onExited}
+      >
         {(state) => (
           <MenuContext.Provider
             value={{
@@ -148,6 +173,7 @@ function Menu<E extends ElementType = "ul">({
                 autoFocus
                 data-open={open}
                 role="menu"
+                style={{ transitionDuration: `${duration}ms` }}
                 className={twMerge(
                   "w-fit min-w-52 bg-white shadow-lg rounded py-2 transition-[scale,opacity] absolute top-(--top) left-(--left) right-auto origin-top-left rtl:left-auto rtl:right-(--right) rtl:origin-top-right",
                   classes,
