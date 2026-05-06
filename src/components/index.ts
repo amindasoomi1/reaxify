@@ -22,3 +22,4 @@ export { default as Table } from "./Table";
 export { default as Tabs } from "./Tabs";
 export { default as Tooltip } from "./Tooltip";
 export { default as Typography } from "./Typography";
+import "../style.css";
