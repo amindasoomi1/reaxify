@@ -99,6 +99,7 @@ function AvatarImage({
     setIsImageLoaded(true);
     onLoad?.(e);
   };
+  if (!src) return null;
   return (
     <img
       src={src || undefined}
