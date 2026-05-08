@@ -19,6 +19,11 @@ type AvatarContextType = {
 type AvatarProps = {
   size?: Size;
 };
+type AvatarImageProps = {
+  src: string | null | undefined;
+  alt: string | null | undefined;
+  loading?: never;
+};
 type Sizes = {
   [key in Size]?: string;
 };
@@ -82,10 +87,12 @@ function Avatar<E extends ElementType = "div">({
   );
 }
 function AvatarImage({
+  src,
+  alt,
   className,
   onLoad,
   ...props
-}: ComponentPropsWithoutAs<"img", { loading?: never }>) {
+}: ComponentPropsWithoutAs<"img", AvatarImageProps>) {
   const classes = useClasses((c) => c.avatar.image.base);
   const { isImageLoaded, setIsImageLoaded } = useContext(AvatarContext);
   const handleLoad = (e: SyntheticEvent<HTMLImageElement>) => {
@@ -94,6 +101,8 @@ function AvatarImage({
   };
   return (
     <img
+      src={src || undefined}
+      alt={alt || undefined}
       className={twMerge(
         "aspect-square size-full rounded-full object-cover",
         isImageLoaded ? "block" : "hidden",
