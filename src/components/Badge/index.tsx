@@ -1,4 +1,3 @@
-import { cn } from "@/helpers";
 import { useClasses } from "@/hooks";
 import { BadgeVariant, Color, ComponentPropsWithAs, Size } from "@/types";
 import { ElementType, useMemo } from "react";
@@ -80,11 +79,13 @@ export default function Badge<E extends ElementType = "span">({
   const sizeClasses = useMemo(() => {
     if (!size) return null;
     const sizes: Sizes = {
-      sm: cn("text-xs py-0.5 px-1.5", classes?.size?.sm),
-      md: cn("text-sm py-[0.1875rem] px-2", classes?.size?.md),
-      lg: cn("text-base py-1 px-3", classes?.size?.lg),
+      sm: "text-xs py-0.5 px-1.5",
+      md: "text-sm py-[0.1875rem] px-2",
+      lg: "text-base py-1 px-3",
     };
-    return sizes?.[size];
+    const sizeResult = sizes?.[size];
+    const classesResult = classes?.size?.[size];
+    return [sizeResult, classesResult];
   }, [size, classes?.size]);
   return (
     <Component
