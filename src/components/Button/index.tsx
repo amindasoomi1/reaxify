@@ -135,7 +135,7 @@ export default function Button<E extends ElementType = "button">({
     const colorResult = colors?.[color]?.[variant];
     return cn(colorResult, classesResult);
   }, [color, variant, classes?.color]);
-  const loadingClasses = useMemo(() => {
+  const spinnerTextClass = useMemo(() => {
     return colorClasses?.split(" ").find((e) => e.startsWith("text-"));
   }, [colorClasses]);
   const sizeClasses = useMemo(() => {
@@ -185,12 +185,13 @@ export default function Button<E extends ElementType = "button">({
     >
       {children}
       {loading && (
-        <span className="absolute inset-0 size-full flex items-center justify-center bg-transparent p-2 pointer-events-none">
-          <Spinner
-            size={size === "icon" ? "sm" : size}
-            color={color}
-            className={loadingClasses}
-          />
+        <span
+          className={cn(
+            "absolute inset-0 size-full flex items-center justify-center bg-transparent p-2 pointer-events-none",
+            spinnerTextClass,
+          )}
+        >
+          <Spinner size={size === "icon" ? "sm" : size} inheritColor />
         </span>
       )}
       <span

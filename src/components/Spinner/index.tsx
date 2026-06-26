@@ -5,18 +5,21 @@ import { twMerge } from "tailwind-merge";
 
 type Props = {
   color?: Color;
+  inheritColor?: boolean;
   size?: Size;
   children?: never;
 };
 
 export default function Spinner({
   color = "primary",
+  inheritColor = false,
   size = "md",
   className,
   ...props
 }: ComponentPropsWithoutAs<"span", Props>) {
   const classes = useClasses((s) => s.spinner);
   const colorClasses = useMemo(() => {
+    if (inheritColor) return "border-current";
     const colors = {
       primary: "border-primary",
       secondary: "border-secondary",
@@ -28,7 +31,7 @@ export default function Spinner({
       light: "border-light",
     };
     return [colors?.[color], classes?.color?.[color]];
-  }, [color, classes?.color]);
+  }, [color, inheritColor, classes?.color]);
   const sizeClasses = useMemo(() => {
     const sizes = {
       sm: "border-2 w-4",
