@@ -14,7 +14,7 @@ type ValueAnimation =
       animate: boolean;
     };
 type BaseProgressProps = {
-  color?: Color | null;
+  color?: Color;
   children?: never;
 } & ValueAnimation;
 type Colors = {
@@ -63,12 +63,12 @@ export default function Progress({
       <span
         style={{ width }}
         className={cn(
-          "absolute h-full max-w-full bg-current rounded-[inherit] top-0 bottom-0 start-0",
+          "absolute h-full max-w-full bg-current rounded-[inherit] top-0 bottom-0 inset-s-0",
           animate ? "animate-linear-progress-1" : "transition-[width]",
         )}
       />
       {animate && (
-        <span className="absolute h-full max-w-full bg-current rounded-[inherit] top-0 bottom-0 start-0 animate-linear-progress-2" />
+        <span className="absolute h-full max-w-full bg-current rounded-[inherit] top-0 bottom-0 inset-s-0 animate-linear-progress-2" />
       )}
     </div>
   );

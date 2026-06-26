@@ -4,7 +4,7 @@ import { useMemo } from "react";
 import { twMerge } from "tailwind-merge";
 
 type Props = {
-  color?: Color | null;
+  color?: Color;
   size?: Size;
   children?: never;
 };
@@ -17,7 +17,6 @@ export default function Spinner({
 }: ComponentPropsWithoutAs<"span", Props>) {
   const classes = useClasses((s) => s.spinner);
   const colorClasses = useMemo(() => {
-    if (!color) return "border-current";
     const colors = {
       primary: "border-primary",
       secondary: "border-secondary",
@@ -36,7 +35,9 @@ export default function Spinner({
       md: "border-3 w-6",
       lg: "border-4 w-8",
     };
-    return [sizes?.[size], classes?.size?.[size]];
+    const sizeResult = sizes?.[size] ?? sizes.md;
+    const classesResult = classes?.size?.[size];
+    return [sizeResult, classesResult];
   }, [size, classes?.size]);
   return (
     <span

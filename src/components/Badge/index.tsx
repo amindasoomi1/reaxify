@@ -5,7 +5,7 @@ import { twMerge } from "tailwind-merge";
 
 type BadgeProps = {
   variant?: BadgeVariant;
-  color?: Color | null;
+  color?: Color;
   size?: Size;
 };
 type Colors = {
@@ -29,7 +29,6 @@ export default function Badge<E extends ElementType = "span">({
   const classes = useClasses((c) => c.badge);
   const Component = as || "span";
   const colorClasses = useMemo(() => {
-    if (!color) return "border-transparent";
     const colors: Colors = {
       primary: {
         solid: "bg-primary text-white border-primary",

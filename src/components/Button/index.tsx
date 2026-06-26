@@ -175,7 +175,7 @@ export default function Button<E extends ElementType = "button">({
         <span className="absolute inset-0 size-full flex items-center justify-center bg-transparent p-2">
           <Spinner
             size={size === "icon" ? "sm" : size}
-            color={null}
+            color={color}
             className={loadingClasses}
           />
         </span>
