@@ -69,52 +69,66 @@ export default function Button<E extends ElementType = "button">({
     if (!color) return "border-transparent";
     const colors: Colors = {
       primary: {
-        solid: "bg-primary text-white border-primary",
-        outline: "bg-transparent text-primary border-primary",
-        text: "bg-transparent text-primary border-transparent",
-        soft: "bg-light-primary text-dark-primary border-light-primary",
+        solid:
+          "bg-primary text-white border-primary hover:bg-dark-primary hover:border-dark-primary",
+        outline:
+          "bg-transparent text-primary border-primary hover:text-dark-primary hover:border-dark-primary",
+        text: "bg-transparent text-primary border-transparent hover:text-dark-primary",
+        soft: "bg-light-primary text-dark-primary border-light-primary hover:bg-primary hover:text-white hover:border-primary",
       },
       secondary: {
-        solid: "bg-secondary text-white border-secondary",
-        outline: "bg-transparent text-secondary border-secondary",
-        text: "bg-transparent text-secondary border-transparent",
-        soft: "bg-light-secondary text-dark-secondary border-light-secondary",
+        solid:
+          "bg-secondary text-white border-secondary hover:bg-dark-secondary hover:border-dark-secondary",
+        outline:
+          "bg-transparent text-secondary border-secondary hover:text-dark-secondary hover:border-dark-secondary",
+        text: "bg-transparent text-secondary border-transparent hover:text-dark-secondary",
+        soft: "bg-light-secondary text-dark-secondary border-light-secondary hover:bg-secondary hover:text-white hover:border-secondary",
       },
       success: {
-        solid: "bg-success text-white border-success",
-        outline: "bg-transparent text-success border-success",
-        text: "bg-transparent text-success border-transparent",
-        soft: "bg-light-success text-dark-success border-light-success",
+        solid:
+          "bg-success text-white border-success hover:bg-dark-success hover:border-dark-success",
+        outline:
+          "bg-transparent text-success border-success hover:text-dark-success hover:border-dark-success",
+        text: "bg-transparent text-success border-transparent hover:text-dark-success",
+        soft: "bg-light-success text-dark-success border-light-success hover:bg-success hover:text-white hover:border-success",
       },
       info: {
-        solid: "bg-info text-white border-info",
-        outline: "bg-transparent text-info border-info",
-        text: "bg-transparent text-info border-transparent",
-        soft: "bg-light-info text-dark-info border-light-info",
+        solid:
+          "bg-info text-white border-info hover:bg-dark-info hover:border-dark-info",
+        outline:
+          "bg-transparent text-info border-info hover:text-dark-info hover:border-dark-info",
+        text: "bg-transparent text-info border-transparent hover:text-dark-info",
+        soft: "bg-light-info text-dark-info border-light-info hover:bg-info hover:text-white hover:border-info",
       },
       warning: {
-        solid: "bg-warning text-white border-warning",
-        outline: "bg-transparent text-warning border-warning",
-        text: "bg-transparent text-warning border-transparent",
-        soft: "bg-light-warning text-dark-warning border-light-warning",
+        solid:
+          "bg-warning text-white border-warning hover:bg-dark-warning hover:border-dark-warning",
+        outline:
+          "bg-transparent text-warning border-warning hover:text-dark-warning hover:border-dark-warning",
+        text: "bg-transparent text-warning border-transparent hover:text-dark-warning",
+        soft: "bg-light-warning text-dark-warning border-light-warning hover:bg-warning hover:text-white hover:border-warning",
       },
       danger: {
-        solid: "bg-danger text-white border-danger",
-        outline: "bg-transparent text-danger border-danger",
-        text: "bg-transparent text-danger border-transparent",
-        soft: "bg-light-danger text-dark-danger border-light-danger",
+        solid:
+          "bg-danger text-white border-danger hover:bg-dark-danger hover:border-dark-danger",
+        outline:
+          "bg-transparent text-danger border-danger hover:text-dark-danger hover:border-dark-danger",
+        text: "bg-transparent text-danger border-transparent hover:text-dark-danger",
+        soft: "bg-light-danger text-dark-danger border-light-danger hover:bg-danger hover:text-white hover:border-danger",
       },
       dark: {
-        solid: "bg-dark text-white border-dark",
-        outline: "bg-transparent text-dark border-dark",
-        text: "bg-transparent text-dark border-transparent",
-        soft: "bg-dark text-white border-dark",
+        solid: "bg-dark text-white border-dark hover:bg-black hover:border-black",
+        outline:
+          "bg-transparent text-dark border-dark hover:text-black hover:border-black",
+        text: "bg-transparent text-dark border-transparent hover:text-black",
+        soft: "bg-dark text-white border-dark hover:bg-black hover:text-white hover:border-black",
       },
       light: {
-        solid: "bg-light text-dark border-light",
-        outline: "bg-transparent text-dark border-light",
-        text: "bg-transparent text-dark border-transparent",
-        soft: "bg-light text-dark border-light",
+        solid: "bg-light text-dark border-light hover:bg-border hover:border-border",
+        outline:
+          "bg-transparent text-dark border-light hover:text-dark hover:border-dark",
+        text: "bg-transparent text-dark border-transparent hover:text-dark",
+        soft: "bg-light text-dark border-light hover:bg-border hover:border-border",
       },
     };
     const classesResult = classes?.color?.[color]?.[variant];
@@ -157,8 +171,7 @@ export default function Button<E extends ElementType = "button">({
     <Component
       role="button"
       className={twMerge(
-        "relative inline-block no-underline whitespace-nowrap font-medium text-center rounded border border-border cursor-pointer transition-[box-shadow,opacity,color,background-color,border-color] [user-select:none]",
-        "focus-visible:outline-none after:content-[''] after:bg-current after:opacity-25 after:absolute after:-inset-y-px after:inset-x-2 after:rounded-full after:mx-auto after:pointer-events-none after:scale-0 focus-visible:after:scale-100 after:transition-transform after:[corner-shape:squircle]",
+        "relative inline-block no-underline whitespace-nowrap font-medium text-center rounded border border-border cursor-pointer transition-[box-shadow,opacity,color,background-color,border-color] [user-select:none] focus-visible:outline-none",
         classes?.base,
         colorClasses,
         sizeClasses,
@@ -172,7 +185,7 @@ export default function Button<E extends ElementType = "button">({
     >
       {children}
       {loading && (
-        <span className="absolute inset-0 size-full flex items-center justify-center bg-transparent p-2">
+        <span className="absolute inset-0 size-full flex items-center justify-center bg-transparent p-2 pointer-events-none">
           <Spinner
             size={size === "icon" ? "sm" : size}
             color={color}
