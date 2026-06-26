@@ -26,12 +26,12 @@ export default function Stack<E extends ElementType = "div">({
   const directionClasses = useMemo(() => {
     const directions: DirectionsObject = {
       row: cn(
-        "*:min-w-0",
+        "[&>*:not([class*='min-w-'])]:min-w-0",
         reverse ? "flex-row-reverse" : "flex-row",
         classes?.directions?.row,
       ),
       column: cn(
-        "*:min-h-0",
+        "[&>*:not([class*='min-h-'])]:min-h-0",
         reverse ? "flex-col-reverse" : "flex-col",
         classes?.directions?.column,
       ),
