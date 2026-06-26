@@ -1,10 +1,11 @@
 import { randomID } from "@/helpers";
 
-const portalId = randomID();
+let portalId = null as string | null;
 const listeners = new Set<VoidFunction>();
 
 const portalElementStore = {
   getElement: () => {
+    if (!portalId) portalId = randomID();
     const element = document.getElementById(portalId);
     if (element) return element;
     const div = document.createElement("div");
@@ -17,6 +18,9 @@ const portalElementStore = {
     listeners.add(cb);
     return () => {
       listeners.delete(cb);
+      const canRemove = listeners.size === 0 && !!portalId;
+      const element = document.getElementById(portalId || "");
+      if (canRemove && element) document.body.removeChild(element);
     };
   },
 };

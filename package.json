@@ -7,6 +7,9 @@
   "files": [
     "dist"
   ],
+  "sideEffects": [
+    "**/*.css"
+  ],
   "publishConfig": {
     "access": "public"
   },
@@ -40,8 +43,8 @@
       "types": "./dist/types/index.d.ts"
     },
     "./style.css": {
-      "require": "./dist/reaxify.css",
-      "default": "./dist/reaxify.css"
+      "require": "./dist/style.css",
+      "default": "./dist/style.css"
     }
   },
   "scripts": {
@@ -91,6 +94,7 @@
     "typescript": "^5.7.2",
     "vite": "^6.3.5",
     "vite-plugin-dts": "^4.5.4",
+    "vite-plugin-lib-inject-css": "^2.2.2",
     "vite-plugin-static-copy": "^4.1.0",
     "vite-tsconfig-paths": "^6.1.1"
   }

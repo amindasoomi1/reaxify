@@ -3,12 +3,14 @@ import react from "@vitejs/plugin-react-swc";
 import path from "path";
 import { defineConfig } from "vite";
 import dts from "vite-plugin-dts";
+import { libInjectCss } from "vite-plugin-lib-inject-css";
 // import { viteStaticCopy } from "vite-plugin-static-copy";
 
 export default defineConfig({
   plugins: [
     react(),
     tailwindcss(),
+    libInjectCss(),
     dts({ entryRoot: "src", exclude: ["**/*.stories.tsx", "**/internal.ts"] }),
     // viteStaticCopy({ targets: [{ src: "./src/types", dest: "" }] }),
   ],
@@ -31,6 +33,9 @@ export default defineConfig({
       formats: ["es", "cjs"],
     },
     rollupOptions: {
+      treeshake: {
+        moduleSideEffects: (id) => /\.css($|\?)/.test(id),
+      },
       external: ["react", "react-dom", "react/jsx-runtime", "axios"],
       output: {
         banner: '"use client";',
