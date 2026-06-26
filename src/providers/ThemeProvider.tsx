@@ -64,6 +64,9 @@ export type ThemeProviderContextType = {
       body: { base: string };
       footer: { base: string };
     };
+    collapse: {
+      base: string;
+    };
     divider: {
       base: string;
       orientation: { vertical: string; horizontal: string };

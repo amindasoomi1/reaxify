@@ -10,11 +10,9 @@ import {
   useContext,
   useMemo,
 } from "react";
-import AnimateHeight from "react-animate-height";
 import { twMerge } from "tailwind-merge";
 import { randomID } from "../../helpers";
-
-// ---------------- Types ----------------
+import Collapse from "../Collapse";
 
 type EventKey = string;
 
@@ -196,26 +194,9 @@ function AccordionCollapse({
   const { active } = useContext(AccordionItemContext);
 
   return (
-    <AnimateHeight
-      duration={duration}
-      height={active ? "auto" : 0}
-      data-name="accordion-collapse"
-      className="w-full"
-      animationStateClasses={{
-        animating: "",
-        animatingUp: "",
-        animatingDown: "",
-        static: "",
-        animatingToHeightZero: "",
-        animatingToHeightAuto: "",
-        animatingToHeightSpecific: "",
-        staticHeightZero: "",
-        staticHeightAuto: "",
-        staticHeightSpecific: "",
-      }}
-    >
+    <Collapse open={active} duration={duration} data-name="accordion-collapse">
       {children}
-    </AnimateHeight>
+    </Collapse>
   );
 }
 
@@ -240,8 +221,6 @@ function AccordionBody({
     </div>
   );
 }
-
-// ---------------- Composition ----------------
 
 Accordion.Item = AccordionItem;
 Accordion.Toggle = AccordionToggle;
