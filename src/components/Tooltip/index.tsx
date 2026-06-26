@@ -148,7 +148,6 @@ export default function Tooltip({
         <Transition nodeRef={divRef} in={open} timeout={duration} unmountOnExit>
           {(state) => (
             <div
-              // data-open={open}
               ref={divRef}
               style={position}
               className={cn(

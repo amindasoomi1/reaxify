@@ -1,5 +1,8 @@
-html:has([role="menu"][data-open="true"]) {
+html {
   scrollbar-gutter: stable;
+}
+html:has([role="dialog"][data-open="true"]) {
+  scrollbar-gutter: auto;
 }
 body:has([data-open="true"]) {
   @apply overflow-hidden overscroll-none;

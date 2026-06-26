@@ -3,7 +3,7 @@ import { Fragment, useState } from "react";
 import Drawer from ".";
 import { useToggle } from "../..//hooks";
 import Button from "../Button";
-import ButtonGroup from "../ButtonGroup";
+import Stack from "../Stack";
 import Typography from "../Typography";
 
 const meta: Meta<typeof Drawer> = {
@@ -62,7 +62,7 @@ export function Anchor() {
     });
   };
   return (
-    <ButtonGroup>
+    <Stack wrap className="gap-2">
       {(["top", "start", "bottom", "end"] as const).map((anchor) => (
         <Fragment key={anchor}>
           <Button
@@ -107,7 +107,7 @@ export function Anchor() {
           </Drawer>
         </Fragment>
       ))}
-    </ButtonGroup>
+    </Stack>
   );
 }
 export function PreventClose() {
