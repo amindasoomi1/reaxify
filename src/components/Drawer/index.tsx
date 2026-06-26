@@ -110,6 +110,7 @@ function Drawer<E extends ElementType = "div">({
             ref={divRef}
             style={{ transitionDuration: `${duration}ms` }}
             role="dialog"
+            data-name="drawer"
             data-open={open}
             className={twMerge(
               "fixed size-full inset-0 flex z-10 bg-black/20 backdrop-blur transition-opacity [--drawer-ratio:1] rtl:[--drawer-ratio:-1]",
@@ -121,6 +122,7 @@ function Drawer<E extends ElementType = "div">({
             {...props}
           >
             <div
+              data-name="drawer-backdrop"
               onClick={dismiss}
               className={cn(
                 "absolute inset-0 size-full cursor-default opacity-0",
@@ -196,6 +198,7 @@ function DrawerMenu({ children, className = "", ...props }: DrawerMenuProps) {
   return (
     <Card
       as="div"
+      data-name="drawer-menu"
       style={{ transitionDuration: `${duration}ms` }}
       className={twMerge(
         "relative flex flex-col transition-[translate,width] rounded-none",
@@ -213,12 +216,19 @@ function DrawerMenu({ children, className = "", ...props }: DrawerMenuProps) {
 }
 function DrawerHeader({ className, ...props }: DrawerHeaderProps) {
   const classes = useClasses((c) => c.drawer.header.base);
-  return <Card.Header className={cn(classes, className)} {...props} />;
+  return (
+    <Card.Header
+      data-name="drawer-header"
+      className={cn(classes, className)}
+      {...props}
+    />
+  );
 }
 function DrawerBody({ className, ...props }: DrawerBodyProps) {
   const classes = useClasses((c) => c.drawer.body.base);
   return (
     <Card.Body
+      data-name="drawer-body"
       className={cn("flex-1 overflow-auto", classes, className)}
       {...props}
     />
@@ -226,7 +236,13 @@ function DrawerBody({ className, ...props }: DrawerBodyProps) {
 }
 function DrawerFooter({ className, ...props }: DrawerFooterProps) {
   const classes = useClasses((c) => c.drawer.footer.base);
-  return <Card.Footer className={cn(classes, className)} {...props} />;
+  return (
+    <Card.Footer
+      data-name="drawer-footer"
+      className={cn(classes, className)}
+      {...props}
+    />
+  );
 }
 
 Drawer.Menu = DrawerMenu;

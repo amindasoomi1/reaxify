@@ -41,6 +41,7 @@ function TableContainer({
   const classes = useClasses((c) => c.table.container.base);
   return (
     <div
+      data-name="table-container"
       className={twMerge("w-full overflow-auto", classes, className)}
       {...props}
     >
@@ -59,6 +60,7 @@ function Table({
   const classes = useClasses((c) => c.table.base);
   return (
     <table
+      data-name="table"
       className={twMerge(
         "min-w-full border-collapse border-spacing-0",
         classes,
@@ -81,6 +83,7 @@ function TableHeader({
   const classes = useClasses((c) => c.table.header);
   return (
     <thead
+      data-name="table-header"
       className={twMerge(
         classes?.base,
         sticky && "sticky top-0 left-0 right-0 z-[2]",
@@ -96,7 +99,11 @@ function TableHeader({
 function TableBody({ className, children, ...props }: TableBodyProps) {
   const classes = useClasses((c) => c.table.body.base);
   return (
-    <tbody className={twMerge(classes, className)} {...props}>
+    <tbody
+      data-name="table-body"
+      className={twMerge(classes, className)}
+      {...props}
+    >
       {children}
     </tbody>
   );
@@ -109,6 +116,7 @@ function TableRow({ className, children, ...props }: TableRowProps) {
   const isSolid = bordered === "solid";
   return (
     <tr
+      data-name="table-row"
       className={twMerge(
         "bg-white",
         classes?.base,
@@ -136,9 +144,10 @@ function TableHeaderCell({
 }: TableHeaderCellProps) {
   return (
     <th
+      data-name="table-header-cell"
       className={twMerge(
         "font-medium text-sm py-2 px-4 whitespace-nowrap text-center first:text-start last:text-end",
-        sticky && "bg-inherit sticky end-0 z-[1]",
+        sticky && "bg-inherit sticky inset-e-0 z-1",
         className,
       )}
       {...props}
@@ -155,9 +164,10 @@ function TableDataCell({
 }: TableDataCellProps) {
   return (
     <td
+      data-name="table-data-cell"
       className={twMerge(
         "font-normal text-sm py-2 px-4 whitespace-nowrap text-center first:text-start last:text-end",
-        sticky && "bg-inherit sticky end-0 z-[1]",
+        sticky && "bg-inherit sticky inset-e-0 z-1",
         className,
       )}
       {...props}

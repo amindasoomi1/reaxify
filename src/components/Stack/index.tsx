@@ -45,6 +45,7 @@ export default function Stack<E extends ElementType = "div">({
   }, [wrap]);
   return (
     <Component
+      data-name="stack"
       className={twMerge(
         "flex",
         classes?.base,

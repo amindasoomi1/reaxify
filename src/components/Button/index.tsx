@@ -157,6 +157,7 @@ export default function Button<E extends ElementType = "button">({
   return (
     <Component
       role="button"
+      data-name="button"
       className={twMerge(
         "relative inline-block no-underline whitespace-nowrap font-medium text-center rounded border border-border cursor-pointer transition-[box-shadow,opacity,color,background-color,border-color] [user-select:none] focus-visible:outline-none",
         classes?.base,

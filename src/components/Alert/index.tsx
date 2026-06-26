@@ -124,6 +124,8 @@ function Alert<E extends ElementType = "div">({
   return (
     <Stack
       as={as as ElementType}
+      role="alert"
+      data-name="alert"
       className={cn(
         "w-full border rounded py-1.5 px-4 gap-3",
         classes?.base,
@@ -144,6 +146,7 @@ function AlertIcon({
   const classes = useClasses((c) => c.alert?.icon?.base);
   return (
     <div
+      data-name="alert-icon"
       className={twMerge(
         "flex flex-col py-2 items-start justify-start *:size-5.5 *:text-current",
         classes,
@@ -164,6 +167,7 @@ function AlertContent({
   return (
     <Fill
       as="div"
+      data-name="alert-content"
       className={twMerge("py-2 space-y-0.5", classes, className)}
       {...props}
     >
@@ -181,6 +185,7 @@ function AlertTitle({
     <Typography
       as="h6"
       variant="body-1"
+      data-name="alert-title"
       className={twMerge("w-full -mt-px font-medium", classes, className)}
       {...props}
     >
@@ -197,6 +202,7 @@ function AlertDescription({
   return (
     <Typography
       variant="body-2"
+      data-name="alert-description"
       className={twMerge("w-full font-normal", classes, className)}
       {...props}
     >
@@ -212,6 +218,7 @@ function AlertAction({
   const classes = useClasses((c) => c.alert?.action?.base);
   return (
     <div
+      data-name="alert-action"
       className={twMerge("self-center size-fit", classes, className)}
       {...props}
     >

@@ -46,6 +46,7 @@ export default function Typography<E extends ElementType = "p">({
   }, [variant, classes?.variant]);
   return (
     <Component
+      data-name="typography"
       className={twMerge(classes?.base, variantClasses, className)}
       {...props}
     />

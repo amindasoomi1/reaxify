@@ -9,6 +9,10 @@ export default function Fill<E extends ElementType = "div">({
 }: ComponentPropsWithAs<E>) {
   const classes = useClasses((c) => c.fill.base);
   return (
-    <div className={twMerge("flex-1", classes, className)} {...props}></div>
+    <div
+      data-name="fill"
+      className={twMerge("flex-1", classes, className)}
+      {...props}
+    ></div>
   );
 }

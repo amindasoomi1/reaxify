@@ -157,8 +157,10 @@ export default function Tooltip({
               )}
             >
               <span
+                role="tooltip"
+                data-name="tooltip"
                 className={twMerge(
-                  "relative block size-fit min-w-fit min-h-fit bg-dark text-sm rounded px-2 py-px whitespace-nowrap z-[1]",
+                  "relative block size-fit min-w-fit min-h-fit bg-dark text-sm rounded px-2 py-px whitespace-nowrap z-1",
                   classes?.base,
                   colorClasses,
                   className,

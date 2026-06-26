@@ -45,6 +45,8 @@ export default function Divider<E extends ElementType = "hr">({
   }, [variant, classes?.variant]);
   return (
     <Component
+      role="separator"
+      data-name="divider"
       className={twMerge(
         "border-border border-0",
         classes?.base,

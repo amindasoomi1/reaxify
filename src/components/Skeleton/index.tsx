@@ -12,6 +12,7 @@ export default function Skeleton({
   const classes = useClasses((c) => c.skeleton.base);
   return (
     <span
+      data-name="skeleton"
       className={twMerge(
         "inline-block w-10 h-10 rounded bg-gray-200 text-gray-200 animate-pulse",
         classes,

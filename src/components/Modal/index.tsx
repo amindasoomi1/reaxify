@@ -99,6 +99,7 @@ function Modal<E extends ElementType = "div">({
             ref={divRef}
             data-open={open}
             role="dialog"
+            data-name="modal"
             style={{ transitionDuration: `${duration}ms` }}
             className={twMerge(
               "modal fixed size-full inset-0 flex flex-col z-10 bg-black/20 transition-opacity backdrop-blur p-4",
@@ -109,6 +110,7 @@ function Modal<E extends ElementType = "div">({
             {...props}
           >
             <div
+              data-name="modal-backdrop"
               onClick={dismiss}
               className={cn(
                 "absolute inset-0 cursor-default opacity-0",
@@ -155,6 +157,7 @@ function ModalDialog({ className, children, ...props }: ModalDialogProps) {
   return (
     <Card
       as="div"
+      data-name="modal-dialog"
       style={{ transitionDuration: `${duration}ms` }}
       className={twMerge(
         "max-w-full max-h-full m-auto transition-transform",
@@ -171,15 +174,33 @@ function ModalDialog({ className, children, ...props }: ModalDialogProps) {
 }
 function ModalHeader({ className, ...props }: ModalHeaderProps) {
   const classes = useClasses((c) => c.modal.header.base);
-  return <Card.Header className={cn(classes, className)} {...props} />;
+  return (
+    <Card.Header
+      data-name="modal-header"
+      className={cn(classes, className)}
+      {...props}
+    />
+  );
 }
 function ModalBody({ className, ...props }: ModalBodyProps) {
   const classes = useClasses((c) => c.modal.body.base);
-  return <Card.Body className={cn(classes, className)} {...props} />;
+  return (
+    <Card.Body
+      data-name="modal-body"
+      className={cn(classes, className)}
+      {...props}
+    />
+  );
 }
 function ModalFooter({ className, ...props }: ModalFooterProps) {
   const classes = useClasses((c) => c.modal.footer.base);
-  return <Card.Footer className={cn(classes, className)} {...props} />;
+  return (
+    <Card.Footer
+      data-name="modal-footer"
+      className={cn(classes, className)}
+      {...props}
+    />
+  );
 }
 
 Modal.Dialog = ModalDialog;

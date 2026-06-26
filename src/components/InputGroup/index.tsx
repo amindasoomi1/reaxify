@@ -12,7 +12,11 @@ function InputGroup<E extends ElementType = "div">({
   const Component = as || "div";
   const classes = useClasses((c) => c.inputGroup.base);
   return (
-    <Component className={twMerge("w-full", classes, className)} {...props}>
+    <Component
+      data-name="input-group"
+      className={twMerge("w-full", classes, className)}
+      {...props}
+    >
       {children}
     </Component>
   );
@@ -27,6 +31,7 @@ function InputGroupLabel<E extends ElementType = "h6">({
   const classes = useClasses((c) => c.inputGroup.label.base);
   return (
     <Component
+      data-name="input-group-label"
       className={twMerge(
         "block font-normal text-start mb-0.5 px-0.5 text-sm",
         classes,
@@ -48,6 +53,7 @@ function InputGroupStack<E extends ElementType = "div">({
   const classes = useClasses((c) => c.inputGroup.stack.base);
   return (
     <Component
+      data-name="input-group-stack"
       className={twMerge(
         "flex items-stretch border border-border rounded divide-x divide-border transition-[border-color,box-shadow] [&>*:first-child]:rounded-s [&>*:last-child]:rounded-e focus-within:border-primary focus-within:divide-primary",
         classes,
@@ -69,6 +75,7 @@ function InputGroupText<E extends ElementType = "span">({
   const classes = useClasses((c) => c.inputGroup.text.base);
   return (
     <Component
+      data-name="input-group-text"
       className={twMerge(
         "flex items-center text-base py-1.5 px-3 font-normal text-center whitespace-nowrap",
         classes,
@@ -91,9 +98,10 @@ function InputGroupFormControl<E extends ElementType = "input">({
   const classes = useClasses((c) => c.inputGroup.formControl.base);
   return (
     <Component
+      data-name="input-group-form-control"
       className={twMerge(
         "text-start flex-1 leading-10 text-base py-1.5 px-3 focus:outline-none bg-transparent border-0",
-        isTextarea ? "min-h-[7.5rem] field-sizing-content" : "h-10",
+        isTextarea ? "min-h-30 field-sizing-content" : "h-10",
         classes,
         className,
       )}

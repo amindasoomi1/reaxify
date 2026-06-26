@@ -13,6 +13,7 @@ function Card<E extends ElementType = "div">({
   const Component = as || "div";
   return (
     <Component
+      data-name="card"
       className={twMerge(
         "block w-full bg-white rounded shadow",
         classes,
@@ -28,6 +29,7 @@ function CardHeader({ className, children, ...props }: ComponentProps<"div">) {
   const classes = useClasses((c) => c.card.header.base);
   return (
     <div
+      data-name="card-header"
       className={twMerge(
         "w-full border-b border-border p-4",
         classes,
@@ -42,7 +44,11 @@ function CardHeader({ className, children, ...props }: ComponentProps<"div">) {
 function CardBody({ className, children, ...props }: ComponentProps<"div">) {
   const classes = useClasses((c) => c.card.body.base);
   return (
-    <div className={twMerge("w-full p-4", classes, className)} {...props}>
+    <div
+      data-name="card-body"
+      className={twMerge("w-full p-4", classes, className)}
+      {...props}
+    >
       {children}
     </div>
   );
@@ -51,6 +57,7 @@ function CardFooter({ className, children, ...props }: ComponentProps<"div">) {
   const classes = useClasses((c) => c.card.footer.base);
   return (
     <div
+      data-name="card-footer"
       className={twMerge(
         "w-full border-t border-border p-4",
         classes,

@@ -60,6 +60,7 @@ export default function ButtonGroup<E extends ElementType = "div">({
   }, [children, variant, color, size, loading, buttonClasses]);
   return (
     <Component
+      data-name="button-group"
       className={twMerge(
         "w-fit flex items-stretch justify-center",
         classes?.base,

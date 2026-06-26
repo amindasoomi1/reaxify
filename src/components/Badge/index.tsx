@@ -88,6 +88,7 @@ export default function Badge<E extends ElementType = "span">({
   }, [size, classes?.size]);
   return (
     <Component
+      data-name="badge"
       className={twMerge(
         "inline-flex border border-border items-center text-center font-medium align-middle whitespace-nowrap rounded",
         classes?.base,

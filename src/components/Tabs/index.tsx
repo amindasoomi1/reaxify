@@ -80,6 +80,7 @@ function TabIndicator({
   return (
     <span
       ref={indicatorRef}
+      data-name="tabs-indicator"
       className={twMerge(
         "absolute bottom-0 left-(--left,0px) rtl:left-(--left,100%) w-(--width,0px) px-(--padding-x,0px) h-px overflow-hidden",
         hasAnimated ? "transition-[width,left,padding]" : "",
@@ -101,6 +102,7 @@ function TabButtonGroup({
   return (
     <ButtonGroup
       as="div"
+      data-name="tabs-button-group"
       className={cn("relative flex items-center", classes, className)}
       {...props}
     >
@@ -134,6 +136,7 @@ function TabButton({
       as="button"
       type="button"
       data-active={isActive}
+      data-name="tabs-button"
       onClick={handleClick}
       color={isActive ? "primary" : "dark"}
       variant="text"

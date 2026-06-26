@@ -77,6 +77,7 @@ export default function Switch({
   };
   return (
     <span
+      data-name="switch"
       className={twMerge(
         sizeClasses,
         "[--w:2.5rem] [--h:1.875rem] [--t:0.75rem] [--width:calc(var(--w)+var(--size)*2)] [--height:calc(var(--h)+var(--size))] [--thumb:calc(var(--t)+var(--size))] [--scale:0] hover:[--scale:1]",
@@ -90,13 +91,16 @@ export default function Switch({
       <input
         {...inputProps}
         type="checkbox"
-        className="peer absolute inset-0 size-full opacity-0 cursor-pointer disabled:cursor-not-allowed z-[2]"
+        role="switch"
+        aria-checked={checked}
+        data-name="switch-input"
+        className="peer absolute inset-0 size-full opacity-0 cursor-pointer disabled:cursor-not-allowed z-2"
         checked={checked}
         disabled={disabled}
         onChange={handleChange}
       />
       {/* <span className="inline-flex justify-center items-center size-(--height) rounded-full absolute inset-y-0 my-auto start-0 peer-checked:start-[calc(100%-var(--height))] transition-[inset-inline-start] z-[1]"> */}
-      <span className="inline-flex justify-center items-center size-(--height) rounded-full absolute inset-y-0 my-auto left-0 peer-checked:left-[calc(100%-var(--height))] transition-[left] z-[1]">
+      <span className="inline-flex justify-center items-center size-(--height) rounded-full absolute inset-y-0 my-auto left-0 peer-checked:left-[calc(100%-var(--height))] transition-[left] z-1">
         <span className="absolute size-full inset-0 bg-black/10 rounded-full scale-(--scale) transition-[scale]" />
         <span
           className={cn(

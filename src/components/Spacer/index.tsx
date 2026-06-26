@@ -8,6 +8,7 @@ export default function Spacer({ className, ...props }: SpacerProps) {
   const classes = useClasses((c) => c.spacer.base);
   return (
     <div
+      data-name="spacer"
       className={twMerge("block flex-1", classes, className)}
       {...props}
     ></div>

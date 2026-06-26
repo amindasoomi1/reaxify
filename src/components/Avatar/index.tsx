@@ -44,6 +44,7 @@ function AvatarGroup<E extends ElementType = "div">({
   const Component = as || "div";
   return (
     <Component
+      data-name="avatar-group"
       className={twMerge("flex -space-x-2", classes, className)}
       {...props}
     >
@@ -72,6 +73,7 @@ function Avatar<E extends ElementType = "div">({
   }, [size, classes?.size]);
   return (
     <Component
+      data-name="avatar"
       className={twMerge(
         "relative flex items-center justify-center bg-light ring-2 ring-light rounded-full select-none",
         classes?.base,
@@ -104,6 +106,8 @@ function AvatarImage({
     <img
       src={src || undefined}
       alt={alt || undefined}
+      role="img"
+      data-name="avatar-image"
       className={twMerge(
         "aspect-square size-full rounded-full object-cover",
         isImageLoaded ? "block" : "hidden",
@@ -133,6 +137,7 @@ function AvatarFallback({
   }, [size, classes?.size]);
   return (
     <div
+      data-name="avatar-fallback"
       className={twMerge(
         "flex size-full items-center justify-center rounded-full text-dark",
         isImageLoaded ? "hidden" : "flex",
@@ -164,6 +169,7 @@ function AvatarBadge({
   }, [size, classes?.size]);
   return (
     <span
+      data-name="avatar-badge"
       className={twMerge(
         "absolute inset-e-0 bottom-0 bg-success z-10 inline-flex items-center justify-center rounded-full ring-2 ring-light",
         classes?.base,
@@ -184,6 +190,7 @@ function AvatarCount({
   const classes = useClasses((c) => c.avatar.count.base);
   return (
     <span
+      data-name="avatar-count"
       className={twMerge("text-sm text-dark font-medium", classes, className)}
       {...props}
     >

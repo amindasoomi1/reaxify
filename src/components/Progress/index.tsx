@@ -52,6 +52,11 @@ export default function Progress({
   }, [value, animate]);
   return (
     <div
+      role="progressbar"
+      aria-valuemin={0}
+      aria-valuemax={100}
+      aria-valuenow={animate ? undefined : Math.max(value, 0)}
+      data-name="progress"
       className={twMerge(
         "relative block w-full h-1.5 rounded-full overflow-hidden",
         classes?.base,

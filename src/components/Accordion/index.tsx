@@ -118,6 +118,7 @@ function AccordionItem<
 
   return (
     <Component
+      data-name="accordion-item"
       className={twMerge(
         "block w-full border border-border rounded",
         classes,
@@ -151,6 +152,7 @@ function AccordionToggle({
   return (
     <button
       type={type}
+      data-name="accordion-toggle"
       className={twMerge(
         "w-full flex items-center text-start text-base px-5 py-4 rounded-t cursor-pointer",
         classes,
@@ -174,6 +176,7 @@ function AccordionIcon({
   return (
     <ArrowDown2
       color="currentColor"
+      data-name="accordion-icon"
       className={twMerge(
         "size-5 transition-transform",
         classes?.base,
@@ -196,6 +199,7 @@ function AccordionCollapse({
     <AnimateHeight
       duration={duration}
       height={active ? "auto" : 0}
+      data-name="accordion-collapse"
       className="w-full"
       animationStateClasses={{
         animating: "",
@@ -224,6 +228,7 @@ function AccordionBody({
 
   return (
     <div
+      data-name="accordion-body"
       className={twMerge(
         "w-full block px-5 py-4 rounded-b",
         classes,

@@ -167,6 +167,7 @@ function Menu<E extends ElementType = "ul">({
                 autoFocus
                 data-open={open}
                 role="menu"
+                data-name="menu"
                 style={{ transitionDuration: `${duration}ms` }}
                 className={twMerge(
                   "w-fit min-w-52 bg-white shadow-lg rounded py-2 transition-[scale,opacity] absolute top-(--top) left-(--left) right-auto origin-top-left rtl:left-auto rtl:right-(--right) rtl:origin-top-right",
@@ -196,6 +197,7 @@ function Container({ children }: ChildrenProps) {
   };
   return (
     <div
+      data-name="menu-container"
       className={twMerge(
         "fixed inset-0 size-full flex flex-col bg-transparent transition-opacity overflow-hidden z-10",
         classes[transitionState],
@@ -209,6 +211,7 @@ function Backdrop() {
   const { dismiss, preventClose } = useContext(MenuContext);
   return (
     <div
+      data-name="menu-backdrop"
       className={cn(
         "w-full flex-1 opacity-0 cursor-default lg:absolute lg:size-full lg:inset-0",
         preventClose && "[&:active~*]:scale-95",
@@ -238,6 +241,7 @@ function MenuItem<E extends ElementType = "button">({
       color="light"
       variant="text"
       role="menuitem"
+      data-name="menu-item"
       className={twMerge(
         "w-full flex items-center justify-start align-middle px-4 py-1.5 bg-transparent text-base font-normal rounded-none whitespace-nowrap transition-colors hover:bg-dark/5",
         classes,
