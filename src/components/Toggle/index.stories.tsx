@@ -1,11 +1,11 @@
 import type { Meta } from "@storybook/react";
+import Toggle from ".";
 import Button from "../Button";
 import Drawer from "../Drawer";
 import Menu from "../Menu";
 import Modal from "../Modal";
 import Tooltip from "../Tooltip";
 import Typography from "../Typography";
-import Toggle from ".";
 
 const meta: Meta<typeof Toggle> = {
   title: "Component/Toggle",
@@ -32,7 +32,12 @@ export function WithDrawer() {
               </Typography>
             </Drawer.Body>
             <Drawer.Footer className="flex items-center *:flex-1 gap-4">
-              <Button type="button" variant="outline" color="danger" closeDrawer>
+              <Button
+                type="button"
+                variant="outline"
+                color="danger"
+                closeDrawer
+              >
                 Cancel
               </Button>
               <Button type="button" variant="solid" color="success">
@@ -123,7 +128,7 @@ export function WithTooltip() {
       <Toggle.Content>
         <Tooltip placement="top">
           <Tooltip.Content>Tooltip</Tooltip.Content>
-          <Tooltip.Arrow className="-mt-2" />
+          <Tooltip.Arrow />
         </Tooltip>
       </Toggle.Content>
     </Toggle>
