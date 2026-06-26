@@ -64,9 +64,9 @@ function Avatar<E extends ElementType = "div">({
   const sizeClasses = useMemo(() => {
     if (!size) return null;
     const sizes: Sizes = {
-      sm: "size-6 [&_svg]:size-3",
-      md: "size-8 [&_svg]:size-4",
-      lg: "size-10 [&_svg]:size-5",
+      sm: "size-6",
+      md: "size-8",
+      lg: "size-10",
     };
     return [sizes?.[size], classes?.size?.[size]];
   }, [size, classes?.size]);
@@ -125,9 +125,9 @@ function AvatarFallback({
   const sizeClasses = useMemo(() => {
     if (!size) return null;
     const sizes: Sizes = {
-      sm: "text-xs",
-      md: "text-sm",
-      lg: "text-sm",
+      sm: "text-xs [&_svg]:size-3",
+      md: "text-sm [&_svg]:size-4",
+      lg: "text-sm [&_svg]:size-5",
     };
     return [sizes?.[size], classes?.size?.[size]];
   }, [size, classes?.size]);
@@ -165,7 +165,7 @@ function AvatarBadge({
   return (
     <span
       className={twMerge(
-        "absolute right-0 bottom-0 bg-success z-10 inline-flex items-center justify-center rounded-full ring-2 ring-light",
+        "absolute inset-e-0 bottom-0 bg-success z-10 inline-flex items-center justify-center rounded-full ring-2 ring-light",
         classes?.base,
         sizeClasses,
         className,

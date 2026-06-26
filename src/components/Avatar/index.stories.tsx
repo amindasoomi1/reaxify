@@ -22,7 +22,9 @@ export function Basic() {
         <Avatar.Badge className="bg-danger" />
       </Avatar>
       <Avatar>
-        <Profile color="currentColor" />
+        <Avatar.Fallback>
+          <Profile color="currentColor" />
+        </Avatar.Fallback>
       </Avatar>
       <Avatar>
         <Avatar.Image

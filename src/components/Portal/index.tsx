@@ -6,6 +6,7 @@ export default function Portal({ children }: ChildrenProps) {
   const element = useSyncExternalStore(
     portalElementStore.subscribe,
     portalElementStore.getElement,
+    undefined,
   );
   if (!element) return null;
   return createPortal(children, element);
