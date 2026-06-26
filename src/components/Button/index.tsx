@@ -148,8 +148,8 @@ export default function Button<E extends ElementType = "button">({
   }, [loading, classes?.loading]);
   const handleClick = (e: MouseEvent<HTMLElement>) => {
     createRipple(e);
-    closeModal && modalContext.onClose();
-    closeDrawer && drawerContext.onClose();
+    closeModal && modalContext.dismiss();
+    closeDrawer && drawerContext.dismiss();
     stopPropagation && e.stopPropagation();
     preventDefault && e.preventDefault();
     onClick?.(e);

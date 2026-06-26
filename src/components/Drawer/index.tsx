@@ -1,7 +1,6 @@
-import { useClasses } from "@/hooks";
+import { useClasses, usePreventableClose } from "@/hooks";
 import { ComponentPropsWithAs, ToggleEventProps, ToggleProps } from "@/types";
 import { TransitionClasses } from "@/types/internal";
-import { useHotkey } from "@tanstack/react-hotkeys";
 import {
   ComponentProps,
   createContext,
@@ -23,6 +22,7 @@ type Context = {
   anchor: Anchor;
   transitionState: TransitionStatus;
   preventClose: boolean;
+  dismiss: VoidFunction;
 } & ToggleProps;
 type DrawerBaseProps = {
   anchor?: Anchor;
@@ -47,6 +47,7 @@ export const DrawerContext = createContext<Context>({
   anchor: "start",
   transitionState: "unmounted",
   preventClose: false,
+  dismiss: () => {},
 });
 
 function Drawer<E extends ElementType = "div">({
@@ -88,16 +89,8 @@ function Drawer<E extends ElementType = "div">({
     const anchorResult = result[anchor];
     return [anchorResult, classesResult];
   }, [anchor, classes?.anchor]);
-  const handleClose = () => {
-    if (preventClose) return;
-    onClose();
-  };
+  const dismiss = usePreventableClose({ preventClose, open, onClose });
   useImperativeHandle(ref, () => divRef.current);
-  useHotkey("Escape", () => onClose(), {
-    conflictBehavior: "allow",
-    ignoreInputs: true,
-    enabled: open && !preventClose,
-  });
   return (
     <Portal>
       <Transition
@@ -128,7 +121,7 @@ function Drawer<E extends ElementType = "div">({
             {...props}
           >
             <div
-              onClick={handleClose}
+              onClick={dismiss}
               className={cn(
                 "absolute inset-0 size-full cursor-default opacity-0",
                 preventClose && "[&:active~*]:scale-95",
@@ -137,7 +130,8 @@ function Drawer<E extends ElementType = "div">({
             <DrawerContext.Provider
               value={{
                 open,
-                onClose: handleClose,
+                onClose,
+                dismiss,
                 transitionState: state,
                 duration,
                 anchor,

@@ -1,5 +1,5 @@
 import { cn } from "@/helpers";
-import { useClasses } from "@/hooks";
+import { useClasses, usePreventableClose } from "@/hooks";
 import {
   ComponentPropsWithAs,
   Size,
@@ -8,7 +8,6 @@ import {
 } from "@/types";
 import { TransitionClasses } from "@/types/internal";
 
-import { useHotkey } from "@tanstack/react-hotkeys";
 import {
   ComponentProps,
   createContext,
@@ -27,6 +26,8 @@ type Context = {
   size: Size;
   transitionState: TransitionStatus;
   duration: number;
+  preventClose: boolean;
+  dismiss: VoidFunction;
 } & ToggleProps;
 type ModalProps = {
   size?: Size;
@@ -45,6 +46,8 @@ export const ModalContext = createContext<Context>({
   onClose: () => {},
   transitionState: "unmounted",
   duration: 300,
+  preventClose: false,
+  dismiss: () => {},
 });
 
 function Modal<E extends ElementType = "div">({
@@ -75,16 +78,8 @@ function Modal<E extends ElementType = "div">({
     exited: "opacity-0 pointer-events-none",
     unmounted: "",
   };
-  const handleClose = () => {
-    if (preventClose) return;
-    onClose();
-  };
+  const dismiss = usePreventableClose({ preventClose, open, onClose });
   useImperativeHandle(ref, () => divRef.current);
-  useHotkey("Escape", () => onClose(), {
-    conflictBehavior: "allow",
-    ignoreInputs: true,
-    enabled: open && !preventClose,
-  });
   return (
     <Portal>
       <Transition
@@ -114,7 +109,7 @@ function Modal<E extends ElementType = "div">({
             {...props}
           >
             <div
-              onClick={handleClose}
+              onClick={dismiss}
               className={cn(
                 "absolute inset-0 cursor-default opacity-0",
                 preventClose && "[&:active~*]:scale-95",
@@ -124,9 +119,11 @@ function Modal<E extends ElementType = "div">({
               value={{
                 size,
                 open,
-                onClose: handleClose,
+                onClose,
+                dismiss,
                 transitionState: state,
                 duration,
+                preventClose,
               }}
             >
               {children}

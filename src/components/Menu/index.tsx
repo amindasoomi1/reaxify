@@ -1,5 +1,5 @@
 import { cn } from "@/helpers";
-import { useClasses } from "@/hooks";
+import { useClasses, usePreventableClose } from "@/hooks";
 import {
   ChildrenProps,
   ComponentPropsWithAs,
@@ -7,7 +7,6 @@ import {
   ToggleProps,
 } from "@/types";
 import { TransitionClasses } from "@/types/internal";
-import { useHotkey } from "@tanstack/react-hotkeys";
 import {
   createContext,
   ElementType,
@@ -39,6 +38,7 @@ type MenuContextType = {
   transitionState: TransitionStatus;
   closeOnClick: boolean;
   preventClose: boolean;
+  dismiss: () => void;
 } & Partial<ToggleProps>;
 
 const MenuContext = createContext<MenuContextType>({
@@ -47,6 +47,7 @@ const MenuContext = createContext<MenuContextType>({
   transitionState: "unmounted",
   closeOnClick: false,
   preventClose: false,
+  dismiss: () => {},
 });
 
 function Menu<E extends ElementType = "ul">({
@@ -117,10 +118,7 @@ function Menu<E extends ElementType = "ul">({
     setPosition({ left, right, top });
     setPositionProperty({ left, right, top });
   }, [open, anchorEl, setPosition, setPositionProperty]);
-  const handleCLose = () => {
-    if (preventClose) return;
-    onClose?.();
-  };
+  const dismiss = usePreventableClose({ preventClose, open, onClose });
 
   useEffect(() => {
     positionHandler();
@@ -137,11 +135,6 @@ function Menu<E extends ElementType = "ul">({
     };
   }, [positionHandler]);
   useImperativeHandle(ref, () => menuRef.current);
-  useHotkey("Escape", () => onClose(), {
-    conflictBehavior: "allow",
-    ignoreInputs: true,
-    enabled: open && !preventClose,
-  });
   return (
     <Portal>
       <Transition
@@ -160,7 +153,8 @@ function Menu<E extends ElementType = "ul">({
           <MenuContext.Provider
             value={{
               open,
-              onClose: handleCLose,
+              onClose,
+              dismiss,
               transitionState: state,
               closeOnClick,
               preventClose,
@@ -212,14 +206,14 @@ function Container({ children }: ChildrenProps) {
   );
 }
 function Backdrop() {
-  const { onClose, preventClose } = useContext(MenuContext);
+  const { dismiss, preventClose } = useContext(MenuContext);
   return (
     <div
       className={cn(
         "w-full flex-1 opacity-0 cursor-default lg:absolute lg:size-full lg:inset-0",
         preventClose && "[&:active~*]:scale-95",
       )}
-      onClick={onClose}
+      onClick={dismiss}
     ></div>
   );
 }

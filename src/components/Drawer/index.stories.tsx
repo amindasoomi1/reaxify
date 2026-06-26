@@ -131,16 +131,16 @@ export function PreventClose() {
             </Typography>
           </Drawer.Body>
           <Drawer.Footer className="flex items-center *:flex-1 gap-4">
+            <Button type="button" variant="outline" color="danger" closeDrawer>
+              Cancel (prevented)
+            </Button>
             <Button
               type="button"
-              variant="outline"
-              color="danger"
+              variant="solid"
+              color="success"
               onClick={closeDrawer}
             >
-              Cancel
-            </Button>
-            <Button type="button" variant="solid" color="success">
-              Understood
+              Accept and close
             </Button>
           </Drawer.Footer>
         </Drawer.Menu>

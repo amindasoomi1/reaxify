@@ -67,16 +67,16 @@ export function PreventClose() {
             </Typography>
           </Modal.Body>
           <Modal.Footer className="flex items-center *:flex-1 gap-4">
+            <Button type="button" variant="outline" color="danger" closeModal>
+              Cancel (prevented)
+            </Button>
             <Button
               type="button"
-              variant="outline"
-              color="danger"
+              variant="solid"
+              color="success"
               onClick={closeModal}
             >
-              Cancel
-            </Button>
-            <Button type="button" variant="solid" color="success">
-              Accept
+              Accept and close
             </Button>
           </Modal.Footer>
         </Modal.Dialog>

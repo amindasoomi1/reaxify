@@ -80,14 +80,20 @@ export function PreventClose() {
   const handleClick = (e: MouseEvent<HTMLElement>) => {
     setAnchorEl(e.currentTarget);
   };
-  const handleCLose = () => {
+  const handleClose = () => {
     setAnchorEl(null);
   };
   return (
     <Fragment>
       <Button onClick={handleClick}>Dropdown</Button>
-      <Menu anchorEl={anchorEl} open={open} onClose={handleCLose} preventClose>
-        <Menu.Item onClick={handleCLose}>Item #1 (Click This)</Menu.Item>
+      <Menu
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        preventClose
+        closeOnClick
+      >
+        <Menu.Item>Item #1</Menu.Item>
         <Menu.Item>Item #2</Menu.Item>
         <Menu.Item>Item #3</Menu.Item>
         <Menu.Item>Item #4</Menu.Item>
