@@ -1,11 +1,12 @@
 import { cn } from "@/helpers";
 import { useClasses } from "@/hooks";
-import { ComponentPropsWithAs } from "@/types";
+import { ClassNameProps, ComponentPropsWithAs } from "@/types";
 import {
   Children,
   cloneElement,
   ElementType,
   isValidElement,
+  ReactElement,
   useMemo,
 } from "react";
 import { twMerge } from "tailwind-merge";
@@ -46,10 +47,12 @@ export default function ButtonGroup<E extends ElementType = "div">({
     return [orientationsResult, classesResult];
   }, [orientation, classes?.button]);
   const enhancedChildren = useMemo(() => {
-    return Children.map(children, (child) => {
-      if (!isValidElement<ButtonProps>(child)) return child;
-      const childProps = child.props;
-      return cloneElement(child, {
+    return Children.toArray(children).map((child) => {
+      if (!isValidElement(child)) return child;
+      const childProps = child.props as ButtonProps &
+        ClassNameProps & { "data-button-group-skip"?: boolean };
+      if (childProps["data-button-group-skip"]) return child;
+      return cloneElement(child as ReactElement<ButtonProps & ClassNameProps>, {
         variant: childProps.variant ?? variant,
         color: childProps.color ?? color,
         size: childProps.size ?? size,

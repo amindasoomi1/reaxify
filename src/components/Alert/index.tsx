@@ -10,14 +10,16 @@ import {
 import {
   Children,
   cloneElement,
+  createContext,
   ElementType,
   isValidElement,
   ReactElement,
   ReactNode,
+  useContext,
   useMemo,
 } from "react";
 import { twMerge } from "tailwind-merge";
-import Button, { ButtonProps } from "../Button";
+import { ButtonProps } from "../Button";
 import Fill from "../Fill";
 import Stack from "../Stack";
 import Typography from "../Typography";
@@ -31,30 +33,15 @@ type Colors = {
     [key in AlertVariant]?: string;
   };
 };
+type AlertContextType = {
+  variant: AlertVariant;
+  color: Color;
+};
 
-function enhanceButtons(
-  children: ReactNode,
-  buttonVariant: ButtonVariant,
-  color: Color,
-): ReactNode {
-  return Children.map(children, (child) => {
-    if (!isValidElement<{ children?: ReactNode }>(child)) return child;
-    const childProps = child.props;
-    if (child.type === Button) {
-      const buttonProps = childProps as ButtonProps;
-      return cloneElement(child as ReactElement<ButtonProps>, {
-        variant: buttonProps.variant ?? buttonVariant,
-        color: buttonProps.color ?? color,
-      });
-    }
-    if (childProps.children) {
-      return cloneElement(child, {
-        children: enhanceButtons(childProps.children, buttonVariant, color),
-      });
-    }
-    return child;
-  });
-}
+const AlertContext = createContext<AlertContextType>({
+  variant: "solid",
+  color: "primary",
+});
 
 function Alert<E extends ElementType = "div">({
   as,
@@ -113,14 +100,6 @@ function Alert<E extends ElementType = "div">({
     const colorResult = colors?.[color]?.[variant];
     return twMerge(colorResult, classesResult);
   }, [color, variant, classes?.color]);
-  const buttonVariant: ButtonVariant = useMemo(() => {
-    if (variant === "solid") return "solid";
-    return "text";
-  }, [variant]);
-  const enhancedChildren = useMemo(
-    () => enhanceButtons(children, buttonVariant, color),
-    [children, buttonVariant, color],
-  );
   return (
     <Stack
       as={as as ElementType}
@@ -134,7 +113,9 @@ function Alert<E extends ElementType = "div">({
       )}
       {...props}
     >
-      {enhancedChildren}
+      <AlertContext.Provider value={{ variant, color }}>
+        {children}
+      </AlertContext.Provider>
     </Stack>
   );
 }
@@ -216,13 +197,29 @@ function AlertAction({
   ...props
 }: ComponentPropsWithoutAs<"div">) {
   const classes = useClasses((c) => c.alert?.action?.base);
+  const { variant, color } = useContext(AlertContext);
+  const buttonVariant: ButtonVariant = useMemo(() => {
+    if (variant === "solid") return "solid";
+    return "text";
+  }, [variant]);
+  const enhancedChildren = useMemo(() => {
+    return Children.map(children, (child) => {
+      if (!isValidElement<{ children?: ReactNode }>(child)) return child;
+      const childProps = child.props;
+      const buttonProps = childProps as ButtonProps;
+      return cloneElement(child as ReactElement<ButtonProps>, {
+        variant: buttonProps.variant ?? buttonVariant,
+        color: buttonProps.color ?? color,
+      });
+    });
+  }, [children, buttonVariant, color]);
   return (
     <div
       data-name="alert-action"
       className={twMerge("self-center size-fit", classes, className)}
       {...props}
     >
-      {children}
+      {enhancedChildren}
     </div>
   );
 }

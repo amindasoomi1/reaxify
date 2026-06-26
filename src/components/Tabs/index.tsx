@@ -80,6 +80,7 @@ function TabIndicator({
   return (
     <span
       ref={indicatorRef}
+      data-button-group-skip
       data-name="tabs-indicator"
       className={twMerge(
         "absolute bottom-0 left-(--left,0px) rtl:left-(--left,100%) w-(--width,0px) px-(--padding-x,0px) h-px overflow-hidden",
@@ -115,6 +116,10 @@ function TabButton({
   className,
   children,
   onClick,
+  variant = "text",
+  color,
+  size,
+  loading,
   ...props
 }: ComponentPropsWithoutAs<typeof Button<"button">, TabButtonProps>) {
   const baseClasses = useClasses((c) => c.tabs.button.base);
@@ -128,7 +133,7 @@ function TabButton({
     return className;
   }, [isActive, className]);
   const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
-    !isActive && onChange(eventKey);
+    if (!isActive) onChange?.(eventKey);
     onClick?.(e);
   };
   return (
@@ -137,15 +142,17 @@ function TabButton({
       type="button"
       data-active={isActive}
       data-name="tabs-button"
-      onClick={handleClick}
-      color={isActive ? "primary" : "dark"}
-      variant="text"
+      variant={variant}
+      color={color ?? (isActive ? "primary" : "dark")}
+      size={size}
+      loading={loading}
       className={cn(
         "shadow-none border-none",
         baseClasses,
         isActive && activeClasses,
         handleClassName,
       )}
+      onClick={handleClick}
       {...props}
     >
       {children}
