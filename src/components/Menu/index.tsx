@@ -29,7 +29,7 @@ type MenuProps = {
   preventClose?: boolean;
   duration?: number;
 } & Partial<ToggleEventProps> &
-  ToggleProps;
+  Partial<ToggleProps>;
 type MenuItemProps = {
   closeOnClick?: boolean;
 };

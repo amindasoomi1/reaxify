@@ -23,5 +23,7 @@ export { default as Stack } from "./Stack";
 export { default as Switch } from "./Switch";
 export { default as Table } from "./Table";
 export { default as Tabs } from "./Tabs";
+export { default as Toggle, useToggleContext } from "./Toggle";
+export type { ToggleRef } from "./Toggle";
 export { default as Tooltip } from "./Tooltip";
 export { default as Typography } from "./Typography";
