@@ -40,7 +40,9 @@ export default function Spinner({
     };
     const sizeResult = sizes?.[size] ?? sizes.md;
     const classesResult = classes?.size?.[size];
-    return [sizeResult, classesResult];
+    const hiddenClasses =
+      "border-e-transparent! border-e-0! border-s-transparent! border-t-0!";
+    return [sizeResult, classesResult, hiddenClasses];
   }, [size, classes?.size]);
   return (
     <span
@@ -48,7 +50,6 @@ export default function Spinner({
         "inline-block align-middle rounded-full animate-spin aspect-square",
         classes?.base,
         colorClasses,
-        "border-l-transparent!",
         sizeClasses,
         className,
       )}
