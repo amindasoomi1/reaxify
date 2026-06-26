@@ -15,11 +15,13 @@ import {
   useState,
 } from "react";
 
+type TriggerOn = "hover" | "click" | "contextMenu";
+
 type ToggleStateContextValue = {
   open: boolean;
   anchorEl: HTMLElement | null;
   anchor: boolean;
-  pointer: boolean;
+  triggerOn: TriggerOn;
 };
 
 type ToggleActionsContextValue = {
@@ -40,7 +42,7 @@ type ToggleProps = {
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
   anchor?: boolean;
-  pointer?: boolean;
+  triggerOn?: TriggerOn;
   ref?: Ref<ToggleRef>;
 } & ChildrenProps;
 
@@ -92,7 +94,7 @@ function Toggle({
   open: openProp,
   onOpenChange,
   anchor = false,
-  pointer = false,
+  triggerOn = "click",
   ref,
   children,
 }: ToggleProps) {
@@ -129,8 +131,8 @@ function Toggle({
   }));
 
   const stateValue = useMemo(
-    () => ({ open, anchorEl, anchor, pointer }),
-    [open, anchorEl, anchor, pointer],
+    () => ({ open, anchorEl, anchor, triggerOn }),
+    [open, anchorEl, anchor, triggerOn],
   );
 
   const actionsValue = useMemo(
@@ -148,14 +150,16 @@ function Toggle({
 }
 
 function ToggleTrigger({ children }: ToggleTriggerProps) {
-  const { open, pointer } = useToggleState();
-  const { toggle, setAnchorEl, open: openFn } = useToggleActions();
+  const { open, triggerOn } = useToggleState();
+  const { toggle, setAnchorEl, open: openFn, close } = useToggleActions();
 
   if (!isValidElement(children)) return children;
 
   const child = Children.only(children) as ReactElement<{
     onClick?: (e: MouseEvent<HTMLElement>) => void;
     onContextMenu?: (e: MouseEvent<HTMLElement>) => void;
+    onMouseEnter?: (e: MouseEvent<HTMLElement>) => void;
+    onMouseLeave?: (e: MouseEvent<HTMLElement>) => void;
     ref?: Ref<HTMLElement>;
     "aria-expanded"?: boolean;
   }>;
@@ -174,7 +178,18 @@ function ToggleTrigger({ children }: ToggleTriggerProps) {
     openFn();
   };
 
-  if (pointer) {
+  const handleMouseEnter = (e: MouseEvent<HTMLElement>) => {
+    child.props.onMouseEnter?.(e);
+    setAnchorEl(e.currentTarget);
+    openFn();
+  };
+
+  const handleMouseLeave = (e: MouseEvent<HTMLElement>) => {
+    child.props.onMouseLeave?.(e);
+    close();
+  };
+
+  if (triggerOn === "contextMenu") {
     return cloneElement(child, {
       "aria-expanded": open,
       onContextMenu: handleContextMenu,
@@ -182,18 +197,33 @@ function ToggleTrigger({ children }: ToggleTriggerProps) {
     });
   }
 
-  return cloneElement(child, {
-    "aria-expanded": open,
-    onClick: handleClick,
-    ref: composeRefs(child.props.ref),
-  });
+  if (triggerOn === "hover") {
+    return cloneElement(child, {
+      "aria-expanded": open,
+      onMouseEnter: handleMouseEnter,
+      onMouseLeave: handleMouseLeave,
+      ref: composeRefs(child.props.ref),
+    });
+  }
+
+  if (triggerOn === "click") {
+    return cloneElement(child, {
+      "aria-expanded": open,
+      onClick: handleClick,
+      ref: composeRefs(child.props.ref),
+    });
+  }
+
+  return child;
 }
 
 function ToggleContent({ children }: ToggleContentProps) {
-  const { open, anchorEl, anchor, pointer } = useToggleState();
+  const { open, anchorEl, anchor, triggerOn } = useToggleState();
   const { close } = useToggleActions();
 
   if (!isValidElement(children)) return children;
+
+  const isContextMenu = triggerOn === "contextMenu";
 
   const child = Children.only(children) as ReactElement<{
     open?: boolean;
@@ -206,7 +236,7 @@ function ToggleContent({ children }: ToggleContentProps) {
     open,
     onClose: close,
     ...(anchor && { anchorEl }),
-    ...(pointer && { anchorPointer: true }),
+    ...(isContextMenu && { anchorPointer: true }),
   });
 }
 

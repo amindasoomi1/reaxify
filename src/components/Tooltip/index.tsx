@@ -1,50 +1,237 @@
-import { cn } from "@/helpers";
+import { getAnchorPointer } from "@/helpers";
 import { useClasses } from "@/hooks";
-import { Color, ComponentPropsWithoutAs } from "@/types";
-import { TransitionClasses } from "@/types/internal";
-
 import {
-  cloneElement,
-  Fragment,
-  ReactElement,
+  ChildrenProps,
+  Color,
+  ComponentPropsWithoutAs,
+  ToggleEventProps,
+  ToggleProps,
+} from "@/types";
+import { TransitionClasses } from "@/types/internal";
+import {
+  createContext,
   useCallback,
+  useContext,
   useEffect,
   useMemo,
   useRef,
-  useState,
 } from "react";
-import { Transition } from "react-transition-group";
+import { Transition, TransitionStatus } from "react-transition-group";
 import { twMerge } from "tailwind-merge";
 import Portal from "../Portal";
 
 type Placement = "top" | "end" | "bottom" | "start";
-type Props = {
-  title: string;
+type Position = { left: number; right: number; top: number };
+
+type TooltipProps = {
+  anchorEl?: HTMLElement | null;
+  anchorPointer?: boolean;
+  placement?: Placement;
   color?: Color;
   duration?: number;
-  placement?: Placement;
-  // eslint-disable-next-line
-  children?: ReactElement<any>;
+} & Partial<Omit<ToggleProps, "onClose">> &
+  Partial<ToggleEventProps> &
+  ChildrenProps;
+
+type TooltipContextType = {
+  placement: Placement;
+  color: Color;
+  transitionState: TransitionStatus;
 };
+
 type Colors = {
   [key in Color]?: string;
 };
-export default function Tooltip({
-  title,
-  color = "dark",
+
+const TooltipContext = createContext<TooltipContextType>({
+  placement: "top",
+  color: "dark",
+  transitionState: "unmounted",
+});
+
+function useTooltipContext() {
+  return useContext(TooltipContext);
+}
+
+function Tooltip({
+  open = false,
+  anchorEl = null,
+  anchorPointer = false,
   placement = "top",
+  color = "dark",
   duration = 300,
+  onEnter,
+  onEntering,
+  onEntered,
+  onExit,
+  onExiting,
+  onExited,
+  className,
+  children,
+}: TooltipProps & { className?: string }) {
+  const classes = useClasses((c) => c.tooltip);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const gap = 0;
+  const offset = 16;
+
+  const transitionClasses: TransitionClasses = {
+    entering: "scale-100 opacity-100",
+    entered: "scale-100 opacity-100",
+    exiting: "scale-75 opacity-0",
+    exited: "scale-75 opacity-0",
+    unmounted: "",
+  };
+
+  const placementClasses = useMemo(() => {
+    const flexDirection =
+      placement === "top" || placement === "bottom" ? "flex-col" : "flex-row";
+    const origins: Record<Placement, string> = {
+      top: "flex-col origin-bottom",
+      bottom: "flex-col-reverse origin-top",
+      start: "flex-row origin-right rtl:origin-left",
+      end: "flex-row-reverse origin-left rtl:origin-right",
+    };
+    return [flexDirection, origins[placement], classes?.placement?.[placement]];
+  }, [placement, classes?.placement]);
+
+  const setPositionProperty = useCallback((position: Position) => {
+    containerRef.current?.style.setProperty("--left", `${position.left}px`);
+    containerRef.current?.style.setProperty("--right", `${position.right}px`);
+    containerRef.current?.style.setProperty("--top", `${position.top}px`);
+  }, []);
+
+  const positionHandler = useCallback(() => {
+    if (!open || !anchorEl || !containerRef.current) return;
+
+    const el = containerRef.current;
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
+    const width = el.offsetWidth;
+    const height = el.offsetHeight;
+
+    let anchorLeft: number;
+    let anchorRight: number;
+    let anchorTop: number;
+    let anchorBottom: number;
+    let anchorCenterX: number;
+    let anchorCenterY: number;
+
+    if (anchorPointer) {
+      const point = getAnchorPointer(anchorEl);
+      if (!point) return;
+      anchorLeft = point.x;
+      anchorRight = point.x;
+      anchorTop = point.y;
+      anchorBottom = point.y;
+      anchorCenterX = point.x;
+      anchorCenterY = point.y;
+    } else {
+      const rect = anchorEl.getBoundingClientRect();
+      anchorLeft = rect.left;
+      anchorRight = rect.right;
+      anchorTop = rect.top;
+      anchorBottom = rect.bottom;
+      anchorCenterX = rect.left + rect.width / 2;
+      anchorCenterY = rect.top + rect.height / 2;
+    }
+
+    let left: number;
+    let right: number;
+    let top: number;
+
+    switch (placement) {
+      case "top":
+        left = anchorCenterX - width / 2;
+        right = viewportWidth - anchorCenterX - width / 2;
+        top = anchorTop - height - gap;
+        break;
+      case "bottom":
+        left = anchorCenterX - width / 2;
+        right = viewportWidth - anchorCenterX - width / 2;
+        top = anchorBottom + gap;
+        break;
+      case "start":
+        left = anchorLeft - width - gap;
+        right = viewportWidth - anchorRight - gap - width;
+        top = anchorCenterY - height / 2;
+        break;
+      case "end":
+        left = anchorRight + gap;
+        right = viewportWidth - anchorLeft + gap;
+        top = anchorCenterY - height / 2;
+        break;
+    }
+
+    left = Math.min(Math.max(left, offset), viewportWidth - width - offset);
+    right = Math.min(Math.max(right, offset), viewportWidth - width - offset);
+    top = Math.min(Math.max(top, offset), viewportHeight - height - offset);
+
+    setPositionProperty({ left, right, top });
+  }, [open, anchorEl, anchorPointer, placement, setPositionProperty]);
+
+  useEffect(() => {
+    positionHandler();
+  }, [positionHandler, children]);
+
+  useEffect(() => {
+    const handleResize = () => positionHandler();
+    window.addEventListener("scroll", handleResize);
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("scroll", handleResize);
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [positionHandler]);
+
+  return (
+    <Portal>
+      <Transition
+        nodeRef={containerRef}
+        in={open}
+        timeout={duration}
+        unmountOnExit
+        onEnter={onEnter}
+        onEntering={onEntering}
+        onEntered={onEntered}
+        onExit={onExit}
+        onExiting={onExiting}
+        onExited={onExited}
+      >
+        {(state) => (
+          <TooltipContext.Provider
+            value={{ placement, color, transitionState: state }}
+          >
+            <div
+              ref={containerRef}
+              data-name="tooltip"
+              data-open={open}
+              style={{ transitionDuration: `${duration}ms` }}
+              className={twMerge(
+                "flex items-center justify-center fixed z-1 pointer-events-none top-(--top) left-(--left) right-auto origin-top-left rtl:left-auto rtl:right-(--right) rtl:origin-top-right transition-[scale,opacity]",
+                classes?.base,
+                placementClasses,
+                transitionClasses[state],
+                className,
+              )}
+            >
+              {children}
+            </div>
+          </TooltipContext.Provider>
+        )}
+      </Transition>
+    </Portal>
+  );
+}
+
+function TooltipContent({
   className,
   children,
   ...props
-}: ComponentPropsWithoutAs<"span", Props>) {
-  const classes = useClasses((c) => c.tooltip);
-  const divRef = useRef<HTMLDivElement | null>(null);
-  const triggerRef = useRef<HTMLElement | null>(null);
-  const [open, setOpen] = useState(false);
-  const [position, setPosition] = useState<Record<string, string>>({});
+}: ComponentPropsWithoutAs<"span">) {
+  const classes = useClasses((c) => c.tooltip?.content);
+  const { color } = useTooltipContext();
+
   const colorClasses = useMemo(() => {
-    if (!color) return "border-transparent";
     const colors: Colors = {
       primary: "bg-primary text-white",
       secondary: "bg-secondary text-white",
@@ -55,131 +242,72 @@ export default function Tooltip({
       dark: "bg-dark text-white",
       light: "bg-light text-dark",
     };
-    return [colors?.[color], classes?.color?.[color]];
+    return [colors[color], classes?.color?.[color]];
   }, [color, classes?.color]);
+
+  return (
+    <span
+      role="tooltip"
+      data-name="tooltip-content"
+      className={twMerge(
+        "relative block size-fit min-w-fit min-h-fit text-sm rounded px-2 py-px whitespace-nowrap z-1",
+        classes?.base,
+        colorClasses,
+        className,
+      )}
+      {...props}
+    >
+      {children}
+    </span>
+  );
+}
+
+function TooltipArrow({
+  className,
+  ...props
+}: ComponentPropsWithoutAs<"span">) {
+  const classes = useClasses((c) => c.tooltip?.arrow);
+  const { color, placement } = useTooltipContext();
+
   const placementClasses = useMemo(() => {
-    const base =
-      "size-0 min-w-(--width) min-h-(--height) top-(--top) right-(--right) bottom-(--bottom) left-(--left) justify-end items-center p-1.5";
-    const placements = {
-      top: "-translate-y-full flex-col origin-bottom",
-      end: "translate-x-[calc(var(--ratio)*100%)] flex-row-reverse origin-left rtl:origin-right",
-      bottom: "translate-y-full flex-col-reverse origin-top",
-      start:
-        "translate-x-[calc(var(--ratio)*-100%)] flex-row origin-right rtl:origin-left",
-    };
-    return [base, placements[placement], classes?.placement?.[placement]];
-  }, [placement, classes?.placement]);
-  const transitionClasses: TransitionClasses = {
-    entering: "scale-100 opacity-100",
-    entered: "scale-100 opacity-100",
-    exiting: "scale-75 opacity-0",
-    exited: "scale-75 opacity-0",
-    unmounted: "",
-  };
-  const arrowPlacementClasses = useMemo(() => {
-    const placements = {
-      top: "mt-[-0.5rem]",
-      end: "me-[-0.5rem]",
-      bottom: "mb-[-0.5rem]",
-      start: "ms-[-0.5rem]",
+    const placements: Record<Placement, string> = {
+      top: "-translate-y-2/3",
+      bottom: "translate-y-2/3",
+      start: "-translate-x-2/3 rtl:translate-x-2/3",
+      end: "translate-x-2/3 rtl:-translate-x-2/3",
     };
     return placements[placement];
   }, [placement]);
-  const enhancedChild = useMemo(() => {
-    if (!children) return null;
-    return cloneElement(children, {
-      ref: (el: HTMLElement) => {
-        triggerRef.current = el;
-        // if (typeof children.ref === "function") children.ref(el);
-        // else if (children.ref) (children.ref as any).current = el;
-      },
-      onMouseEnter: (e: React.MouseEvent<HTMLElement>) => {
-        children.props.onMouseEnter?.(e);
-        setOpen(true);
-      },
-      onMouseLeave: (e: React.MouseEvent<HTMLElement>) => {
-        children.props.onMouseLeave?.(e);
-        setOpen(false);
-      },
-      onFocus: (e: React.FocusEvent<HTMLElement>) => {
-        children.props.onFocus?.(e);
-        setOpen(true);
-      },
-      onBlur: (e: React.FocusEvent<HTMLElement>) => {
-        children.props.onBlur?.(e);
-        setOpen(false);
-      },
-    });
-  }, [children]);
-  const updatePosition = useCallback(() => {
-    const el = triggerRef.current;
-    if (!el) return;
-    const rect = el.getBoundingClientRect();
-
-    const width = rect.width;
-    const height = rect.height;
-    const top = rect.top;
-    const left = rect.left;
-    const right = window.innerWidth - rect.right;
-    const bottom = window.innerHeight - rect.bottom;
-
-    setPosition({
-      "--width": `${width}px`,
-      "--height": `${height}px`,
-      "--top": `${top}px`,
-      "--left": `${left}px`,
-      "--right": `${right}px`,
-      "--bottom": `${bottom}px`,
-    });
-  }, []);
-  useEffect(() => {
-    if (open) updatePosition();
-    window.addEventListener("scroll", updatePosition);
-    window.addEventListener("resize", updatePosition);
-    return () => {
-      window.removeEventListener("scroll", updatePosition);
-      window.removeEventListener("resize", updatePosition);
+  const colorClasses = useMemo(() => {
+    const colors: Colors = {
+      primary: "bg-primary",
+      secondary: "bg-secondary",
+      success: "bg-success",
+      info: "bg-info",
+      warning: "bg-warning",
+      danger: "bg-danger",
+      dark: "bg-dark",
+      light: "bg-light",
     };
-  }, [open, placement, updatePosition]);
+    return [colors[color], classes?.color?.[color]];
+  }, [color, classes?.color]);
+
   return (
-    <Fragment>
-      {enhancedChild}
-      <Portal>
-        <Transition nodeRef={divRef} in={open} timeout={duration} unmountOnExit>
-          {(state) => (
-            <div
-              ref={divRef}
-              style={position}
-              className={cn(
-                "fixed flex justify-center items-center z-10 pointer-events-none transition-[scale,opacity] [--ratio:1] rtl:[--ratio:-1]",
-                ...placementClasses,
-                transitionClasses[state],
-              )}
-            >
-              <span
-                role="tooltip"
-                data-name="tooltip"
-                className={twMerge(
-                  "relative block size-fit min-w-fit min-h-fit bg-dark text-sm rounded px-2 py-px whitespace-nowrap z-1",
-                  classes?.base,
-                  colorClasses,
-                  className,
-                )}
-                {...props}
-              >
-                {title}
-              </span>
-              <span
-                className={twMerge(
-                  "block size-3 min-w-3 min-h-3 bg-dark rotate-45",
-                  arrowPlacementClasses,
-                  colorClasses,
-                )}
-              ></span>
-            </div>
-          )}
-        </Transition>
-      </Portal>
-    </Fragment>
+    <span
+      data-name="tooltip-arrow"
+      className={twMerge(
+        "block size-3 min-w-3 min-h-3 rotate-45 shrink-0",
+        classes?.base,
+        placementClasses,
+        colorClasses,
+        className,
+      )}
+      {...props}
+    />
   );
 }
+
+Tooltip.Content = TooltipContent;
+Tooltip.Arrow = TooltipArrow;
+
+export default Tooltip;

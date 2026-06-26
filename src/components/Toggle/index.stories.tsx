@@ -3,6 +3,7 @@ import Button from "../Button";
 import Drawer from "../Drawer";
 import Menu from "../Menu";
 import Modal from "../Modal";
+import Tooltip from "../Tooltip";
 import Typography from "../Typography";
 import Toggle from ".";
 
@@ -96,7 +97,7 @@ export function WithMenu() {
 
 export function WithContextMenu() {
   return (
-    <Toggle anchor pointer>
+    <Toggle anchor triggerOn="contextMenu">
       <Toggle.Trigger>
         <div className="flex size-48 items-center justify-center rounded border border-dashed border-dark/20 bg-dark/5 text-sm text-dark/60 select-none">
           Right click here
@@ -108,6 +109,22 @@ export function WithContextMenu() {
           <Menu.Item>Paste</Menu.Item>
           <Menu.Item>Delete</Menu.Item>
         </Menu>
+      </Toggle.Content>
+    </Toggle>
+  );
+}
+
+export function WithTooltip() {
+  return (
+    <Toggle anchor triggerOn="hover">
+      <Toggle.Trigger>
+        <Button type="button">Hover me</Button>
+      </Toggle.Trigger>
+      <Toggle.Content>
+        <Tooltip placement="top">
+          <Tooltip.Content>Tooltip</Tooltip.Content>
+          <Tooltip.Arrow className="-mt-2" />
+        </Tooltip>
       </Toggle.Content>
     </Toggle>
   );

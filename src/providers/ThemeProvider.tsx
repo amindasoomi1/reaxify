@@ -138,8 +138,9 @@ export type ThemeProviderContextType = {
     };
     tooltip: {
       base: string;
-      color: ColorClasses<string>;
       placement: { top: string; end: string; bottom: string; start: string };
+      content: { base: string; color: ColorClasses<string> };
+      arrow: { base: string; color: ColorClasses<string> };
     };
     spinner: {
       base: string;
