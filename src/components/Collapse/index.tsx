@@ -1,5 +1,6 @@
 import { useClasses } from "@/hooks";
-import { ChildrenProps } from "@/types";
+import { ChildrenProps, ComponentPropsWithAs } from "@/types";
+import { ElementType } from "react";
 import AnimateHeight from "react-animate-height";
 import { twMerge } from "tailwind-merge";
 
@@ -19,28 +20,47 @@ const EMPTY_ANIMATION_STATE_CLASSES = {
 type CollapseProps = {
   open?: boolean;
   duration?: number;
-  className?: string;
   "data-name"?: string;
 } & ChildrenProps;
 
-export default function Collapse({
+function Collapse({
   open = false,
   duration = 300,
-  className,
   "data-name": dataName = "collapse",
   children,
 }: CollapseProps) {
-  const classes = useClasses((c) => c.collapse.base);
-
   return (
     <AnimateHeight
-      duration={duration}
-      height={open ? "auto" : 0}
       data-name={dataName}
-      className={twMerge("w-full", classes, className)}
+      height={open ? "auto" : 0}
+      duration={duration}
+      className="w-full overflow-hidden"
       animationStateClasses={EMPTY_ANIMATION_STATE_CLASSES}
     >
       {children}
     </AnimateHeight>
   );
 }
+
+function CollapseContent<E extends ElementType = "div">({
+  as,
+  className,
+  children,
+  ...props
+}: ComponentPropsWithAs<E>) {
+  const classes = useClasses((c) => c.collapse.content.base);
+  const Component = as || "div";
+  return (
+    <Component
+      data-name="collapse-content"
+      className={twMerge("w-full block", classes, className)}
+      {...props}
+    >
+      {children}
+    </Component>
+  );
+}
+
+Collapse.Content = CollapseContent;
+
+export default Collapse;

@@ -1,5 +1,9 @@
 import { useClasses } from "@/hooks";
-import { ChildrenProps, ComponentPropsWithAs } from "@/types";
+import {
+  ChildrenProps,
+  ComponentPropsWithAs,
+  ComponentPropsWithoutAs,
+} from "@/types";
 import { ArrowDown2 } from "iconsax-react";
 import {
   ComponentProps,
@@ -204,21 +208,18 @@ function AccordionBody({
   className,
   children,
   ...props
-}: ComponentProps<"div">) {
+}: ComponentPropsWithoutAs<"div">) {
   const classes = useClasses((s) => s.accordion.body.base);
 
   return (
-    <div
+    <Collapse.Content
+      as="div"
       data-name="accordion-body"
-      className={twMerge(
-        "w-full block px-5 py-4 rounded-b",
-        classes,
-        className,
-      )}
+      className={twMerge("px-5 py-4 rounded-b", classes, className)}
       {...props}
     >
       {children}
-    </div>
+    </Collapse.Content>
   );
 }
 

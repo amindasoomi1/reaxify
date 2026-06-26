@@ -22,14 +22,14 @@ export function Controlled() {
       </Button>
       <Card>
         <Collapse open={open}>
-          <Card.Body>
+          <Collapse.Content className="p-10">
             <Typography variant="body-1">
               Lorem ipsum dolor, sit amet consectetur adipisicing elit. Officiis
               quod labore praesentium perferendis veniam odit esse, in
               voluptatem. Nobis repellendus reiciendis labore nisi assumenda
               maiores qui excepturi quo, accusantium quasi.
             </Typography>
-          </Card.Body>
+          </Collapse.Content>
         </Collapse>
       </Card>
     </div>
