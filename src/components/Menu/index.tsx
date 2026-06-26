@@ -1,4 +1,4 @@
-import { cn } from "@/helpers";
+import { cn, getAnchorPointer } from "@/helpers";
 import { useClasses, usePreventableClose } from "@/hooks";
 import {
   ChildrenProps,
@@ -25,6 +25,7 @@ import Portal from "../Portal";
 type Position = { left: number; top: number; right: number };
 type MenuProps = {
   anchorEl?: HTMLElement | null;
+  anchorPointer?: boolean;
   closeOnClick?: boolean;
   preventClose?: boolean;
   duration?: number;
@@ -39,6 +40,7 @@ type MenuContextType = {
   closeOnClick: boolean;
   preventClose: boolean;
   dismiss: () => void;
+  anchorPointer: boolean;
 } & Partial<ToggleProps>;
 
 const MenuContext = createContext<MenuContextType>({
@@ -48,6 +50,7 @@ const MenuContext = createContext<MenuContextType>({
   closeOnClick: false,
   preventClose: false,
   dismiss: () => {},
+  anchorPointer: false,
 });
 
 function Menu<E extends ElementType = "ul">({
@@ -65,6 +68,7 @@ function Menu<E extends ElementType = "ul">({
   closeOnClick = false,
   preventClose = false,
   anchorEl = null,
+  anchorPointer = false,
   className,
   children,
   ...props
@@ -98,26 +102,39 @@ function Menu<E extends ElementType = "ul">({
   const positionHandler = useCallback(() => {
     if (!open) return;
     if (!anchorEl) return;
-    const rect = anchorEl.getBoundingClientRect();
+
     const viewportWidth = window.innerWidth;
     const viewportHeight = window.innerHeight;
     const menuWidth = menuRef.current?.offsetWidth || 150;
     const menuHeight = menuRef.current?.offsetHeight || 200;
 
-    let left = rect.left;
-    let right = rect.right;
-    let top = rect.bottom;
+    let left: number;
+    let right: number;
+    let top: number;
+
+    if (anchorPointer) {
+      const point = getAnchorPointer(anchorEl);
+      if (!point) return;
+      left = point.x;
+      right = viewportWidth - point.x;
+      top = point.y;
+    } else {
+      const rect = anchorEl.getBoundingClientRect();
+      left = rect.left;
+      right = viewportWidth - rect.right;
+      top = rect.bottom;
+    }
 
     left = Math.min(Math.max(left, offset), viewportWidth - menuWidth - offset);
     right = Math.min(
-      Math.max(viewportWidth - rect.right, offset),
+      Math.max(right, offset),
       viewportWidth - menuWidth - offset,
     );
     top = Math.min(Math.max(top, offset), viewportHeight - menuHeight - offset);
 
     setPosition({ left, right, top });
     setPositionProperty({ left, right, top });
-  }, [open, anchorEl, setPosition, setPositionProperty]);
+  }, [open, anchorEl, anchorPointer, setPosition, setPositionProperty]);
   const dismiss = usePreventableClose({ preventClose, open, onClose });
 
   useEffect(() => {
@@ -158,6 +175,7 @@ function Menu<E extends ElementType = "ul">({
               transitionState: state,
               closeOnClick,
               preventClose,
+              anchorPointer,
             }}
           >
             <Container>
@@ -208,7 +226,10 @@ function Container({ children }: ChildrenProps) {
   );
 }
 function Backdrop() {
-  const { dismiss, preventClose } = useContext(MenuContext);
+  const { dismiss, preventClose, anchorPointer } = useContext(MenuContext);
+  const handleContextMenu = (e: MouseEvent<HTMLDivElement>) => {
+    if (anchorPointer) e.preventDefault();
+  };
   return (
     <div
       data-name="menu-backdrop"
@@ -216,6 +237,7 @@ function Backdrop() {
         "w-full flex-1 opacity-0 cursor-default lg:absolute lg:size-full lg:inset-0",
         preventClose && "[&:active~*]:scale-95",
       )}
+      onContextMenu={handleContextMenu}
       onClick={dismiss}
     ></div>
   );

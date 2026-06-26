@@ -1,3 +1,4 @@
+export { getAnchorPointer, setAnchorPointer } from "./anchorPointer";
 export { default as cn } from "./cn";
 export { default as copy } from "./copy";
 export {

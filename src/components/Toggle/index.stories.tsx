@@ -94,4 +94,23 @@ export function WithMenu() {
   );
 }
 
+export function WithContextMenu() {
+  return (
+    <Toggle anchor pointer>
+      <Toggle.Trigger>
+        <div className="flex size-48 items-center justify-center rounded border border-dashed border-dark/20 bg-dark/5 text-sm text-dark/60 select-none">
+          Right click here
+        </div>
+      </Toggle.Trigger>
+      <Toggle.Content>
+        <Menu closeOnClick>
+          <Menu.Item>Copy</Menu.Item>
+          <Menu.Item>Paste</Menu.Item>
+          <Menu.Item>Delete</Menu.Item>
+        </Menu>
+      </Toggle.Content>
+    </Toggle>
+  );
+}
+
 export default meta;

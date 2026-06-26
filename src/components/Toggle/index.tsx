@@ -1,3 +1,4 @@
+import { setAnchorPointer } from "@/helpers";
 import { ChildrenProps } from "@/types";
 import {
   Children,
@@ -18,6 +19,7 @@ type ToggleStateContextValue = {
   open: boolean;
   anchorEl: HTMLElement | null;
   anchor: boolean;
+  pointer: boolean;
 };
 
 type ToggleActionsContextValue = {
@@ -38,6 +40,7 @@ type ToggleProps = {
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
   anchor?: boolean;
+  pointer?: boolean;
   ref?: Ref<ToggleRef>;
 } & ChildrenProps;
 
@@ -89,6 +92,7 @@ function Toggle({
   open: openProp,
   onOpenChange,
   anchor = false,
+  pointer = false,
   ref,
   children,
 }: ToggleProps) {
@@ -125,8 +129,8 @@ function Toggle({
   }));
 
   const stateValue = useMemo(
-    () => ({ open, anchorEl, anchor }),
-    [open, anchorEl, anchor],
+    () => ({ open, anchorEl, anchor, pointer }),
+    [open, anchorEl, anchor, pointer],
   );
 
   const actionsValue = useMemo(
@@ -144,13 +148,14 @@ function Toggle({
 }
 
 function ToggleTrigger({ children }: ToggleTriggerProps) {
-  const { open } = useToggleState();
-  const { toggle, setAnchorEl } = useToggleActions();
+  const { open, pointer } = useToggleState();
+  const { toggle, setAnchorEl, open: openFn } = useToggleActions();
 
   if (!isValidElement(children)) return children;
 
   const child = Children.only(children) as ReactElement<{
     onClick?: (e: MouseEvent<HTMLElement>) => void;
+    onContextMenu?: (e: MouseEvent<HTMLElement>) => void;
     ref?: Ref<HTMLElement>;
     "aria-expanded"?: boolean;
   }>;
@@ -161,6 +166,22 @@ function ToggleTrigger({ children }: ToggleTriggerProps) {
     toggle();
   };
 
+  const handleContextMenu = (e: MouseEvent<HTMLElement>) => {
+    e.preventDefault();
+    child.props.onContextMenu?.(e);
+    setAnchorPointer(e.currentTarget, e.clientX, e.clientY);
+    setAnchorEl(e.currentTarget);
+    openFn();
+  };
+
+  if (pointer) {
+    return cloneElement(child, {
+      "aria-expanded": open,
+      onContextMenu: handleContextMenu,
+      ref: composeRefs(child.props.ref),
+    });
+  }
+
   return cloneElement(child, {
     "aria-expanded": open,
     onClick: handleClick,
@@ -169,7 +190,7 @@ function ToggleTrigger({ children }: ToggleTriggerProps) {
 }
 
 function ToggleContent({ children }: ToggleContentProps) {
-  const { open, anchorEl, anchor } = useToggleState();
+  const { open, anchorEl, anchor, pointer } = useToggleState();
   const { close } = useToggleActions();
 
   if (!isValidElement(children)) return children;
@@ -178,12 +199,14 @@ function ToggleContent({ children }: ToggleContentProps) {
     open?: boolean;
     onClose?: VoidFunction;
     anchorEl?: HTMLElement | null;
+    anchorPointer?: boolean;
   }>;
 
   return cloneElement(child, {
     open,
     onClose: close,
     ...(anchor && { anchorEl }),
+    ...(pointer && { anchorPointer: true }),
   });
 }
 
