@@ -7,8 +7,17 @@ import {
   ComponentPropsWithAs,
   ComponentPropsWithoutAs,
 } from "@/types";
-import { createContext, ElementType, useMemo } from "react";
+import {
+  Children,
+  cloneElement,
+  ElementType,
+  isValidElement,
+  ReactElement,
+  ReactNode,
+  useMemo,
+} from "react";
 import { twMerge } from "tailwind-merge";
+import Button, { ButtonProps } from "../Button";
 import Fill from "../Fill";
 import Stack from "../Stack";
 import Typography from "../Typography";
@@ -17,17 +26,35 @@ type AlertProps = {
   variant?: AlertVariant;
   color?: Color;
 };
-type AlertContextType = {
-  buttonVariant?: ButtonVariant;
-  color?: Color;
-};
 type Colors = {
   [key in Color]?: {
     [key in AlertVariant]?: string;
   };
 };
 
-export const AlertContext = createContext<AlertContextType>({});
+function enhanceButtons(
+  children: ReactNode,
+  buttonVariant: ButtonVariant,
+  color: Color,
+): ReactNode {
+  return Children.map(children, (child) => {
+    if (!isValidElement<{ children?: ReactNode }>(child)) return child;
+    const childProps = child.props;
+    if (child.type === Button) {
+      const buttonProps = childProps as ButtonProps;
+      return cloneElement(child as ReactElement<ButtonProps>, {
+        variant: buttonProps.variant ?? buttonVariant,
+        color: buttonProps.color ?? color,
+      });
+    }
+    if (childProps.children) {
+      return cloneElement(child, {
+        children: enhanceButtons(childProps.children, buttonVariant, color),
+      });
+    }
+    return child;
+  });
+}
 
 function Alert<E extends ElementType = "div">({
   as,
@@ -90,6 +117,10 @@ function Alert<E extends ElementType = "div">({
     if (variant === "solid") return "solid";
     return "text";
   }, [variant]);
+  const enhancedChildren = useMemo(
+    () => enhanceButtons(children, buttonVariant, color),
+    [children, buttonVariant, color],
+  );
   return (
     <Stack
       as={as as ElementType}
@@ -101,9 +132,7 @@ function Alert<E extends ElementType = "div">({
       )}
       {...props}
     >
-      <AlertContext.Provider value={{ color, buttonVariant }}>
-        {children}
-      </AlertContext.Provider>
+      {enhancedChildren}
     </Stack>
   );
 }
@@ -116,7 +145,7 @@ function AlertIcon({
   return (
     <div
       className={twMerge(
-        "flex flex-col py-2 items-start justify-start *:size-[1.375rem] *:text-current",
+        "flex flex-col py-2 items-start justify-start *:size-5.5 *:text-current",
         classes,
         className,
       )}

@@ -1,18 +1,19 @@
 import { cn } from "@/helpers";
 import { useClasses } from "@/hooks";
 import { ComponentPropsWithAs } from "@/types";
-import { createContext, ElementType, useMemo } from "react";
+import {
+  Children,
+  cloneElement,
+  ElementType,
+  isValidElement,
+  useMemo,
+} from "react";
 import { twMerge } from "tailwind-merge";
 import { ButtonProps } from "../Button";
 
 type ButtonGroupProps = {
   orientation?: "vertical" | "horizontal";
 } & ButtonProps;
-type Context = {
-  buttonClasses?: string;
-} & ButtonProps;
-
-export const ButtonGroupContext = createContext<Context>({});
 
 export default function ButtonGroup<E extends ElementType = "div">({
   as,
@@ -42,8 +43,21 @@ export default function ButtonGroup<E extends ElementType = "div">({
     };
     const classesResult = classes?.button?.orientation?.[orientation];
     const orientationsResult = orientations[orientation];
-    return cn(orientationsResult, classesResult);
+    return [orientationsResult, classesResult];
   }, [orientation, classes?.button]);
+  const enhancedChildren = useMemo(() => {
+    return Children.map(children, (child) => {
+      if (!isValidElement<ButtonProps>(child)) return child;
+      const childProps = child.props;
+      return cloneElement(child, {
+        variant: childProps.variant ?? variant,
+        color: childProps.color ?? color,
+        size: childProps.size ?? size,
+        loading: childProps.loading ?? loading,
+        className: cn(...buttonClasses, childProps.className),
+      });
+    });
+  }, [children, variant, color, size, loading, buttonClasses]);
   return (
     <Component
       className={twMerge(
@@ -54,11 +68,7 @@ export default function ButtonGroup<E extends ElementType = "div">({
       )}
       {...props}
     >
-      <ButtonGroupContext.Provider
-        value={{ variant, color, size, loading, buttonClasses }}
-      >
-        {children}
-      </ButtonGroupContext.Provider>
+      {enhancedChildren}
     </Component>
   );
 }

@@ -8,8 +8,6 @@ import { ElementType, MouseEvent, useContext, useMemo } from "react";
 import { twMerge } from "tailwind-merge";
 import { cn } from "../../helpers";
 import { useClasses, useCreateRipple } from "../../hooks";
-import { AlertContext } from "../Alert";
-import { ButtonGroupContext } from "../ButtonGroup";
 import { DrawerContext } from "../Drawer";
 import { ModalContext } from "../Modal";
 import Spinner from "../Spinner";
@@ -35,10 +33,10 @@ type Sizes = {
 
 export default function Button<E extends ElementType = "button">({
   as,
-  variant: initVariant,
-  color: initColor,
-  size: initSize,
-  loading: initLoading,
+  variant = "solid",
+  color = "primary",
+  size = "md",
+  loading = false,
   stopPropagation = false,
   preventDefault = false,
   closeModal = false,
@@ -50,23 +48,11 @@ export default function Button<E extends ElementType = "button">({
   ...props
 }: ComponentPropsWithAs<E, ButtonProps>) {
   const classes = useClasses((c) => c.button);
-  const buttonGroupContext = useContext(ButtonGroupContext);
+  const createRipple = useCreateRipple();
   const modalContext = useContext(ModalContext);
   const drawerContext = useContext(DrawerContext);
-  const alertContext = useContext(AlertContext);
-  const createRipple = useCreateRipple();
   const Component = as || "button";
-  const variant =
-    initVariant ??
-    buttonGroupContext.variant ??
-    alertContext.buttonVariant ??
-    "solid";
-  const color =
-    initColor ?? buttonGroupContext.color ?? alertContext.color ?? "primary";
-  const size = initSize ?? buttonGroupContext.size ?? "md";
-  const loading = initLoading ?? buttonGroupContext.loading ?? false;
   const colorClasses = useMemo(() => {
-    if (!color) return "border-transparent";
     const colors: Colors = {
       primary: {
         solid:
@@ -117,14 +103,16 @@ export default function Button<E extends ElementType = "button">({
         soft: "bg-light-danger text-dark-danger border-light-danger hover:bg-danger hover:text-white hover:border-danger",
       },
       dark: {
-        solid: "bg-dark text-white border-dark hover:bg-black hover:border-black",
+        solid:
+          "bg-dark text-white border-dark hover:bg-black hover:border-black",
         outline:
           "bg-transparent text-dark border-dark hover:text-black hover:border-black",
         text: "bg-transparent text-dark border-transparent hover:text-black",
         soft: "bg-dark text-white border-dark hover:bg-black hover:text-white hover:border-black",
       },
       light: {
-        solid: "bg-light text-dark border-light hover:bg-border hover:border-border",
+        solid:
+          "bg-light text-dark border-light hover:bg-border hover:border-border",
         outline:
           "bg-transparent text-dark border-light hover:text-dark hover:border-dark",
         text: "bg-transparent text-dark border-transparent hover:text-dark",
@@ -139,7 +127,6 @@ export default function Button<E extends ElementType = "button">({
     return colorClasses?.split(" ").find((e) => e.startsWith("text-"));
   }, [colorClasses]);
   const sizeClasses = useMemo(() => {
-    if (!size) return null;
     const sizes: Sizes = {
       sm: "text-sm py-1 px-3.5",
       md: "text-base py-1.5 px-4",
@@ -176,7 +163,6 @@ export default function Button<E extends ElementType = "button">({
         colorClasses,
         sizeClasses,
         loadingDisabledClasses,
-        buttonGroupContext.buttonClasses,
         className,
       )}
       onClick={handleClick}
