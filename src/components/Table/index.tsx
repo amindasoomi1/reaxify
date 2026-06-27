@@ -33,6 +33,7 @@ const TableContext = createContext<TableContextType>({
   bordered: false,
   hover: false,
 });
+const TableHeaderContext = createContext(false);
 function TableContainer({
   className,
   children,
@@ -86,13 +87,15 @@ function TableHeader({
       data-name="table-header"
       className={twMerge(
         classes?.base,
-        sticky && "sticky top-0 left-0 right-0 z-[2]",
+        sticky && "sticky top-0 left-0 right-0 z-2",
         sticky && classes?.sticky,
         className,
       )}
       {...props}
     >
-      {children}
+      <TableHeaderContext.Provider value={true}>
+        {children}
+      </TableHeaderContext.Provider>
     </thead>
   );
 }
@@ -111,9 +114,11 @@ function TableBody({ className, children, ...props }: TableBodyProps) {
 function TableRow({ className, children, ...props }: TableRowProps) {
   const classes = useClasses((c) => c.table.row);
   const { bordered, hover, striped } = useContext(TableContext);
+  const inHeader = useContext(TableHeaderContext);
   const hasBordered = !!bordered;
   const isDashed = bordered === "dashed";
   const isSolid = bordered === "solid";
+  const isHoverable = hover && !inHeader;
   return (
     <tr
       data-name="table-row"
@@ -124,10 +129,10 @@ function TableRow({ className, children, ...props }: TableRowProps) {
         isDashed && "border-dashed",
         isSolid && "border-solid",
         hasBordered && classes?.bordered,
-        hover && "cursor-pointer transition-colors hover:bg-gray-200",
-        hover && classes?.hover,
-        striped && "even:bg-gray-100",
-        striped && classes?.hover,
+        isHoverable && "cursor-pointer transition-colors hover:bg-gray-200",
+        isHoverable && classes?.hover,
+        striped && !inHeader && "even:bg-gray-100",
+        striped && !inHeader && classes?.striped,
         className,
       )}
       {...props}
