@@ -3,12 +3,12 @@ import { ComponentProps, ElementType, ReactNode } from "react";
 export type ComponentPropsWithoutAs<
   E extends ElementType,
   // eslint-disable-next-line
-  P extends Record<string, unknown> = {},
+  P extends Record<string, any> = {},
 > = P & Omit<ComponentProps<E>, keyof P>;
 export type ComponentPropsWithAs<
   E extends ElementType,
   // eslint-disable-next-line
-  P extends Record<string, unknown> = {},
+  P extends Record<string, any> = {},
 > = P & { as?: E } & Omit<ComponentProps<E>, "as" | keyof P>;
 
 export interface ExtendBadgeVariant {}

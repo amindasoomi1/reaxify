@@ -134,6 +134,9 @@ export function Loading() {
       <Button color="success" variant="outline" loading>
         Button
       </Button>
+      <Button color="success" variant="soft" loading>
+        Button
+      </Button>
       <Button color="success" variant="text" loading>
         Button
       </Button>

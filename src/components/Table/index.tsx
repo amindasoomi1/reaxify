@@ -1,8 +1,11 @@
+import { asComponent } from "@/helpers";
 import { useClasses } from "@/hooks";
+import { ComponentPropsWithAs } from "@/types";
 import { useHotkey } from "@tanstack/react-hotkeys";
 import {
   ComponentProps,
   createContext,
+  ElementType,
   MouseEvent,
   useCallback,
   useContext,
@@ -17,7 +20,6 @@ type TableContextType = {
   hover: boolean;
   disabled: boolean;
 };
-type TableContainerProps = ComponentProps<"div">;
 type BaseTableProps = {
   striped?: boolean;
   bordered?: Bordered;
@@ -51,20 +53,23 @@ const TableContext = createContext<TableContextType>({
   disabled: false,
 });
 const TableHeaderContext = createContext(false);
-function TableContainer({
+
+function TableContainer<E extends ElementType = "div">({
+  as,
   className,
   children,
   ...props
-}: TableContainerProps) {
+}: ComponentPropsWithAs<E>) {
   const classes = useClasses((c) => c.table.container.base);
+  const Component = asComponent(as, "div");
   return (
-    <div
+    <Component
       data-name="table-container"
       className={twMerge("w-full overflow-auto", classes, className)}
       {...props}
     >
       {children}
-    </div>
+    </Component>
   );
 }
 function Table({

@@ -1,4 +1,4 @@
-import { cn } from "@/helpers";
+import { asComponent, cn } from "@/helpers";
 import { useClasses } from "@/hooks";
 import { ComponentPropsWithAs } from "@/types";
 import { ElementType, useMemo } from "react";
@@ -22,7 +22,6 @@ export default function Stack<E extends ElementType = "div">({
   ...props
 }: ComponentPropsWithAs<E, StackProps>) {
   const classes = useClasses((c) => c.stack);
-  const Component = as || "div";
   const directionClasses = useMemo(() => {
     const directions: DirectionsObject = {
       row: cn(
@@ -43,6 +42,7 @@ export default function Stack<E extends ElementType = "div">({
     if (wrap) return "flex-wrap";
     return null;
   }, [wrap]);
+  const Component = asComponent(as, "div");
   return (
     <Component
       data-name="stack"

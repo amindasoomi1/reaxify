@@ -1,3 +1,5 @@
+import { asComponent, cn } from "@/helpers";
+import { useClasses, useCreateRipple } from "@/hooks";
 import {
   ButtonSize,
   ButtonVariant,
@@ -6,8 +8,6 @@ import {
 } from "@/types";
 import { ElementType, MouseEvent, useContext, useMemo } from "react";
 import { twMerge } from "tailwind-merge";
-import { cn } from "../../helpers";
-import { useClasses, useCreateRipple } from "../../hooks";
 import { DrawerContext } from "../Drawer";
 import { ModalContext } from "../Modal";
 import Spinner from "../Spinner";
@@ -51,7 +51,6 @@ export default function Button<E extends ElementType = "button">({
   const createRipple = useCreateRipple();
   const modalContext = useContext(ModalContext);
   const drawerContext = useContext(DrawerContext);
-  const Component = as || "button";
   const colorClasses = useMemo(() => {
     const colors: Colors = {
       primary: {
@@ -154,6 +153,7 @@ export default function Button<E extends ElementType = "button">({
     preventDefault && e.preventDefault();
     onClick?.(e);
   };
+  const Component = asComponent(as, "button");
   return (
     <Component
       role="button"

@@ -1,3 +1,4 @@
+import { asComponent } from "@/helpers";
 import { useClasses } from "@/hooks";
 import { ComponentPropsWithAs } from "@/types";
 import { ElementType, useMemo } from "react";
@@ -27,7 +28,6 @@ export default function Divider<E extends ElementType = "hr">({
   ...props
 }: ComponentPropsWithAs<E, Props>) {
   const classes = useClasses((s) => s.divider);
-  const Component = as ?? "hr";
   const orientationClasses = useMemo(() => {
     const orientations: Orientations = {
       horizontal: `${flexItem ? "w-auto self-stretch" : "w-full"} h-0 border-b`,
@@ -43,6 +43,7 @@ export default function Divider<E extends ElementType = "hr">({
     };
     return [variants?.[variant], classes?.variant?.[variant]];
   }, [variant, classes?.variant]);
+  const Component = asComponent(as, "hr");
   return (
     <Component
       role="separator"

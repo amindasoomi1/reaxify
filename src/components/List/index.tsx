@@ -1,5 +1,6 @@
+import { asComponent } from "@/helpers";
 import { useClasses } from "@/hooks";
-import { ComponentPropsWithAs, ComponentPropsWithoutAs } from "@/types";
+import { ComponentPropsWithAs } from "@/types";
 import { useHotkey } from "@tanstack/react-hotkeys";
 import {
   createContext,
@@ -43,8 +44,8 @@ function List<E extends ElementType = "ul">({
   children,
   ...props
 }: ComponentPropsWithAs<E, ListProps>) {
-  const Component = as || "ul";
   const classes = useClasses((c) => c.list?.base);
+  const Component = asComponent(as, "ul");
 
   return (
     <Component
@@ -75,7 +76,6 @@ function ListItem<E extends ElementType = "li">({
   onClick,
   ...props
 }: ComponentPropsWithAs<E, ListItemProps>) {
-  const Component = as || "li";
   const classes = useClasses((c) => c.list?.item);
   const { hover: listHover, disabled: listDisabled } = useContext(ListContext);
   const itemRef = useRef<HTMLElement>(null);
@@ -105,6 +105,8 @@ function ListItem<E extends ElementType = "li">({
     preventDefault: true,
   });
 
+  const Component = asComponent(as, "li");
+
   return (
     <Component
       ref={itemRef as Ref<HTMLLIElement>}
@@ -133,15 +135,17 @@ function ListItem<E extends ElementType = "li">({
   );
 }
 
-function ListIcon({
+function ListIcon<E extends ElementType = "div">({
+  as,
   className,
   children,
   ...props
-}: ComponentPropsWithoutAs<"div">) {
+}: ComponentPropsWithAs<E>) {
   const classes = useClasses((c) => c.list?.icon?.base);
+  const Component = asComponent(as, "div");
 
   return (
-    <div
+    <Component
       data-name="list-icon"
       className={twMerge(
         "shrink-0 flex items-center justify-center [&_svg]:size-5.5",
@@ -151,50 +155,55 @@ function ListIcon({
       {...props}
     >
       {children}
-    </div>
+    </Component>
   );
 }
 
-function ListContent({
+function ListContent<E extends ElementType = "div">({
+  as,
   className,
   children,
   ...props
-}: ComponentPropsWithoutAs<"div">) {
+}: ComponentPropsWithAs<E>) {
   const classes = useClasses((c) => c.list?.content?.base);
+  const Component = asComponent(as, "div");
 
   return (
-    <div
+    <Component
       data-name="list-content"
       className={twMerge("flex-1 min-w-0 space-y-px", classes, className)}
       {...props}
     >
       {children}
-    </div>
+    </Component>
   );
 }
 
-function ListAction({
+function ListAction<E extends ElementType = "div">({
+  as,
   className,
   children,
   onClick,
   ...props
-}: ComponentPropsWithoutAs<"div">) {
+}: ComponentPropsWithAs<E>) {
   const classes = useClasses((c) => c.list?.action?.base);
 
-  const handleClick = (e: MouseEvent<HTMLDivElement>) => {
+  const handleClick = (e: MouseEvent<HTMLElement>) => {
     e.stopPropagation();
-    onClick?.(e);
+    onClick?.(e as unknown as MouseEvent<E>);
   };
 
+  const Component = asComponent(as, "div");
+
   return (
-    <div
+    <Component
       data-name="list-action"
       className={twMerge("shrink-0 self-center", classes, className)}
       onClick={handleClick}
       {...props}
     >
       {children}
-    </div>
+    </Component>
   );
 }
 

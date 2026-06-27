@@ -1,4 +1,4 @@
-import { cn, getAnchorPointer } from "@/helpers";
+import { asComponent, cn, getAnchorPointer } from "@/helpers";
 import { useClasses, usePreventableClose } from "@/hooks";
 import {
   ChildrenProps,
@@ -74,7 +74,6 @@ function Menu<E extends ElementType = "ul">({
   ...props
 }: ComponentPropsWithAs<E, MenuProps>) {
   const classes = useClasses((c) => c.menu.base);
-  const Component = as || "ul";
   const offset = 16;
   const menuRef = useRef<HTMLUListElement | null>(null);
   const positionRef = useRef<Position>({
@@ -152,6 +151,7 @@ function Menu<E extends ElementType = "ul">({
     };
   }, [positionHandler]);
   useImperativeHandle(ref, () => menuRef.current);
+  const Component = asComponent(as, "ul");
   return (
     <Portal>
       <Transition

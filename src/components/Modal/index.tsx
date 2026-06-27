@@ -1,4 +1,4 @@
-import { cn } from "@/helpers";
+import { asComponent, cn } from "@/helpers";
 import { useClasses, usePreventableClose } from "@/hooks";
 import {
   ComponentPropsWithAs,
@@ -35,10 +35,6 @@ type ModalProps = {
   preventClose?: boolean;
 } & Partial<ToggleEventProps> &
   Partial<ToggleProps>;
-type ModalDialogProps = Omit<ComponentProps<"div">, "as" | "ref">;
-type ModalHeaderProps = ComponentProps<"div">;
-type ModalBodyProps = ComponentProps<"div">;
-type ModalFooterProps = ComponentProps<"div">;
 
 export const ModalContext = createContext<Context>({
   size: "md",
@@ -70,7 +66,6 @@ function Modal<E extends ElementType = "div">({
 }: ComponentPropsWithAs<E, ModalProps>) {
   const classes = useClasses((c) => c.modal.base);
   const divRef = useRef<HTMLDivElement | null>(null);
-  const Component = as || "div";
   const transitionClasses: TransitionClasses = {
     entering: "active opacity-100 pointer-events-auto",
     entered: "active opacity-100 pointer-events-auto",
@@ -80,6 +75,7 @@ function Modal<E extends ElementType = "div">({
   };
   const dismiss = usePreventableClose({ preventClose, open, onClose });
   useImperativeHandle(ref, () => divRef.current);
+  const Component = asComponent(as, "div");
   return (
     <Portal>
       <Transition
@@ -136,7 +132,12 @@ function Modal<E extends ElementType = "div">({
     </Portal>
   );
 }
-function ModalDialog({ className, children, ...props }: ModalDialogProps) {
+function ModalDialog<E extends ElementType = "div">({
+  as,
+  className,
+  children,
+  ...props
+}: ComponentPropsWithAs<E>) {
   const classes = useClasses((c) => c.modal.dialog);
   const { size, transitionState, duration } = useContext(ModalContext);
   const transitionClasses: TransitionClasses = {
@@ -156,7 +157,7 @@ function ModalDialog({ className, children, ...props }: ModalDialogProps) {
   }, [size, classes?.size]);
   return (
     <Card
-      as="div"
+      as={as}
       data-name="modal-dialog"
       style={{ transitionDuration: `${duration}ms` }}
       className={twMerge(
@@ -166,39 +167,54 @@ function ModalDialog({ className, children, ...props }: ModalDialogProps) {
         transitionClasses[transitionState],
         className,
       )}
-      {...props}
+      {...(props as ComponentProps<E>)}
     >
       {children}
     </Card>
   );
 }
-function ModalHeader({ className, ...props }: ModalHeaderProps) {
+function ModalHeader<E extends ElementType = "div">({
+  as,
+  className,
+  ...props
+}: ComponentPropsWithAs<E>) {
   const classes = useClasses((c) => c.modal.header.base);
   return (
     <Card.Header
+      as={as}
       data-name="modal-header"
       className={cn(classes, className)}
-      {...props}
+      {...(props as ComponentProps<E>)}
     />
   );
 }
-function ModalBody({ className, ...props }: ModalBodyProps) {
+function ModalBody<E extends ElementType = "div">({
+  as,
+  className,
+  ...props
+}: ComponentPropsWithAs<E>) {
   const classes = useClasses((c) => c.modal.body.base);
   return (
     <Card.Body
+      as={as}
       data-name="modal-body"
       className={cn(classes, className)}
-      {...props}
+      {...(props as ComponentProps<E>)}
     />
   );
 }
-function ModalFooter({ className, ...props }: ModalFooterProps) {
+function ModalFooter<E extends ElementType = "div">({
+  as,
+  className,
+  ...props
+}: ComponentPropsWithAs<E>) {
   const classes = useClasses((c) => c.modal.footer.base);
   return (
     <Card.Footer
+      as={as}
       data-name="modal-footer"
       className={cn(classes, className)}
-      {...props}
+      {...(props as ComponentProps<E>)}
     />
   );
 }

@@ -1,3 +1,4 @@
+import { asComponent } from "@/helpers";
 import { useClasses } from "@/hooks";
 import { BadgeVariant, Color, ComponentPropsWithAs, Size } from "@/types";
 import { ElementType, useMemo } from "react";
@@ -27,7 +28,6 @@ export default function Badge<E extends ElementType = "span">({
   ...props
 }: ComponentPropsWithAs<E, BadgeProps>) {
   const classes = useClasses((c) => c.badge);
-  const Component = as || "span";
   const colorClasses = useMemo(() => {
     const colors: Colors = {
       primary: {
@@ -86,6 +86,7 @@ export default function Badge<E extends ElementType = "span">({
     const classesResult = classes?.size?.[size];
     return [sizeResult, classesResult];
   }, [size, classes?.size]);
+  const Component = asComponent(as, "span");
   return (
     <Component
       data-name="badge"

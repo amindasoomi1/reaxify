@@ -1,6 +1,7 @@
+import { asComponent } from "@/helpers";
 import { useClasses } from "@/hooks";
 import { ComponentPropsWithAs } from "@/types";
-import { ComponentProps, ElementType } from "react";
+import { ElementType } from "react";
 import { twMerge } from "tailwind-merge";
 
 function Card<E extends ElementType = "div">({
@@ -10,7 +11,7 @@ function Card<E extends ElementType = "div">({
   ...props
 }: ComponentPropsWithAs<E>) {
   const classes = useClasses((c) => c.card.base);
-  const Component = as || "div";
+  const Component = asComponent(as, "div");
   return (
     <Component
       data-name="card"
@@ -25,10 +26,16 @@ function Card<E extends ElementType = "div">({
     </Component>
   );
 }
-function CardHeader({ className, children, ...props }: ComponentProps<"div">) {
+function CardHeader<E extends ElementType = "div">({
+  as,
+  className,
+  children,
+  ...props
+}: ComponentPropsWithAs<E>) {
   const classes = useClasses((c) => c.card.header.base);
+  const Component = asComponent(as, "div");
   return (
-    <div
+    <Component
       data-name="card-header"
       className={twMerge(
         "w-full border-b border-border p-4",
@@ -38,25 +45,37 @@ function CardHeader({ className, children, ...props }: ComponentProps<"div">) {
       {...props}
     >
       {children}
-    </div>
+    </Component>
   );
 }
-function CardBody({ className, children, ...props }: ComponentProps<"div">) {
+function CardBody<E extends ElementType = "div">({
+  as,
+  className,
+  children,
+  ...props
+}: ComponentPropsWithAs<E>) {
   const classes = useClasses((c) => c.card.body.base);
+  const Component = asComponent(as, "div");
   return (
-    <div
+    <Component
       data-name="card-body"
       className={twMerge("w-full p-4", classes, className)}
       {...props}
     >
       {children}
-    </div>
+    </Component>
   );
 }
-function CardFooter({ className, children, ...props }: ComponentProps<"div">) {
+function CardFooter<E extends ElementType = "div">({
+  as,
+  className,
+  children,
+  ...props
+}: ComponentPropsWithAs<E>) {
   const classes = useClasses((c) => c.card.footer.base);
+  const Component = asComponent(as, "div");
   return (
-    <div
+    <Component
       data-name="card-footer"
       className={twMerge(
         "w-full border-t border-border p-4",
@@ -66,7 +85,7 @@ function CardFooter({ className, children, ...props }: ComponentProps<"div">) {
       {...props}
     >
       {children}
-    </div>
+    </Component>
   );
 }
 

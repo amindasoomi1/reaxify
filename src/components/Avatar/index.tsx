@@ -1,3 +1,4 @@
+import { asComponent } from "@/helpers";
 import { useClasses } from "@/hooks";
 import { ComponentPropsWithAs, ComponentPropsWithoutAs, Size } from "@/types";
 import {
@@ -41,7 +42,7 @@ function AvatarGroup<E extends ElementType = "div">({
   ...props
 }: ComponentPropsWithAs<E>) {
   const classes = useClasses((c) => c.avatar.group.base);
-  const Component = as || "div";
+  const Component = asComponent(as, "div");
   return (
     <Component
       data-name="avatar-group"
@@ -60,7 +61,6 @@ function Avatar<E extends ElementType = "div">({
   ...props
 }: ComponentPropsWithAs<E, AvatarProps>) {
   const classes = useClasses((c) => c.avatar);
-  const Component = as || "div";
   const [isImageLoaded, setIsImageLoaded] = useState(false);
   const sizeClasses = useMemo(() => {
     if (!size) return null;
@@ -71,6 +71,7 @@ function Avatar<E extends ElementType = "div">({
     };
     return [sizes?.[size], classes?.size?.[size]];
   }, [size, classes?.size]);
+  const Component = asComponent(as, "div");
   return (
     <Component
       data-name="avatar"
@@ -119,11 +120,12 @@ function AvatarImage({
     />
   );
 }
-function AvatarFallback({
+function AvatarFallback<E extends ElementType = "div">({
+  as,
   className,
   children,
   ...props
-}: ComponentPropsWithoutAs<"div">) {
+}: ComponentPropsWithAs<E>) {
   const classes = useClasses((c) => c.avatar.fallback);
   const { size, isImageLoaded } = useContext(AvatarContext);
   const sizeClasses = useMemo(() => {
@@ -135,8 +137,9 @@ function AvatarFallback({
     };
     return [sizes?.[size], classes?.size?.[size]];
   }, [size, classes?.size]);
+  const Component = asComponent(as, "div");
   return (
-    <div
+    <Component
       data-name="avatar-fallback"
       className={twMerge(
         "flex size-full items-center justify-center rounded-full text-dark",
@@ -148,14 +151,15 @@ function AvatarFallback({
       {...props}
     >
       {children}
-    </div>
+    </Component>
   );
 }
-function AvatarBadge({
+function AvatarBadge<E extends ElementType = "span">({
+  as,
   className,
   children,
   ...props
-}: ComponentPropsWithoutAs<"span">) {
+}: ComponentPropsWithAs<E>) {
   const classes = useClasses((c) => c.avatar.badge);
   const { size } = useContext(AvatarContext);
   const sizeClasses = useMemo(() => {
@@ -167,8 +171,9 @@ function AvatarBadge({
     };
     return [sizes?.[size], classes?.size?.[size]];
   }, [size, classes?.size]);
+  const Component = asComponent(as, "span");
   return (
-    <span
+    <Component
       data-name="avatar-badge"
       className={twMerge(
         "absolute inset-e-0 bottom-0 bg-success z-10 inline-flex items-center justify-center rounded-full ring-2 ring-light",
@@ -179,23 +184,25 @@ function AvatarBadge({
       {...props}
     >
       {children}
-    </span>
+    </Component>
   );
 }
-function AvatarCount({
+function AvatarCount<E extends ElementType = "span">({
+  as,
   className,
   children,
   ...props
-}: ComponentPropsWithoutAs<"span">) {
+}: ComponentPropsWithAs<E>) {
   const classes = useClasses((c) => c.avatar.count.base);
+  const Component = asComponent(as, "span");
   return (
-    <span
+    <Component
       data-name="avatar-count"
       className={twMerge("text-sm text-dark font-medium", classes, className)}
       {...props}
     >
       {children}
-    </span>
+    </Component>
   );
 }
 

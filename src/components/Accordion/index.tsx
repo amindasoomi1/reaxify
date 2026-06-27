@@ -1,9 +1,6 @@
+import { asComponent, randomID } from "@/helpers";
 import { useClasses } from "@/hooks";
-import {
-  ChildrenProps,
-  ComponentPropsWithAs,
-  ComponentPropsWithoutAs,
-} from "@/types";
+import { ChildrenProps, ComponentPropsWithAs } from "@/types";
 import { ArrowDown2 } from "iconsax-react";
 import {
   ComponentProps,
@@ -15,7 +12,6 @@ import {
   useMemo,
 } from "react";
 import { twMerge } from "tailwind-merge";
-import { randomID } from "../../helpers";
 import Collapse from "../Collapse";
 
 type EventKey = string;
@@ -55,7 +51,6 @@ type AccordionItemContextType<T extends EventKey> = {
   active: boolean;
 };
 
-// ---------------- Contexts ----------------
 // eslint-disable-next-line
 const AccordionContext = createContext<AccordionContextType<any>>({
   activeKey: null,
@@ -67,8 +62,6 @@ const AccordionItemContext = createContext<AccordionItemContextType<any>>({
   active: false,
   eventKey: null,
 });
-
-// ---------------- Components ----------------
 
 function Accordion<T extends EventKey>({
   variant = "single",
@@ -109,7 +102,6 @@ function AccordionItem<
 }: ComponentPropsWithAs<E, AccordionItemProps>) {
   const classes = useClasses((s) => s.accordion.item.base);
   const { activeKey } = useContext(AccordionContext) as AccordionContextType<T>;
-  const Component = as || "div";
   const ID = useMemo(() => randomID(), []);
   const eventKey = (initEventKey || ID) as T;
 
@@ -117,6 +109,8 @@ function AccordionItem<
     if (Array.isArray(activeKey)) return activeKey.includes(eventKey);
     return activeKey === eventKey;
   }, [activeKey, eventKey]);
+
+  const Component = asComponent(as, "div");
 
   return (
     <Component
@@ -135,24 +129,27 @@ function AccordionItem<
   );
 }
 
-function AccordionToggle({
+function AccordionToggle<E extends ElementType = "button">({
+  as,
   type = "button",
   className,
   children,
   onClick,
   ...props
-}: ComponentProps<"button">) {
+}: ComponentPropsWithAs<E, { type?: "button" | "submit" | "reset" }>) {
   const classes = useClasses((s) => s.accordion.toggle.base);
   const { eventKey } = useContext(AccordionItemContext);
   const { handleChange } = useContext(AccordionContext);
 
-  const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
+  const handleClick = (e: MouseEvent<HTMLElement>) => {
     if (eventKey) handleChange(eventKey);
-    onClick?.(e);
+    onClick?.(e as unknown as MouseEvent<E>);
   };
 
+  const Component = asComponent(as, "button");
+
   return (
-    <button
+    <Component
       type={type}
       data-name="accordion-toggle"
       className={twMerge(
@@ -164,7 +161,7 @@ function AccordionToggle({
       {...props}
     >
       {children}
-    </button>
+    </Component>
   );
 }
 
@@ -204,19 +201,20 @@ function AccordionCollapse({
   );
 }
 
-function AccordionBody({
+function AccordionBody<E extends ElementType = "div">({
+  as,
   className,
   children,
   ...props
-}: ComponentPropsWithoutAs<"div">) {
+}: ComponentPropsWithAs<E>) {
   const classes = useClasses((s) => s.accordion.body.base);
 
   return (
     <Collapse.Content
-      as="div"
+      as={as}
       data-name="accordion-body"
       className={twMerge("px-5 py-4 rounded-b", classes, className)}
-      {...props}
+      {...(props as ComponentProps<E>)}
     >
       {children}
     </Collapse.Content>

@@ -12,33 +12,15 @@ const meta: Meta<typeof Typography> = {
 export function Default() {
   return (
     <Stack direction="column" className="gap-4">
-      <Typography as="h1" variant="heading-1">
-        Heading 1
-      </Typography>
-      <Typography as="h2" variant="heading-2">
-        Heading 2
-      </Typography>
-      <Typography as="h3" variant="heading-3">
-        Heading 3
-      </Typography>
-      <Typography as="h4" variant="heading-4">
-        Heading 4
-      </Typography>
-      <Typography as="h5" variant="heading-5">
-        Heading 5
-      </Typography>
-      <Typography as="h6" variant="heading-6">
-        Heading 6
-      </Typography>
-      <Typography as="p" variant="body-1">
-        Body 1
-      </Typography>
-      <Typography as="p" variant="body-2">
-        Body 2
-      </Typography>
-      <Typography as="p" variant="body-3">
-        Body 3
-      </Typography>
+      <Typography variant="heading-1">Heading 1</Typography>
+      <Typography variant="heading-2">Heading 2</Typography>
+      <Typography variant="heading-3">Heading 3</Typography>
+      <Typography variant="heading-4">Heading 4</Typography>
+      <Typography variant="heading-5">Heading 5</Typography>
+      <Typography variant="heading-6">Heading 6</Typography>
+      <Typography variant="body-1">Body 1</Typography>
+      <Typography variant="body-2">Body 2</Typography>
+      <Typography variant="body-3">Body 3</Typography>
     </Stack>
   );
 }

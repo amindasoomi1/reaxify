@@ -1,3 +1,4 @@
+import { asComponent, cn } from "@/helpers";
 import { useClasses, usePreventableClose } from "@/hooks";
 import { ComponentPropsWithAs, ToggleEventProps, ToggleProps } from "@/types";
 import { TransitionClasses } from "@/types/internal";
@@ -12,7 +13,6 @@ import {
 } from "react";
 import { Transition, TransitionStatus } from "react-transition-group";
 import { twMerge } from "tailwind-merge";
-import { cn } from "../../helpers";
 import Card from "../Card";
 import Portal from "../Portal";
 
@@ -34,10 +34,6 @@ type DrawerProps<E extends ElementType> = ComponentPropsWithAs<
   E,
   DrawerBaseProps
 >;
-type DrawerMenuProps = Omit<ComponentProps<"div">, "as" | "ref">;
-type DrawerHeaderProps = ComponentProps<"div">;
-type DrawerBodyProps = ComponentProps<"div">;
-type DrawerFooterProps = ComponentProps<"div">;
 type AnchorClasses<T = string | undefined> = { [key in Anchor]: T };
 
 export const DrawerContext = createContext<Context>({
@@ -70,7 +66,6 @@ function Drawer<E extends ElementType = "div">({
 }: DrawerProps<E>) {
   const classes = useClasses((c) => c.drawer);
   const divRef = useRef<HTMLDivElement | null>(null);
-  const Component = as || "div";
   const transitionClasses: TransitionClasses = {
     entering: "active opacity-100 pointer-events-auto",
     entered: "active opacity-100 pointer-events-auto",
@@ -91,6 +86,7 @@ function Drawer<E extends ElementType = "div">({
   }, [anchor, classes?.anchor]);
   const dismiss = usePreventableClose({ preventClose, open, onClose });
   useImperativeHandle(ref, () => divRef.current);
+  const Component = asComponent(as, "div");
   return (
     <Portal>
       <Transition
@@ -148,7 +144,12 @@ function Drawer<E extends ElementType = "div">({
     </Portal>
   );
 }
-function DrawerMenu({ children, className = "", ...props }: DrawerMenuProps) {
+function DrawerMenu<E extends ElementType = "div">({
+  as,
+  children,
+  className = "",
+  ...props
+}: ComponentPropsWithAs<E>) {
   const classes = useClasses((c) => c.drawer.menu);
   const { anchor, duration, transitionState, preventClose } =
     useContext(DrawerContext);
@@ -197,7 +198,7 @@ function DrawerMenu({ children, className = "", ...props }: DrawerMenuProps) {
   }, [anchor]);
   return (
     <Card
-      as="div"
+      as={as}
       data-name="drawer-menu"
       style={{ transitionDuration: `${duration}ms` }}
       className={twMerge(
@@ -208,39 +209,54 @@ function DrawerMenu({ children, className = "", ...props }: DrawerMenuProps) {
         anchorClasses,
         className,
       )}
-      {...props}
+      {...(props as ComponentProps<E>)}
     >
       {children}
     </Card>
   );
 }
-function DrawerHeader({ className, ...props }: DrawerHeaderProps) {
+function DrawerHeader<E extends ElementType = "div">({
+  as,
+  className,
+  ...props
+}: ComponentPropsWithAs<E>) {
   const classes = useClasses((c) => c.drawer.header.base);
   return (
     <Card.Header
+      as={as}
       data-name="drawer-header"
       className={cn(classes, className)}
-      {...props}
+      {...(props as ComponentProps<E>)}
     />
   );
 }
-function DrawerBody({ className, ...props }: DrawerBodyProps) {
+function DrawerBody<E extends ElementType = "div">({
+  as,
+  className,
+  ...props
+}: ComponentPropsWithAs<E>) {
   const classes = useClasses((c) => c.drawer.body.base);
   return (
     <Card.Body
+      as={as}
       data-name="drawer-body"
       className={cn("flex-1 overflow-auto", classes, className)}
-      {...props}
+      {...(props as ComponentProps<E>)}
     />
   );
 }
-function DrawerFooter({ className, ...props }: DrawerFooterProps) {
+function DrawerFooter<E extends ElementType = "div">({
+  as,
+  className,
+  ...props
+}: ComponentPropsWithAs<E>) {
   const classes = useClasses((c) => c.drawer.footer.base);
   return (
     <Card.Footer
+      as={as}
       data-name="drawer-footer"
       className={cn(classes, className)}
-      {...props}
+      {...(props as ComponentProps<E>)}
     />
   );
 }

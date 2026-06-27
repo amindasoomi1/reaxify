@@ -1,3 +1,4 @@
+import { asComponent } from "@/helpers";
 import { useClasses } from "@/hooks";
 import { ComponentPropsWithAs, TypographyVariant } from "@/types";
 import { ElementType, useMemo } from "react";
@@ -6,7 +7,7 @@ import { twMerge } from "tailwind-merge";
 type TypographyProps = {
   variant?: TypographyVariant;
 };
-type Components = { [key in TypographyVariant]: string };
+type Components = { [key in TypographyVariant]: ElementType };
 type Variants = { [key in TypographyVariant]: string | undefined };
 
 export default function Typography<E extends ElementType = "p">({
@@ -28,7 +29,7 @@ export default function Typography<E extends ElementType = "p">({
       "body-2": "p",
       "body-3": "p",
     };
-    return as || components[variant] || "p";
+    return asComponent(as, components[variant] || "p");
   }, [as, variant]);
   const variantClasses = useMemo(() => {
     const variants: Variants = {

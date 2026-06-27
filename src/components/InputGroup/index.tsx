@@ -1,3 +1,4 @@
+import { asComponent } from "@/helpers";
 import { useClasses } from "@/hooks";
 import { ComponentPropsWithAs } from "@/types";
 import { ElementType } from "react";
@@ -9,8 +10,8 @@ function InputGroup<E extends ElementType = "div">({
   className,
   ...props
 }: ComponentPropsWithAs<E>) {
-  const Component = as || "div";
   const classes = useClasses((c) => c.inputGroup.base);
+  const Component = asComponent(as, "div");
   return (
     <Component
       data-name="input-group"
@@ -27,8 +28,8 @@ function InputGroupLabel<E extends ElementType = "h6">({
   className,
   ...props
 }: ComponentPropsWithAs<E>) {
-  const Component = as || "h6";
   const classes = useClasses((c) => c.inputGroup.label.base);
+  const Component = asComponent(as, "h6");
   return (
     <Component
       data-name="input-group-label"
@@ -49,8 +50,8 @@ function InputGroupStack<E extends ElementType = "div">({
   className,
   ...props
 }: ComponentPropsWithAs<E>) {
-  const Component = as || "div";
   const classes = useClasses((c) => c.inputGroup.stack.base);
+  const Component = asComponent(as, "div");
   return (
     <Component
       data-name="input-group-stack"
@@ -71,8 +72,8 @@ function InputGroupText<E extends ElementType = "span">({
   className,
   ...props
 }: ComponentPropsWithAs<E>) {
-  const Component = as || "span";
   const classes = useClasses((c) => c.inputGroup.text.base);
+  const Component = asComponent(as, "span");
   return (
     <Component
       data-name="input-group-text"
@@ -93,14 +94,14 @@ function InputGroupFormControl<E extends ElementType = "input">({
   className,
   ...props
 }: ComponentPropsWithAs<E>) {
-  const Component = as || "input";
   const isTextarea = as === "textarea";
   const classes = useClasses((c) => c.inputGroup.formControl.base);
+  const Component = asComponent(as, "input");
   return (
     <Component
       data-name="input-group-form-control"
       className={twMerge(
-        "text-start flex-1 leading-10 text-base py-1.5 px-3 focus:outline-none bg-transparent border-0",
+        "text-start flex-1 leading-10 text-base py-1.5 px-3 align-middle focus:outline-none bg-transparent border-0",
         isTextarea ? "min-h-30 field-sizing-content" : "h-10",
         classes,
         className,

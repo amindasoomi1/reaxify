@@ -1,4 +1,4 @@
-import { cn } from "@/helpers";
+import { asComponent, cn } from "@/helpers";
 import { useClasses } from "@/hooks";
 import { ClassNameProps, ComponentPropsWithAs } from "@/types";
 import {
@@ -27,7 +27,6 @@ export default function ButtonGroup<E extends ElementType = "div">({
   children,
   ...props
 }: ComponentPropsWithAs<E, ButtonGroupProps>) {
-  const Component = as || "div";
   const classes = useClasses((c) => c.buttonGroup);
   const orientationClasses = useMemo(() => {
     const orientations = {
@@ -61,6 +60,7 @@ export default function ButtonGroup<E extends ElementType = "div">({
       });
     });
   }, [children, variant, color, size, loading, buttonClasses]);
+  const Component = asComponent(as, "div");
   return (
     <Component
       data-name="button-group"

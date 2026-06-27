@@ -1,15 +1,15 @@
-import { cn } from "@/helpers";
+import { asComponent, cn } from "@/helpers";
 import { useClasses } from "@/hooks";
 import {
   AlertVariant,
   ButtonVariant,
   Color,
   ComponentPropsWithAs,
-  ComponentPropsWithoutAs,
 } from "@/types";
 import {
   Children,
   cloneElement,
+  ComponentProps,
   createContext,
   ElementType,
   isValidElement,
@@ -119,14 +119,16 @@ function Alert<E extends ElementType = "div">({
     </Stack>
   );
 }
-function AlertIcon({
+function AlertIcon<E extends ElementType = "div">({
+  as,
   children,
   className,
   ...props
-}: ComponentPropsWithoutAs<"div">) {
+}: ComponentPropsWithAs<E>) {
   const classes = useClasses((c) => c.alert?.icon?.base);
+  const Component = asComponent(as, "div");
   return (
-    <div
+    <Component
       data-name="alert-icon"
       className={twMerge(
         "flex flex-col py-2 items-start justify-start *:size-5.5 *:text-current",
@@ -136,66 +138,71 @@ function AlertIcon({
       {...props}
     >
       {children}
-    </div>
+    </Component>
   );
 }
-function AlertContent({
+function AlertContent<E extends ElementType = "div">({
+  as,
   children,
   className,
   ...props
-}: ComponentPropsWithoutAs<"div">) {
+}: ComponentPropsWithAs<E>) {
   const classes = useClasses((c) => c.alert?.content.base);
   return (
     <Fill
-      as="div"
+      as={as}
       data-name="alert-content"
       className={twMerge("py-2 space-y-0.5", classes, className)}
-      {...props}
+      {...(props as ComponentProps<E>)}
     >
       {children}
     </Fill>
   );
 }
-function AlertTitle({
-  children,
+function AlertTitle<E extends ElementType = typeof Typography<"h6">>({
+  as,
   className,
+  children,
   ...props
-}: ComponentPropsWithoutAs<typeof Typography<"h6">>) {
+}: ComponentPropsWithAs<E>) {
   const classes = useClasses((c) => c.alert?.title.base);
   return (
     <Typography
-      as="h6"
+      as={as}
       variant="body-1"
       data-name="alert-title"
       className={twMerge("w-full -mt-px font-medium", classes, className)}
-      {...props}
+      {...(props as ComponentProps<E>)}
     >
       {children}
     </Typography>
   );
 }
-function AlertDescription({
+function AlertDescription<E extends ElementType = "p">({
+  as,
   children,
   className,
   ...props
-}: ComponentPropsWithoutAs<typeof Typography<"p">>) {
+}: ComponentPropsWithAs<E>) {
   const classes = useClasses((c) => c.alert?.description.base);
   return (
     <Typography
+      as={as}
       variant="body-2"
       data-name="alert-description"
       className={twMerge("w-full font-normal", classes, className)}
-      {...props}
+      {...(props as ComponentProps<E>)}
     >
       {children}
     </Typography>
   );
 }
-function AlertAction({
+function AlertAction<E extends ElementType = "div">({
+  as,
   children,
   className,
   ...props
-}: ComponentPropsWithoutAs<"div">) {
+}: ComponentPropsWithAs<E>) {
   const classes = useClasses((c) => c.alert?.action?.base);
   const { variant, color } = useContext(AlertContext);
   const buttonVariant: ButtonVariant = useMemo(() => {
@@ -213,14 +220,15 @@ function AlertAction({
       });
     });
   }, [children, buttonVariant, color]);
+  const Component = asComponent(as, "div");
   return (
-    <div
+    <Component
       data-name="alert-action"
       className={twMerge("self-center size-fit", classes, className)}
       {...props}
     >
       {enhancedChildren}
-    </div>
+    </Component>
   );
 }
 

@@ -1,3 +1,4 @@
+import { asComponent } from "@/helpers";
 import { useClasses } from "@/hooks";
 import { ChildrenProps, ComponentPropsWithAs } from "@/types";
 import { ElementType } from "react";
@@ -49,7 +50,7 @@ function CollapseContent<E extends ElementType = "div">({
   ...props
 }: ComponentPropsWithAs<E>) {
   const classes = useClasses((c) => c.collapse.content.base);
-  const Component = as || "div";
+  const Component = asComponent(as, "div");
   return (
     <Component
       data-name="collapse-content"
