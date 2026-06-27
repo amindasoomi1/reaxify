@@ -1,5 +1,13 @@
 import { useClasses } from "@/hooks";
-import { ComponentProps, createContext, useContext } from "react";
+import { useHotkey } from "@tanstack/react-hotkeys";
+import {
+  ComponentProps,
+  createContext,
+  MouseEvent,
+  useCallback,
+  useContext,
+  useRef,
+} from "react";
 import { twMerge } from "tailwind-merge";
 
 type Bordered = boolean | "dashed" | "solid";
@@ -7,12 +15,14 @@ type TableContextType = {
   striped: boolean;
   bordered: Bordered;
   hover: boolean;
+  disabled: boolean;
 };
 type TableContainerProps = ComponentProps<"div">;
 type BaseTableProps = {
   striped?: boolean;
   bordered?: Bordered;
   hover?: boolean;
+  disabled?: boolean;
 };
 type TableProps = BaseTableProps &
   Omit<ComponentProps<"table">, keyof BaseTableProps>;
@@ -20,7 +30,13 @@ type BaseTableHeaderProps = { sticky?: boolean };
 type TableHeaderProps = BaseTableHeaderProps &
   Omit<ComponentProps<"thead">, keyof BaseTableHeaderProps>;
 type TableBodyProps = ComponentProps<"tbody">;
-type TableRowProps = ComponentProps<"tr">;
+type TableRowStateProps = {
+  hover?: boolean;
+  active?: boolean;
+  disabled?: boolean;
+};
+type TableRowProps = TableRowStateProps &
+  Omit<ComponentProps<"tr">, keyof TableRowStateProps>;
 type BaseTableHeaderCellProps = { sticky?: boolean };
 type TableHeaderCellProps = BaseTableHeaderCellProps &
   Omit<ComponentProps<"th">, keyof BaseTableHeaderCellProps>;
@@ -32,6 +48,7 @@ const TableContext = createContext<TableContextType>({
   striped: false,
   bordered: false,
   hover: false,
+  disabled: false,
 });
 const TableHeaderContext = createContext(false);
 function TableContainer({
@@ -54,6 +71,7 @@ function Table({
   striped = false,
   bordered = false,
   hover = false,
+  disabled = false,
   className,
   children,
   ...props
@@ -69,7 +87,7 @@ function Table({
       )}
       {...props}
     >
-      <TableContext.Provider value={{ bordered, hover, striped }}>
+      <TableContext.Provider value={{ bordered, hover, striped, disabled }}>
         {children}
       </TableContext.Provider>
     </table>
@@ -111,17 +129,57 @@ function TableBody({ className, children, ...props }: TableBodyProps) {
     </tbody>
   );
 }
-function TableRow({ className, children, ...props }: TableRowProps) {
+function TableRow({
+  hover,
+  active = false,
+  disabled,
+  className,
+  children,
+  tabIndex,
+  onClick,
+  ...props
+}: TableRowProps) {
   const classes = useClasses((c) => c.table.row);
-  const { bordered, hover, striped } = useContext(TableContext);
+  const { bordered, hover: tableHover, striped, disabled: tableDisabled } =
+    useContext(TableContext);
   const inHeader = useContext(TableHeaderContext);
+  const rowRef = useRef<HTMLTableRowElement>(null);
+
+  const isDisabled = disabled ?? tableDisabled;
+  const isHoverable = (hover ?? tableHover) && !inHeader && !isDisabled;
+  const isActive = active && !inHeader && !isDisabled;
   const hasBordered = !!bordered;
   const isDashed = bordered === "dashed";
   const isSolid = bordered === "solid";
-  const isHoverable = hover && !inHeader;
+  const hotkeyEnabled = isHoverable && !!onClick;
+
+  const activate = useCallback(
+    (event: KeyboardEvent) => {
+      if (isDisabled || !onClick) return;
+      onClick(event as unknown as MouseEvent<HTMLTableRowElement>);
+    },
+    [isDisabled, onClick],
+  );
+
+  useHotkey("Enter", activate, {
+    target: rowRef,
+    enabled: hotkeyEnabled,
+    preventDefault: true,
+  });
+
+  useHotkey("Space", activate, {
+    target: rowRef,
+    enabled: hotkeyEnabled,
+    preventDefault: true,
+  });
+
   return (
     <tr
+      ref={rowRef}
       data-name="table-row"
+      tabIndex={tabIndex ?? (isHoverable ? 0 : undefined)}
+      aria-disabled={isDisabled || undefined}
+      aria-current={isActive ? "true" : undefined}
       className={twMerge(
         "bg-white",
         classes?.base,
@@ -129,12 +187,19 @@ function TableRow({ className, children, ...props }: TableRowProps) {
         isDashed && "border-dashed",
         isSolid && "border-solid",
         hasBordered && classes?.bordered,
-        isHoverable && "cursor-pointer transition-colors hover:bg-gray-200",
+        isHoverable &&
+          "cursor-pointer transition-colors hover:bg-gray-200 [user-select:none]",
         isHoverable && classes?.hover,
         striped && !inHeader && "even:bg-gray-100",
         striped && !inHeader && classes?.striped,
+        isActive && "bg-primary/10 text-primary",
+        isActive && classes?.active,
+        isDisabled &&
+          "opacity-75 cursor-not-allowed pointer-events-none select-none",
+        isDisabled && classes?.disabled,
         className,
       )}
+      onClick={isDisabled ? undefined : onClick}
       {...props}
     >
       {children}

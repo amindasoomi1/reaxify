@@ -135,7 +135,14 @@ export type ThemeProviderContextType = {
       container: { base: string };
       header: { base: string; sticky: string };
       body: { base: string };
-      row: { base: string; bordered: string; hover: string; striped: string };
+      row: {
+        base: string;
+        bordered: string;
+        hover: string;
+        striped: string;
+        active: string;
+        disabled: string;
+      };
       headerCell: { base: string };
       dataCell: { base: string };
     };

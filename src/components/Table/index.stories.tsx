@@ -1,4 +1,5 @@
 import type { Meta } from "@storybook/react";
+import { useState } from "react";
 import Table from ".";
 
 const meta: Meta<typeof Table> = {
@@ -22,7 +23,7 @@ export function Default() {
           </Table.Row>
         </Table.Header>
         <Table.Body>
-          {[...Array(25).keys()].map((key) => (
+          {[...Array(10).keys()].map((key) => (
             <Table.Row key={key}>
               <Table.DataCell>Frozen yoghurt</Table.DataCell>
               <Table.DataCell>159</Table.DataCell>
@@ -36,4 +37,73 @@ export function Default() {
     </Table.Container>
   );
 }
+
+export function Interactive() {
+  const [activeId, setActiveId] = useState(1);
+
+  const rows = [
+    {
+      id: 1,
+      name: "Active row (click to select)",
+      note: "active + hover inherited",
+      onClick: () => setActiveId(1),
+    },
+    {
+      id: 2,
+      name: "Clickable row",
+      note: "hover from Table",
+      onClick: () => setActiveId(2),
+    },
+    {
+      id: 3,
+      name: "No hover override",
+      note: "hover={false}",
+      hover: false as const,
+      onClick: () => {},
+    },
+    {
+      id: 4,
+      name: "Disabled row",
+      note: "disabled",
+      disabled: true as const,
+      onClick: () => {},
+    },
+    {
+      id: 5,
+      name: "Display only",
+      note: "no onClick",
+    },
+  ];
+
+  return (
+    <Table.Container className="w-full max-h-96">
+      <Table striped bordered hover>
+        <Table.Header>
+          <Table.Row>
+            <Table.HeaderCell>Name</Table.HeaderCell>
+            <Table.HeaderCell>Note</Table.HeaderCell>
+          </Table.Row>
+        </Table.Header>
+        <Table.Body>
+          {rows.map((row) => (
+            <Table.Row
+              key={row.id}
+              active={activeId === row.id}
+              hover={row.hover}
+              disabled={row.disabled}
+              onClick={row.onClick}
+            >
+              <Table.DataCell>{row.name}</Table.DataCell>
+              <Table.DataCell>{row.note}</Table.DataCell>
+              <Table.DataCell>6</Table.DataCell>
+              <Table.DataCell>24</Table.DataCell>
+              <Table.DataCell>4</Table.DataCell>
+            </Table.Row>
+          ))}
+        </Table.Body>
+      </Table>
+    </Table.Container>
+  );
+}
+
 export default meta;

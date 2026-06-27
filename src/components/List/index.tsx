@@ -1,11 +1,26 @@
 import { useClasses } from "@/hooks";
 import { ComponentPropsWithAs, ComponentPropsWithoutAs } from "@/types";
 import { useHotkey } from "@tanstack/react-hotkeys";
-import { ElementType, MouseEvent, Ref, useCallback, useRef } from "react";
+import {
+  createContext,
+  ElementType,
+  MouseEvent,
+  Ref,
+  useCallback,
+  useContext,
+  useRef,
+} from "react";
 import { twMerge } from "tailwind-merge";
+
+type ListContextType = {
+  hover: boolean;
+  disabled: boolean;
+};
 
 type ListProps = {
   divided?: boolean;
+  hover?: boolean;
+  disabled?: boolean;
 };
 
 type ListItemProps = {
@@ -14,9 +29,16 @@ type ListItemProps = {
   disabled?: boolean;
 };
 
+const ListContext = createContext<ListContextType>({
+  hover: false,
+  disabled: false,
+});
+
 function List<E extends ElementType = "ul">({
   as,
   divided = false,
+  hover = false,
+  disabled = false,
   className,
   children,
   ...props
@@ -35,16 +57,18 @@ function List<E extends ElementType = "ul">({
       )}
       {...props}
     >
-      {children}
+      <ListContext.Provider value={{ hover, disabled }}>
+        {children}
+      </ListContext.Provider>
     </Component>
   );
 }
 
 function ListItem<E extends ElementType = "li">({
   as,
-  hover = false,
+  hover,
   active = false,
-  disabled = false,
+  disabled,
   className,
   children,
   tabIndex,
@@ -53,17 +77,20 @@ function ListItem<E extends ElementType = "li">({
 }: ComponentPropsWithAs<E, ListItemProps>) {
   const Component = as || "li";
   const classes = useClasses((c) => c.list?.item);
+  const { hover: listHover, disabled: listDisabled } = useContext(ListContext);
   const itemRef = useRef<HTMLElement>(null);
 
-  const isFocusable = hover && !disabled;
-  const hotkeyEnabled = isFocusable && !!onClick;
+  const isDisabled = disabled ?? listDisabled;
+  const isHoverable = (hover ?? listHover) && !isDisabled;
+  const isActive = active && !isDisabled;
+  const hotkeyEnabled = isHoverable && !!onClick;
 
   const activate = useCallback(
     (event: KeyboardEvent) => {
-      if (disabled || !onClick) return;
+      if (isDisabled || !onClick) return;
       onClick(event as unknown as MouseEvent<E>);
     },
-    [disabled, onClick],
+    [isDisabled, onClick],
   );
 
   useHotkey("Enter", activate, {
@@ -82,23 +109,23 @@ function ListItem<E extends ElementType = "li">({
     <Component
       ref={itemRef as Ref<HTMLLIElement>}
       data-name="list-item"
-      tabIndex={tabIndex ?? (isFocusable ? 0 : undefined)}
-      aria-disabled={disabled || undefined}
-      aria-current={active ? "true" : undefined}
+      tabIndex={tabIndex ?? (isHoverable ? 0 : undefined)}
+      aria-disabled={isDisabled || undefined}
+      aria-current={isActive ? "true" : undefined}
       className={twMerge(
         "flex items-center gap-3 px-4 py-3 min-w-0 w-full",
-        hover &&
+        isHoverable &&
           "cursor-pointer transition-colors hover:bg-dark/5 [user-select:none]",
-        hover && classes?.hover,
-        active && "bg-primary/10 text-primary",
-        active && classes?.active,
-        disabled &&
+        isHoverable && classes?.hover,
+        isActive && "bg-primary/10 text-primary",
+        isActive && classes?.active,
+        isDisabled &&
           "opacity-75 cursor-not-allowed pointer-events-none select-none",
-        disabled && classes?.disabled,
+        isDisabled && classes?.disabled,
         classes?.base,
         className,
       )}
-      onClick={disabled ? undefined : onClick}
+      onClick={isDisabled ? undefined : onClick}
       {...props}
     >
       {children}
