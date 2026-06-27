@@ -140,8 +140,12 @@ function TableRow({
   ...props
 }: TableRowProps) {
   const classes = useClasses((c) => c.table.row);
-  const { bordered, hover: tableHover, striped, disabled: tableDisabled } =
-    useContext(TableContext);
+  const {
+    bordered,
+    hover: tableHover,
+    striped,
+    disabled: tableDisabled,
+  } = useContext(TableContext);
   const inHeader = useContext(TableHeaderContext);
   const rowRef = useRef<HTMLTableRowElement>(null);
 
@@ -193,6 +197,10 @@ function TableRow({
         striped && !inHeader && "even:bg-gray-100",
         striped && !inHeader && classes?.striped,
         isActive && "bg-primary/10 text-primary",
+        striped &&
+          !inHeader &&
+          isActive &&
+          "even:bg-primary/10 even:text-primary",
         isActive && classes?.active,
         isDisabled &&
           "opacity-75 cursor-not-allowed pointer-events-none select-none",

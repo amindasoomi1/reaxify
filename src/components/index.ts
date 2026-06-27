@@ -1,3 +1,5 @@
+"use client";
+
 import "../style.css";
 
 export { default as Accordion } from "./Accordion";

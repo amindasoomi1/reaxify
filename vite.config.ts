@@ -38,7 +38,13 @@ export default defineConfig({
       },
       external: ["react", "react-dom", "react/jsx-runtime", "axios"],
       output: {
-        banner: '"use client";',
+        banner(chunk) {
+          const id = chunk.facadeModuleId ?? "";
+          if (/src[\\/](components|providers|hooks|axios)[\\/]/.test(id)) {
+            return '"use client";';
+          }
+          return "";
+        },
         dir: "dist",
         preserveModules: true,
         preserveModulesRoot: "src",
