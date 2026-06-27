@@ -1,21 +1,67 @@
-import type { Meta } from "@storybook/react";
+import {
+  booleanArg,
+  buttonGroupOrientationArgType,
+  buttonSizeArgType,
+  buttonVariantArgType,
+  colorArgType,
+} from "@/storybook/argTypes";
+import { staticStoryParameters } from "@/storybook/parameters";
+import type { Meta, StoryObj } from "@storybook/react";
 import ButtonGroup from ".";
 import Button from "../Button";
 import Stack from "../Stack";
 
-const meta: Meta<typeof ButtonGroup> = {
+const label = "Button";
+
+const meta = {
   title: "Component/ButtonGroup",
   component: ButtonGroup,
   parameters: { layout: "centered" },
   tags: ["autodocs"],
+  args: {
+    color: "primary",
+    variant: "solid",
+    size: "md",
+    loading: false,
+    orientation: "horizontal",
+  },
+  argTypes: {
+    color: colorArgType,
+    variant: buttonVariantArgType,
+    size: buttonSizeArgType,
+    loading: booleanArg("Shows loading state on all buttons.", false),
+    orientation: buttonGroupOrientationArgType,
+  },
+} satisfies Meta<typeof ButtonGroup>;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Playground: Story = {
+  render: ({ orientation, variant, color, size, loading }) => (
+    <ButtonGroup
+      orientation={orientation}
+      variant={variant}
+      color={color}
+      size={size}
+      loading={loading}
+    >
+      <Button color="primary" variant="solid">
+        {label}
+      </Button>
+      <Button color="secondary" variant="solid">
+        {label}
+      </Button>
+      <Button color="success" variant="solid">
+        {label}
+      </Button>
+    </ButtonGroup>
+  ),
 };
 
-// type Story = StoryObj<typeof meta>;
-
-const label = "Button";
-
-export function Colors() {
-  return (
+export const Colors: Story = {
+  parameters: staticStoryParameters,
+  render: () => (
     <Stack direction="column" className="gap-4">
       <ButtonGroup color="primary">
         <Button>{label}</Button>
@@ -28,10 +74,12 @@ export function Colors() {
         <Button>{label}</Button>
       </ButtonGroup>
     </Stack>
-  );
-}
-export function Variants() {
-  return (
+  ),
+};
+
+export const Variants: Story = {
+  parameters: staticStoryParameters,
+  render: () => (
     <Stack direction="column" className="gap-4">
       <ButtonGroup variant="outline">
         <Button>{label}</Button>
@@ -44,10 +92,12 @@ export function Variants() {
         <Button>{label}</Button>
       </ButtonGroup>
     </Stack>
-  );
-}
-export function Sizes() {
-  return (
+  ),
+};
+
+export const Sizes: Story = {
+  parameters: staticStoryParameters,
+  render: () => (
     <Stack direction="column" className="gap-4">
       <ButtonGroup size="lg">
         <Button>{label}</Button>
@@ -70,10 +120,12 @@ export function Sizes() {
         <Button>{label}</Button>
       </ButtonGroup>
     </Stack>
-  );
-}
-export function Loading() {
-  return (
+  ),
+};
+
+export const Loading: Story = {
+  parameters: staticStoryParameters,
+  render: () => (
     <Stack direction="column" className="gap-4">
       <ButtonGroup loading>
         <Button>{label}</Button>
@@ -86,10 +138,12 @@ export function Loading() {
         <Button>{label}</Button>
       </ButtonGroup>
     </Stack>
-  );
-}
-export function Orientations() {
-  return (
+  ),
+};
+
+export const Orientations: Story = {
+  parameters: staticStoryParameters,
+  render: () => (
     <Stack direction="column" className="gap-4">
       <ButtonGroup orientation="horizontal">
         <Button color="primary" variant="solid">
@@ -114,7 +168,5 @@ export function Orientations() {
         </Button>
       </ButtonGroup>
     </Stack>
-  );
-}
-
-export default meta;
+  ),
+};

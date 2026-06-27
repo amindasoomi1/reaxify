@@ -1,59 +1,107 @@
-import type { Meta } from "@storybook/react";
+import {
+  booleanArg,
+  colorArgType,
+  sizeArgType,
+} from "@/storybook/argTypes";
+import { staticStoryParameters } from "@/storybook/parameters";
+import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
 import Switch from ".";
 import Stack from "../Stack";
 import Typography from "../Typography";
 
-const meta: Meta<typeof Switch> = {
+const meta = {
   title: "Component/Switch",
   component: Switch,
   parameters: { layout: "centered" },
   tags: ["autodocs"],
+  args: {
+    checked: false,
+    disabled: false,
+    color: "primary",
+    size: "md",
+  },
+  argTypes: {
+    checked: booleanArg("Whether the switch is on.", false),
+    disabled: booleanArg("Disables the switch.", false),
+    color: colorArgType,
+    size: sizeArgType,
+    onChange: { table: { disable: true } },
+    inputProps: { table: { disable: true } },
+  },
+} satisfies Meta<typeof Switch>;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Playground: Story = {
+  render: ({ checked: checkedArg, ...args }) => {
+    const [checked, setChecked] = useState(checkedArg ?? false);
+    return (
+      <Stack className="items-center gap-4">
+        <Typography variant="body-2" className="flex-1">
+          Checked
+        </Typography>
+        <Switch {...args} checked={checked} onChange={setChecked} />
+      </Stack>
+    );
+  },
 };
 
-export function Default() {
-  const [value, setValue] = useState(false);
-  return (
-    <Stack className="items-center gap-4">
-      <Typography variant="body-2" className="flex-1">
-        Checked
-      </Typography>
-      <Switch checked={value} onChange={setValue} />
-    </Stack>
-  );
-}
-export function Color() {
-  const [value, setValue] = useState(false);
-  return (
-    <Stack wrap className="items-center gap-4">
-      <Switch checked={value} onChange={setValue} color="primary" />
-      <Switch checked={value} onChange={setValue} color="secondary" />
-      <Switch checked={value} onChange={setValue} color="success" />
-      <Switch checked={value} onChange={setValue} color="info" />
-      <Switch checked={value} onChange={setValue} color="warning" />
-      <Switch checked={value} onChange={setValue} color="danger" />
-      <Switch checked={value} onChange={setValue} color="dark" />
-      <Switch checked={value} onChange={setValue} color="light" />
-    </Stack>
-  );
-}
-export function Size() {
-  const [value, setValue] = useState(false);
-  return (
-    <Stack wrap className="items-center gap-4">
-      <Switch checked={value} onChange={setValue} size="sm" />
-      <Switch checked={value} onChange={setValue} size="md" />
-      <Switch checked={value} onChange={setValue} size="lg" />
-    </Stack>
-  );
-}
-export function Disabled() {
-  return (
+export const Default: Story = {
+  parameters: staticStoryParameters,
+  render: function Default() {
+    const [value, setValue] = useState(false);
+    return (
+      <Stack className="items-center gap-4">
+        <Typography variant="body-2" className="flex-1">
+          Checked
+        </Typography>
+        <Switch checked={value} onChange={setValue} />
+      </Stack>
+    );
+  },
+};
+
+export const Color: Story = {
+  parameters: staticStoryParameters,
+  render: function Color() {
+    const [value, setValue] = useState(false);
+    return (
+      <Stack wrap className="items-center gap-4">
+        <Switch checked={value} onChange={setValue} color="primary" />
+        <Switch checked={value} onChange={setValue} color="secondary" />
+        <Switch checked={value} onChange={setValue} color="success" />
+        <Switch checked={value} onChange={setValue} color="info" />
+        <Switch checked={value} onChange={setValue} color="warning" />
+        <Switch checked={value} onChange={setValue} color="danger" />
+        <Switch checked={value} onChange={setValue} color="dark" />
+        <Switch checked={value} onChange={setValue} color="light" />
+      </Stack>
+    );
+  },
+};
+
+export const Size: Story = {
+  parameters: staticStoryParameters,
+  render: function Size() {
+    const [value, setValue] = useState(false);
+    return (
+      <Stack wrap className="items-center gap-4">
+        <Switch checked={value} onChange={setValue} size="sm" />
+        <Switch checked={value} onChange={setValue} size="md" />
+        <Switch checked={value} onChange={setValue} size="lg" />
+      </Stack>
+    );
+  },
+};
+
+export const Disabled: Story = {
+  parameters: staticStoryParameters,
+  render: () => (
     <Stack wrap className="items-center gap-4">
       <Switch checked disabled color="primary" />
       <Switch checked color="primary" />
     </Stack>
-  );
-}
-
-export default meta;
+  ),
+};

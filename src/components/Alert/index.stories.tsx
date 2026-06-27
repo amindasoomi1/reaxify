@@ -1,4 +1,6 @@
-import type { Meta } from "@storybook/react";
+import { alertVariantArgType } from "@/storybook/argTypes";
+import { staticStoryParameters } from "@/storybook/parameters";
+import type { Meta, StoryObj } from "@storybook/react";
 import {
   CloseCircle,
   InfoCircle,
@@ -9,15 +11,78 @@ import Alert from ".";
 import Button from "../Button";
 import Stack from "../Stack";
 
-const meta: Meta<typeof Alert> = {
+const alertItems = [
+  {
+    color: "success" as const,
+    title: "Success",
+    description: "This is a success alert.",
+    icon: TickCircle,
+  },
+  {
+    color: "info" as const,
+    title: "Info",
+    description: "This is an info alert.",
+    icon: InfoCircle,
+  },
+  {
+    color: "warning" as const,
+    title: "Warning",
+    description: "This is a warning alert.",
+    icon: Information,
+  },
+  {
+    color: "danger" as const,
+    title: "Danger",
+    description: "This is a danger alert.",
+    icon: CloseCircle,
+  },
+];
+
+const meta = {
   title: "Component/Alert",
   component: Alert,
   parameters: { layout: "padded" },
   tags: ["autodocs"],
+  args: {
+    variant: "solid",
+  },
+  argTypes: {
+    variant: alertVariantArgType,
+  },
+} satisfies Meta<typeof Alert>;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Playground: Story = {
+  render: ({ variant }) => (
+    <Stack direction="column" className="gap-4">
+      {alertItems.map((item) => {
+        const Icon = item.icon;
+        return (
+          <Alert key={item.color} color={item.color} variant={variant}>
+            <Alert.Icon>
+              <Icon color="currentColor" variant="Linear" />
+            </Alert.Icon>
+            <Alert.Content>
+              <Alert.Title>{item.title}</Alert.Title>
+              <Alert.Description>{item.description}</Alert.Description>
+            </Alert.Content>
+            <Alert.Action>
+              <Button type="button" size="icon">
+                <CloseCircle color="currentColor" variant="Linear" />
+              </Button>
+            </Alert.Action>
+          </Alert>
+        );
+      })}
+    </Stack>
+  ),
 };
 
-export function Soft() {
-  return (
+export const Soft: Story = {
+  parameters: staticStoryParameters,
+  render: () => (
     <Stack direction="column" className="gap-4">
       <Alert color="success" variant="soft">
         <Alert.Icon>
@@ -79,10 +144,12 @@ export function Soft() {
         </Alert.Action>
       </Alert>
     </Stack>
-  );
-}
-export function Outline() {
-  return (
+  ),
+};
+
+export const Outline: Story = {
+  parameters: staticStoryParameters,
+  render: () => (
     <Stack direction="column" className="gap-4">
       <Alert color="success" variant="outline">
         <Alert.Icon>
@@ -144,10 +211,12 @@ export function Outline() {
         </Alert.Action>
       </Alert>
     </Stack>
-  );
-}
-export function Solid() {
-  return (
+  ),
+};
+
+export const Solid: Story = {
+  parameters: staticStoryParameters,
+  render: () => (
     <Stack direction="column" className="gap-4">
       <Alert color="success" variant="solid">
         <Alert.Icon>
@@ -209,7 +278,5 @@ export function Solid() {
         </Alert.Action>
       </Alert>
     </Stack>
-  );
-}
-
-export default meta;
+  ),
+};

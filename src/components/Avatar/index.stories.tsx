@@ -1,17 +1,85 @@
-import type { Meta } from "@storybook/react";
+import { sizeArgType } from "@/storybook/argTypes";
+import { staticStoryParameters } from "@/storybook/parameters";
+import type { Meta, StoryObj } from "@storybook/react";
 import { Add, Profile } from "iconsax-react";
 import Avatar from ".";
 import Stack from "../Stack";
 
-const meta: Meta<typeof Avatar> = {
+const meta = {
   title: "Component/Avatar",
   component: Avatar,
   parameters: { layout: "padded" },
   tags: ["autodocs"],
+  args: {
+    size: "md",
+  },
+  argTypes: {
+    size: sizeArgType,
+  },
+} satisfies Meta<typeof Avatar>;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Playground: Story = {
+  render: ({ size }) => (
+    <Stack wrap className="gap-6">
+      <Avatar size={size}>
+        <Avatar.Image
+          src="https://randomuser.me/api/portraits/women/1.jpg"
+          alt="Reaxify Avatar"
+        />
+        <Avatar.Fallback>CN</Avatar.Fallback>
+        <Avatar.Badge className="bg-danger" />
+      </Avatar>
+      <Avatar size={size}>
+        <Avatar.Fallback>
+          <Profile color="currentColor" />
+        </Avatar.Fallback>
+      </Avatar>
+      <Avatar size={size}>
+        <Avatar.Image
+          src="https://randomuser.me/api/portraits/men/2.jpg"
+          alt="Reaxify Avatar"
+        />
+        <Avatar.Fallback>ER</Avatar.Fallback>
+        <Avatar.Badge>
+          <Add color="currentColor" />
+        </Avatar.Badge>
+      </Avatar>
+      <Avatar.Group>
+        <Avatar size={size}>
+          <Avatar.Image
+            src="https://randomuser.me/api/portraits/women/3.jpg"
+            alt="Reaxify Avatar"
+          />
+          <Avatar.Fallback>CN</Avatar.Fallback>
+        </Avatar>
+        <Avatar size={size}>
+          <Avatar.Image
+            src="https://randomuser.me/api/portraits/men/4.jpg"
+            alt="Reaxify Avatar"
+          />
+          <Avatar.Fallback>LR</Avatar.Fallback>
+        </Avatar>
+        <Avatar size={size}>
+          <Avatar.Image
+            src="https://randomuser.me/api/portraits/women/5.jpg"
+            alt="Reaxify Avatar"
+          />
+          <Avatar.Fallback>ER</Avatar.Fallback>
+        </Avatar>
+        <Avatar size={size}>
+          <Avatar.Count>+3</Avatar.Count>
+        </Avatar>
+      </Avatar.Group>
+    </Stack>
+  ),
 };
 
-export function Basic() {
-  return (
+export const Basic: Story = {
+  parameters: staticStoryParameters,
+  render: () => (
     <Stack wrap className="gap-6">
       <Avatar>
         <Avatar.Image
@@ -63,11 +131,12 @@ export function Basic() {
         </Avatar>
       </Avatar.Group>
     </Stack>
-  );
-}
+  ),
+};
 
-export function Badge() {
-  return (
+export const Badge: Story = {
+  parameters: staticStoryParameters,
+  render: () => (
     <Avatar>
       <Avatar.Image
         src="https://randomuser.me/api/portraits/women/3.jpg"
@@ -76,10 +145,12 @@ export function Badge() {
       <Avatar.Fallback>CN</Avatar.Fallback>
       <Avatar.Badge />
     </Avatar>
-  );
-}
-export function BadgeWithIcon() {
-  return (
+  ),
+};
+
+export const BadgeWithIcon: Story = {
+  parameters: staticStoryParameters,
+  render: () => (
     <Avatar>
       <Avatar.Image
         src="https://randomuser.me/api/portraits/women/3.jpg"
@@ -90,10 +161,12 @@ export function BadgeWithIcon() {
         <Add color="white" />
       </Avatar.Badge>
     </Avatar>
-  );
-}
-export function AvatarGroup() {
-  return (
+  ),
+};
+
+export const AvatarGroup: Story = {
+  parameters: staticStoryParameters,
+  render: () => (
     <Avatar.Group>
       <Avatar>
         <Avatar.Image
@@ -117,10 +190,12 @@ export function AvatarGroup() {
         <Avatar.Fallback>ER</Avatar.Fallback>
       </Avatar>
     </Avatar.Group>
-  );
-}
-export function AvatarGroupCount() {
-  return (
+  ),
+};
+
+export const AvatarGroupCount: Story = {
+  parameters: staticStoryParameters,
+  render: () => (
     <Avatar.Group>
       <Avatar>
         <Avatar.Image
@@ -147,10 +222,12 @@ export function AvatarGroupCount() {
         <Avatar.Count>+4</Avatar.Count>
       </Avatar>
     </Avatar.Group>
-  );
-}
-export function AvatarGroupWithIcon() {
-  return (
+  ),
+};
+
+export const AvatarGroupWithIcon: Story = {
+  parameters: staticStoryParameters,
+  render: () => (
     <Avatar.Group>
       <Avatar>
         <Avatar.Image
@@ -179,10 +256,12 @@ export function AvatarGroupWithIcon() {
         </Avatar.Count>
       </Avatar>
     </Avatar.Group>
-  );
-}
-export function Sizes() {
-  return (
+  ),
+};
+
+export const Sizes: Story = {
+  parameters: staticStoryParameters,
+  render: () => (
     <Stack wrap className="items-center gap-4">
       <Avatar size="sm">
         <Avatar.Image
@@ -206,7 +285,5 @@ export function Sizes() {
         <Avatar.Fallback>CN</Avatar.Fallback>
       </Avatar>
     </Stack>
-  );
-}
-
-export default meta;
+  ),
+};

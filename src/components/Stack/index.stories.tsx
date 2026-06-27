@@ -1,108 +1,110 @@
-import type { Meta, StoryFn } from "@storybook/react";
-import { Fragment } from "react";
+import { stackDirectionArgType } from "@/storybook/argTypes";
+import { staticStoryParameters } from "@/storybook/parameters";
+import type { Meta, StoryObj } from "@storybook/react";
 import Stack from ".";
 
-const meta: Meta<typeof Stack> = {
+const meta = {
   title: "Component/Stack",
   component: Stack,
   parameters: { layout: "padded" },
+  tags: ["autodocs"],
   args: {
-    as: undefined as never,
-    children: undefined as never,
-    variant: "horizontal",
+    direction: "row",
     wrap: false,
     reverse: false,
   },
   argTypes: {
-    as: { control: false },
-    children: { control: false },
-    variant: {
-      options: ["vertical", "horizontal"],
-      control: { type: "select" },
-    },
+    direction: stackDirectionArgType,
     wrap: {
+      description: "Wrap items to the next line, or reverse-wrap order.",
+      table: { defaultValue: { summary: "false" } },
       options: [true, false, "reverse"],
       control: { type: "select" },
     },
     reverse: {
-      options: [true, false],
-      control: { type: "select" },
+      description: "Reverses the flex direction.",
+      table: { defaultValue: { summary: "false" } },
+      control: { type: "boolean" },
     },
   },
-  tags: ["autodocs"],
-};
-const Template: StoryFn<typeof Stack> = (args) => (
-  <Stack {...args} className="gap-4" />
-);
+} satisfies Meta<typeof Stack>;
 
-export const Default = Template.bind({});
-Default.storyName = "Stack";
-Default.args = {
-  children: (
-    <Fragment>
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Playground: Story = {
+  render: (args) => (
+    <Stack {...args} className="gap-4">
       {[...Array(3).keys()].map((key) => (
         <div key={key} className="p-6 border border-black">
           Div #{key + 1}
         </div>
       ))}
-    </Fragment>
+    </Stack>
   ),
 };
 
-export const Horizontal = Template.bind({});
-Horizontal.args = {
-  variant: "horizontal",
-  children: (
-    <Fragment>
+export const Default: Story = {
+  parameters: staticStoryParameters,
+  render: () => (
+    <Stack className="gap-4">
       {[...Array(3).keys()].map((key) => (
         <div key={key} className="p-6 border border-black">
           Div #{key + 1}
         </div>
       ))}
-    </Fragment>
+    </Stack>
   ),
 };
 
-export const Vertical = Template.bind({});
-Vertical.args = {
-  variant: "vertical",
-  children: (
-    <Fragment>
+export const Horizontal: Story = {
+  parameters: staticStoryParameters,
+  render: () => (
+    <Stack direction="row" className="gap-4">
       {[...Array(3).keys()].map((key) => (
         <div key={key} className="p-6 border border-black">
           Div #{key + 1}
         </div>
       ))}
-    </Fragment>
+    </Stack>
   ),
 };
 
-export const Wrap = Template.bind({});
-Wrap.args = {
-  wrap: true,
-  children: (
-    <Fragment>
+export const Vertical: Story = {
+  parameters: staticStoryParameters,
+  render: () => (
+    <Stack direction="column" className="gap-4">
+      {[...Array(3).keys()].map((key) => (
+        <div key={key} className="p-6 border border-black">
+          Div #{key + 1}
+        </div>
+      ))}
+    </Stack>
+  ),
+};
+
+export const Wrap: Story = {
+  parameters: staticStoryParameters,
+  render: () => (
+    <Stack wrap className="gap-4">
       {[...Array(12).keys()].map((key) => (
         <div key={key} className="p-6 border border-black">
           Div #{key + 1}
         </div>
       ))}
-    </Fragment>
+    </Stack>
   ),
 };
 
-export const Reverse = Template.bind({});
-Reverse.args = {
-  reverse: true,
-  children: (
-    <Fragment>
+export const Reverse: Story = {
+  parameters: staticStoryParameters,
+  render: () => (
+    <Stack reverse className="gap-4">
       {[...Array(3).keys()].map((key) => (
         <div key={key} className="p-6 border border-black">
           Div #{key + 1}
         </div>
       ))}
-    </Fragment>
+    </Stack>
   ),
 };
-
-export default meta;

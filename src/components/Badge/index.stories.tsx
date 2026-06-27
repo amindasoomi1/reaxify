@@ -1,18 +1,54 @@
-import type { Meta } from "@storybook/react";
+import {
+  badgeVariantArgType,
+  sizeArgType,
+} from "@/storybook/argTypes";
+import { staticStoryParameters } from "@/storybook/parameters";
+import type { Meta, StoryObj } from "@storybook/react";
 import Badge from ".";
 import Stack from "../Stack";
 
-const meta: Meta<typeof Badge> = {
+const badgeColors = [
+  "primary",
+  "secondary",
+  "success",
+  "info",
+  "warning",
+  "danger",
+] as const;
+
+const meta = {
   title: "Component/Badge",
   component: Badge,
   parameters: { layout: "centered" },
   tags: ["autodocs"],
+  args: {
+    variant: "solid",
+    size: "md",
+  },
+  argTypes: {
+    variant: badgeVariantArgType,
+    size: sizeArgType,
+  },
+} satisfies Meta<typeof Badge>;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Playground: Story = {
+  render: ({ variant, size }) => (
+    <Stack wrap className="items-center gap-4">
+      {badgeColors.map((color) => (
+        <Badge key={color} color={color} variant={variant} size={size}>
+          {color.charAt(0).toUpperCase() + color.slice(1)}
+        </Badge>
+      ))}
+    </Stack>
+  ),
 };
 
-// type Story = StoryObj<typeof meta>;
-
-export function Solid() {
-  return (
+export const Solid: Story = {
+  parameters: staticStoryParameters,
+  render: () => (
     <Stack wrap className="items-center gap-4">
       <Badge color="primary" variant="solid">
         Primary
@@ -33,10 +69,12 @@ export function Solid() {
         Danger
       </Badge>
     </Stack>
-  );
-}
-export function Outline() {
-  return (
+  ),
+};
+
+export const Outline: Story = {
+  parameters: staticStoryParameters,
+  render: () => (
     <Stack wrap className="items-center gap-4">
       <Badge color="primary" variant="outline">
         Primary
@@ -57,10 +95,12 @@ export function Outline() {
         Danger
       </Badge>
     </Stack>
-  );
-}
-export function Soft() {
-  return (
+  ),
+};
+
+export const Soft: Story = {
+  parameters: staticStoryParameters,
+  render: () => (
     <Stack wrap className="items-center gap-4">
       <Badge color="primary" variant="soft">
         Primary
@@ -81,10 +121,12 @@ export function Soft() {
         Danger
       </Badge>
     </Stack>
-  );
-}
-export function Sizes() {
-  return (
+  ),
+};
+
+export const Sizes: Story = {
+  parameters: staticStoryParameters,
+  render: () => (
     <Stack wrap className="items-center gap-4">
       <Badge color="success" variant="solid" size="sm">
         Small
@@ -96,7 +138,5 @@ export function Sizes() {
         Large
       </Badge>
     </Stack>
-  );
-}
-
-export default meta;
+  ),
+};
