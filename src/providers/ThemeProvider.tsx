@@ -90,6 +90,18 @@ export type ThemeProviderContextType = {
       text: { base: string };
       formControl: { base: string };
     };
+    list: {
+      base: string;
+      item: {
+        base: string;
+        hover: string;
+        active: string;
+        disabled: string;
+      };
+      icon: { base: string };
+      content: { base: string };
+      action: { base: string };
+    };
     menu: {
       base: string;
       item: { base: string };

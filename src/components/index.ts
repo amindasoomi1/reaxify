@@ -12,6 +12,7 @@ export { default as Divider } from "./Divider";
 export { default as Drawer } from "./Drawer";
 export { default as Fill } from "./Fill";
 export { default as InputGroup } from "./InputGroup";
+export { default as List } from "./List";
 export { default as Menu } from "./Menu";
 export { default as Modal } from "./Modal";
 export { default as Portal } from "./Portal";
