@@ -250,7 +250,7 @@ function TooltipContent({
       role="tooltip"
       data-name="tooltip-content"
       className={twMerge(
-        "relative block size-fit min-w-fit min-h-fit text-sm rounded px-2 py-px whitespace-nowrap z-1",
+        "relative block size-fit min-w-fit min-h-fit text-sm rounded px-3 py-1 whitespace-nowrap z-1",
         classes?.base,
         colorClasses,
         className,
@@ -271,10 +271,10 @@ function TooltipArrow({
 
   const placementClasses = useMemo(() => {
     const placements: Record<Placement, string> = {
-      top: "-translate-y-2/3",
-      bottom: "translate-y-2/3",
-      start: "-translate-x-2/3 rtl:translate-x-2/3",
-      end: "translate-x-2/3 rtl:-translate-x-2/3",
+      top: "-translate-y-3/5",
+      bottom: "translate-y-3/5",
+      start: "-translate-x-3/5 rtl:translate-x-3/5",
+      end: "translate-x-3/5 rtl:-translate-x-3/5",
     };
     return placements[placement];
   }, [placement]);
@@ -296,7 +296,7 @@ function TooltipArrow({
     <span
       data-name="tooltip-arrow"
       className={twMerge(
-        "block size-3 min-w-3 min-h-3 rotate-45 shrink-0",
+        "block size-2.5 min-w-2.5 min-h-2.5 rotate-45 rounded-sm shrink-0",
         classes?.base,
         placementClasses,
         colorClasses,

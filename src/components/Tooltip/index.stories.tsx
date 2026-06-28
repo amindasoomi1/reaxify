@@ -1,10 +1,10 @@
+import { setAnchorPointer } from "@/helpers";
 import {
   booleanArg,
   colorArgType,
   numberArg,
   tooltipPlacementArgType,
 } from "@/storybook/argTypes";
-import { setAnchorPointer } from "@/helpers";
 import { staticStoryParameters } from "@/storybook/parameters";
 import { Color } from "@/types";
 import type { Meta, StoryObj } from "@storybook/react";

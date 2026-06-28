@@ -1,7 +1,4 @@
-import {
-  booleanArg,
-  toggleTriggerOnArgType,
-} from "@/storybook/argTypes";
+import { booleanArg, toggleTriggerOnArgType } from "@/storybook/argTypes";
 import { staticStoryParameters } from "@/storybook/parameters";
 import type { Meta, StoryObj } from "@storybook/react";
 import Toggle from ".";
@@ -28,7 +25,10 @@ const meta = {
       true,
     ),
     triggerOn: toggleTriggerOnArgType,
-    defaultOpen: booleanArg("Initial open state for uncontrolled usage.", false),
+    defaultOpen: booleanArg(
+      "Initial open state for uncontrolled usage.",
+      false,
+    ),
     open: { table: { disable: true } },
     onOpenChange: { table: { disable: true } },
   },
