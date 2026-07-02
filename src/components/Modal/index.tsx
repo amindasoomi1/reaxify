@@ -93,9 +93,9 @@ function Modal<E extends ElementType = "div">({
         {(state) => (
           <Component
             ref={divRef}
-            data-open={open}
             role="dialog"
             data-name="modal"
+            data-open={open}
             style={{ transitionDuration: `${duration}ms` }}
             className={twMerge(
               "modal fixed size-full inset-0 flex flex-col z-10 bg-black/20 transition-opacity backdrop-blur p-4",
