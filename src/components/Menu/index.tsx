@@ -182,7 +182,6 @@ function Menu<E extends ElementType = "ul">({
               <Backdrop />
               <Component
                 ref={menuRef}
-                autoFocus
                 data-open={open}
                 role="menu"
                 data-name="menu"
