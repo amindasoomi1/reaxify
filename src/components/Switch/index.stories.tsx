@@ -3,7 +3,7 @@ import {
   colorArgType,
   sizeArgType,
 } from "@/storybook/argTypes";
-import { staticStoryParameters } from "@/storybook/parameters";
+import { asStaticStory } from "@/storybook/parameters";
 import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
 import Switch from ".";
@@ -48,9 +48,7 @@ export const Playground: Story = {
   },
 };
 
-export const Default: Story = {
-  parameters: staticStoryParameters,
-  render: function Default() {
+export const Default = asStaticStory(function Default() {
     const [value, setValue] = useState(false);
     return (
       <Stack className="items-center gap-4">
@@ -60,12 +58,9 @@ export const Default: Story = {
         <Switch checked={value} onChange={setValue} />
       </Stack>
     );
-  },
-};
+  });
 
-export const Color: Story = {
-  parameters: staticStoryParameters,
-  render: function Color() {
+export const Color = asStaticStory(function Color() {
     const [value, setValue] = useState(false);
     return (
       <Stack wrap className="items-center gap-4">
@@ -79,12 +74,9 @@ export const Color: Story = {
         <Switch checked={value} onChange={setValue} color="light" />
       </Stack>
     );
-  },
-};
+  });
 
-export const Size: Story = {
-  parameters: staticStoryParameters,
-  render: function Size() {
+export const Size = asStaticStory(function Size() {
     const [value, setValue] = useState(false);
     return (
       <Stack wrap className="items-center gap-4">
@@ -93,15 +85,11 @@ export const Size: Story = {
         <Switch checked={value} onChange={setValue} size="lg" />
       </Stack>
     );
-  },
-};
+  });
 
-export const Disabled: Story = {
-  parameters: staticStoryParameters,
-  render: () => (
+export const Disabled = asStaticStory(() => (
     <Stack wrap className="items-center gap-4">
       <Switch checked disabled color="primary" />
       <Switch checked color="primary" />
     </Stack>
-  ),
-};
+  ));

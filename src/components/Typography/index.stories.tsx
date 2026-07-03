@@ -1,5 +1,5 @@
 import { typographyVariantArgType } from "@/storybook/argTypes";
-import { staticStoryParameters } from "@/storybook/parameters";
+import { asStaticStory } from "@/storybook/parameters";
 import type { Meta, StoryObj } from "@storybook/react";
 import Typography from ".";
 import Stack from "../Stack";
@@ -36,9 +36,7 @@ export const Playground: Story = {
   ),
 };
 
-export const Default: Story = {
-  parameters: staticStoryParameters,
-  render: () => (
+export const Default = asStaticStory(() => (
     <Stack direction="column" className="gap-4">
       <Typography variant="heading-1">Heading 1</Typography>
       <Typography variant="heading-2">Heading 2</Typography>
@@ -50,5 +48,4 @@ export const Default: Story = {
       <Typography variant="body-2">Body 2</Typography>
       <Typography variant="body-3">Body 3</Typography>
     </Stack>
-  ),
-};
+  ));

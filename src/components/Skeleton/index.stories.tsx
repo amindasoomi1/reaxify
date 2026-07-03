@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { staticStoryParameters } from "@/storybook/parameters";
+import { asStaticStory } from "@/storybook/parameters";
 import Skeleton from ".";
 import Card from "../Card";
 
@@ -35,9 +35,7 @@ export const Playground: Story = {
   ),
 };
 
-export const Default: Story = {
-  parameters: staticStoryParameters,
-  render: () => (
+export const Default = asStaticStory(() => (
     <Card className="max-w-xs mx-auto">
       <Card.Header className="flex items-center gap-4">
         <Skeleton className="size-16 rounded-full" />
@@ -55,5 +53,4 @@ export const Default: Story = {
         <Skeleton className="w-auto h-10" />
       </Card.Footer>
     </Card>
-  ),
-};
+  ));

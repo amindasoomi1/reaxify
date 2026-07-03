@@ -2,7 +2,7 @@ import {
   badgeVariantArgType,
   sizeArgType,
 } from "@/storybook/argTypes";
-import { staticStoryParameters } from "@/storybook/parameters";
+import { asStaticStory } from "@/storybook/parameters";
 import type { Meta, StoryObj } from "@storybook/react";
 import Badge from ".";
 import Stack from "../Stack";
@@ -46,9 +46,7 @@ export const Playground: Story = {
   ),
 };
 
-export const Solid: Story = {
-  parameters: staticStoryParameters,
-  render: () => (
+export const Solid = asStaticStory(() => (
     <Stack wrap className="items-center gap-4">
       <Badge color="primary" variant="solid">
         Primary
@@ -69,12 +67,9 @@ export const Solid: Story = {
         Danger
       </Badge>
     </Stack>
-  ),
-};
+  ));
 
-export const Outline: Story = {
-  parameters: staticStoryParameters,
-  render: () => (
+export const Outline = asStaticStory(() => (
     <Stack wrap className="items-center gap-4">
       <Badge color="primary" variant="outline">
         Primary
@@ -95,12 +90,9 @@ export const Outline: Story = {
         Danger
       </Badge>
     </Stack>
-  ),
-};
+  ));
 
-export const Soft: Story = {
-  parameters: staticStoryParameters,
-  render: () => (
+export const Soft = asStaticStory(() => (
     <Stack wrap className="items-center gap-4">
       <Badge color="primary" variant="soft">
         Primary
@@ -121,12 +113,9 @@ export const Soft: Story = {
         Danger
       </Badge>
     </Stack>
-  ),
-};
+  ));
 
-export const Sizes: Story = {
-  parameters: staticStoryParameters,
-  render: () => (
+export const Sizes = asStaticStory(() => (
     <Stack wrap className="items-center gap-4">
       <Badge color="success" variant="solid" size="sm">
         Small
@@ -138,5 +127,4 @@ export const Sizes: Story = {
         Large
       </Badge>
     </Stack>
-  ),
-};
+  ));

@@ -1,5 +1,5 @@
 import { accordionVariantArgType } from "@/storybook/argTypes";
-import { staticStoryParameters } from "@/storybook/parameters";
+import { asStaticStory } from "@/storybook/parameters";
 import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
 import Accordion from ".";
@@ -155,9 +155,7 @@ export const Playground: Story = {
   },
 };
 
-export const Single: Story = {
-  parameters: staticStoryParameters,
-  render: function Single() {
+export const Single = asStaticStory(function Single() {
     const [active, setActive] = useState<string | null>(null);
     return (
       <Stack direction="column" className="gap-4">
@@ -205,12 +203,9 @@ export const Single: Story = {
         </Accordion>
       </Stack>
     );
-  },
-};
+  });
 
-export const Multiple: Story = {
-  parameters: staticStoryParameters,
-  render: function Multiple() {
+export const Multiple = asStaticStory(function Multiple() {
     const [active, setActive] = useState<string[]>([]);
     return (
       <Stack direction="column" className="gap-4">
@@ -278,5 +273,4 @@ export const Multiple: Story = {
         </Accordion>
       </Stack>
     );
-  },
-};
+  });

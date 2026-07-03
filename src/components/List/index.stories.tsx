@@ -1,5 +1,5 @@
 import { booleanArg } from "@/storybook/argTypes";
-import { staticStoryParameters } from "@/storybook/parameters";
+import { asStaticStory } from "@/storybook/parameters";
 import type { Meta, StoryObj } from "@storybook/react";
 import { CallCalling, More, Profile, Setting2, Trash } from "iconsax-react";
 import { useState } from "react";
@@ -55,9 +55,7 @@ export const Playground: Story = {
   ),
 };
 
-export const Default: Story = {
-  parameters: staticStoryParameters,
-  render: () => (
+export const Default = asStaticStory(() => (
     <List className="max-w-sm rounded border border-border">
       <List.Item>
         <List.Icon>
@@ -81,12 +79,9 @@ export const Default: Story = {
         </List.Content>
       </List.Item>
     </List>
-  ),
-};
+  ));
 
-export const Divided: Story = {
-  parameters: staticStoryParameters,
-  render: () => (
+export const Divided = asStaticStory(() => (
     <List divided className="max-w-sm rounded border border-border">
       <List.Item>
         <List.Icon>
@@ -110,12 +105,9 @@ export const Divided: Story = {
         </List.Content>
       </List.Item>
     </List>
-  ),
-};
+  ));
 
-export const Interactive: Story = {
-  parameters: staticStoryParameters,
-  render: function Interactive() {
+export const Interactive = asStaticStory(function Interactive() {
     const [activeId, setActiveId] = useState(1);
 
     return (
@@ -179,12 +171,9 @@ export const Interactive: Story = {
         </List.Item>
       </List>
     );
-  },
-};
+  });
 
-export const WithAction: Story = {
-  parameters: staticStoryParameters,
-  render: () => (
+export const WithAction = asStaticStory(() => (
     <List divided hover className="max-w-sm rounded border border-border">
       <List.Item onClick={() => {}}>
         <List.Icon>
@@ -223,5 +212,4 @@ export const WithAction: Story = {
         </List.Action>
       </List.Item>
     </List>
-  ),
-};
+  ));

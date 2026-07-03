@@ -1,5 +1,5 @@
 import { booleanArg, toggleTriggerOnArgType } from "@/storybook/argTypes";
-import { staticStoryParameters } from "@/storybook/parameters";
+import { asStaticStory } from "@/storybook/parameters";
 import type { Meta, StoryObj } from "@storybook/react";
 import Toggle from ".";
 import Button from "../Button";
@@ -54,9 +54,7 @@ export const Playground: Story = {
   ),
 };
 
-export const WithDrawer: Story = {
-  parameters: staticStoryParameters,
-  render: () => (
+export const WithDrawer = asStaticStory(() => (
     <Toggle>
       <Toggle.Trigger>
         <Button type="button">Show drawer</Button>
@@ -89,12 +87,9 @@ export const WithDrawer: Story = {
         </Drawer>
       </Toggle.Content>
     </Toggle>
-  ),
-};
+  ));
 
-export const WithModal: Story = {
-  parameters: staticStoryParameters,
-  render: () => (
+export const WithModal = asStaticStory(() => (
     <Toggle>
       <Toggle.Trigger>
         <Button type="button">Show modal</Button>
@@ -122,12 +117,9 @@ export const WithModal: Story = {
         </Modal>
       </Toggle.Content>
     </Toggle>
-  ),
-};
+  ));
 
-export const WithMenu: Story = {
-  parameters: staticStoryParameters,
-  render: () => (
+export const WithMenu = asStaticStory(() => (
     <Toggle anchor>
       <Toggle.Trigger>
         <Button type="button">Dropdown</Button>
@@ -140,12 +132,9 @@ export const WithMenu: Story = {
         </Menu>
       </Toggle.Content>
     </Toggle>
-  ),
-};
+  ));
 
-export const WithContextMenu: Story = {
-  parameters: staticStoryParameters,
-  render: () => (
+export const WithContextMenu = asStaticStory(() => (
     <Toggle anchor triggerOn="contextMenu">
       <Toggle.Trigger>
         <div className="flex size-48 items-center justify-center rounded border border-dashed border-dark/20 bg-dark/5 text-sm text-dark/60 select-none">
@@ -160,12 +149,9 @@ export const WithContextMenu: Story = {
         </Menu>
       </Toggle.Content>
     </Toggle>
-  ),
-};
+  ));
 
-export const WithTooltip: Story = {
-  parameters: staticStoryParameters,
-  render: () => (
+export const WithTooltip = asStaticStory(() => (
     <Toggle anchor triggerOn="hover">
       <Toggle.Trigger>
         <Button type="button">Hover me</Button>
@@ -177,5 +163,4 @@ export const WithTooltip: Story = {
         </Tooltip>
       </Toggle.Content>
     </Toggle>
-  ),
-};
+  ));

@@ -1,5 +1,5 @@
 import { alertVariantArgType } from "@/storybook/argTypes";
-import { staticStoryParameters } from "@/storybook/parameters";
+import { asStaticStory } from "@/storybook/parameters";
 import type { Meta, StoryObj } from "@storybook/react";
 import {
   CloseCircle,
@@ -80,9 +80,7 @@ export const Playground: Story = {
   ),
 };
 
-export const Soft: Story = {
-  parameters: staticStoryParameters,
-  render: () => (
+export const Soft = asStaticStory(() => (
     <Stack direction="column" className="gap-4">
       <Alert color="success" variant="soft">
         <Alert.Icon>
@@ -144,12 +142,9 @@ export const Soft: Story = {
         </Alert.Action>
       </Alert>
     </Stack>
-  ),
-};
+  ));
 
-export const Outline: Story = {
-  parameters: staticStoryParameters,
-  render: () => (
+export const Outline = asStaticStory(() => (
     <Stack direction="column" className="gap-4">
       <Alert color="success" variant="outline">
         <Alert.Icon>
@@ -211,12 +206,9 @@ export const Outline: Story = {
         </Alert.Action>
       </Alert>
     </Stack>
-  ),
-};
+  ));
 
-export const Solid: Story = {
-  parameters: staticStoryParameters,
-  render: () => (
+export const Solid = asStaticStory(() => (
     <Stack direction="column" className="gap-4">
       <Alert color="success" variant="solid">
         <Alert.Icon>
@@ -278,5 +270,4 @@ export const Solid: Story = {
         </Alert.Action>
       </Alert>
     </Stack>
-  ),
-};
+  ));

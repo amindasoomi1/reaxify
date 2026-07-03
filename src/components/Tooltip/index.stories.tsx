@@ -5,7 +5,7 @@ import {
   numberArg,
   tooltipPlacementArgType,
 } from "@/storybook/argTypes";
-import { staticStoryParameters } from "@/storybook/parameters";
+import { asStaticStory } from "@/storybook/parameters";
 import { Color } from "@/types";
 import type { Meta, StoryObj } from "@storybook/react";
 import { Fragment, MouseEvent, useState } from "react";
@@ -77,9 +77,7 @@ export const Playground: Story = {
   },
 };
 
-export const Hover: Story = {
-  parameters: staticStoryParameters,
-  render: function Hover() {
+export const Hover = asStaticStory(function Hover() {
     const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
     const open = !!anchorEl;
 
@@ -97,12 +95,9 @@ export const Hover: Story = {
         </Tooltip>
       </Fragment>
     );
-  },
-};
+  });
 
-export const Click: Story = {
-  parameters: staticStoryParameters,
-  render: function Click() {
+export const Click = asStaticStory(function Click() {
     const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
     const open = !!anchorEl;
 
@@ -119,12 +114,9 @@ export const Click: Story = {
         </Tooltip>
       </Fragment>
     );
-  },
-};
+  });
 
-export const ContextMenu: Story = {
-  parameters: staticStoryParameters,
-  render: function ContextMenu() {
+export const ContextMenu = asStaticStory(function ContextMenu() {
     const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
     const open = !!anchorEl;
 
@@ -148,12 +140,9 @@ export const ContextMenu: Story = {
         </Tooltip>
       </Fragment>
     );
-  },
-};
+  });
 
-export const Colors: Story = {
-  parameters: staticStoryParameters,
-  render: () => {
+export const Colors = asStaticStory(() => {
     const colors = [
       "primary",
       "secondary",
@@ -172,8 +161,7 @@ export const Colors: Story = {
         ))}
       </Stack>
     );
-  },
-};
+  });
 
 function ColorTooltip({ color }: { color: Color }) {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
@@ -195,9 +183,7 @@ function ColorTooltip({ color }: { color: Color }) {
   );
 }
 
-export const Placement: Story = {
-  parameters: staticStoryParameters,
-  render: () => {
+export const Placement = asStaticStory(() => {
     const placements = ["top", "end", "bottom", "start"] as const;
     return (
       <Stack wrap className="items-center gap-4 py-10">
@@ -216,5 +202,4 @@ export const Placement: Story = {
         ))}
       </Stack>
     );
-  },
-};
+  });

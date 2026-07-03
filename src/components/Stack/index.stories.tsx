@@ -1,5 +1,5 @@
 import { stackDirectionArgType } from "@/storybook/argTypes";
-import { staticStoryParameters } from "@/storybook/parameters";
+import { asStaticStory } from "@/storybook/parameters";
 import type { Meta, StoryObj } from "@storybook/react";
 import Stack from ".";
 
@@ -44,9 +44,7 @@ export const Playground: Story = {
   ),
 };
 
-export const Default: Story = {
-  parameters: staticStoryParameters,
-  render: () => (
+export const Default = asStaticStory(() => (
     <Stack className="gap-4">
       {[...Array(3).keys()].map((key) => (
         <div key={key} className="p-6 border border-black">
@@ -54,12 +52,9 @@ export const Default: Story = {
         </div>
       ))}
     </Stack>
-  ),
-};
+  ));
 
-export const Horizontal: Story = {
-  parameters: staticStoryParameters,
-  render: () => (
+export const Horizontal = asStaticStory(() => (
     <Stack direction="row" className="gap-4">
       {[...Array(3).keys()].map((key) => (
         <div key={key} className="p-6 border border-black">
@@ -67,12 +62,9 @@ export const Horizontal: Story = {
         </div>
       ))}
     </Stack>
-  ),
-};
+  ));
 
-export const Vertical: Story = {
-  parameters: staticStoryParameters,
-  render: () => (
+export const Vertical = asStaticStory(() => (
     <Stack direction="column" className="gap-4">
       {[...Array(3).keys()].map((key) => (
         <div key={key} className="p-6 border border-black">
@@ -80,12 +72,9 @@ export const Vertical: Story = {
         </div>
       ))}
     </Stack>
-  ),
-};
+  ));
 
-export const Wrap: Story = {
-  parameters: staticStoryParameters,
-  render: () => (
+export const Wrap = asStaticStory(() => (
     <Stack wrap className="gap-4">
       {[...Array(12).keys()].map((key) => (
         <div key={key} className="p-6 border border-black">
@@ -93,12 +82,9 @@ export const Wrap: Story = {
         </div>
       ))}
     </Stack>
-  ),
-};
+  ));
 
-export const Reverse: Story = {
-  parameters: staticStoryParameters,
-  render: () => (
+export const Reverse = asStaticStory(() => (
     <Stack reverse className="gap-4">
       {[...Array(3).keys()].map((key) => (
         <div key={key} className="p-6 border border-black">
@@ -106,5 +92,4 @@ export const Reverse: Story = {
         </div>
       ))}
     </Stack>
-  ),
-};
+  ));

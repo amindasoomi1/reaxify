@@ -3,7 +3,7 @@ import {
   numberArg,
   sizeArgType,
 } from "@/storybook/argTypes";
-import { staticStoryParameters } from "@/storybook/parameters";
+import { asStaticStory } from "@/storybook/parameters";
 import type { Meta, StoryObj } from "@storybook/react";
 import Modal from ".";
 import { useToggle } from "../../hooks";
@@ -77,9 +77,7 @@ export const Playground: Story = {
   },
 };
 
-export const Default: Story = {
-  parameters: staticStoryParameters,
-  render: function Default() {
+export const Default = asStaticStory(function Default() {
     const [openModal, toggleModal, closeModal] = useToggle(false);
     return (
       <div>
@@ -111,12 +109,9 @@ export const Default: Story = {
         </Modal>
       </div>
     );
-  },
-};
+  });
 
-export const PreventClose: Story = {
-  parameters: staticStoryParameters,
-  render: function PreventClose() {
+export const PreventClose = asStaticStory(function PreventClose() {
     const [openModal, toggleModal, closeModal] = useToggle(false);
     return (
       <div>
@@ -153,5 +148,4 @@ export const PreventClose: Story = {
         </Modal>
       </div>
     );
-  },
-};
+  });

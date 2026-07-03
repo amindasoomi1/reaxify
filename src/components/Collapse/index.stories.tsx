@@ -1,5 +1,5 @@
 import { numberArg } from "@/storybook/argTypes";
-import { staticStoryParameters } from "@/storybook/parameters";
+import { asStaticStory } from "@/storybook/parameters";
 import { useToggle } from "@/hooks";
 import type { Meta, StoryObj } from "@storybook/react";
 import Collapse from ".";
@@ -51,9 +51,7 @@ export const Playground: Story = {
   },
 };
 
-export const Controlled: Story = {
-  parameters: staticStoryParameters,
-  render: function Controlled() {
+export const Controlled = asStaticStory(function Controlled() {
     const [open, toggleOpen] = useToggle(false);
 
     return (
@@ -75,5 +73,4 @@ export const Controlled: Story = {
         </Card>
       </div>
     );
-  },
-};
+  });

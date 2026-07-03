@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { staticStoryParameters } from "@/storybook/parameters";
+import { asStaticStory } from "@/storybook/parameters";
 import Card from ".";
 import Button from "../Button";
 import Stack from "../Stack";
@@ -45,9 +45,7 @@ export const Playground: Story = {
   ),
 };
 
-export const Default: Story = {
-  parameters: staticStoryParameters,
-  render: () => (
+export const Default = asStaticStory(() => (
     <Stack direction="column" className="lg:flex-row gap-4">
       {[...Array(3).keys()].map((key) => (
         <Card key={key} className="lg:flex-1">
@@ -73,5 +71,4 @@ export const Default: Story = {
         </Card>
       ))}
     </Stack>
-  ),
-};
+  ));

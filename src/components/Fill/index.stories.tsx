@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { staticStoryParameters } from "@/storybook/parameters";
+import { asStaticStory } from "@/storybook/parameters";
 import Fill from ".";
 import Card from "../Card";
 import Stack from "../Stack";
@@ -28,9 +28,7 @@ export const Playground: Story = {
   ),
 };
 
-export const Default: Story = {
-  parameters: staticStoryParameters,
-  render: () => (
+export const Default = asStaticStory(() => (
     <Card>
       <Card.Body>
         <Stack className="w-full gap-6">
@@ -40,5 +38,4 @@ export const Default: Story = {
         </Stack>
       </Card.Body>
     </Card>
-  ),
-};
+  ));

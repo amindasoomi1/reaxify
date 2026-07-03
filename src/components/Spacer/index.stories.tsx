@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { staticStoryParameters } from "@/storybook/parameters";
+import { asStaticStory } from "@/storybook/parameters";
 import Spacer from ".";
 import Stack from "../Stack";
 
@@ -24,14 +24,11 @@ export const Playground: Story = {
   ),
 };
 
-export const Default: Story = {
-  parameters: staticStoryParameters,
-  render: () => (
+export const Default = asStaticStory(() => (
     <Stack className="gap-6">
       <div>div 1</div>
       <Spacer />
       <div>div 2</div>
       <div>div 3</div>
     </Stack>
-  ),
-};
+  ));

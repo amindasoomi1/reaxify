@@ -1,5 +1,5 @@
 import { sizeArgType } from "@/storybook/argTypes";
-import { staticStoryParameters } from "@/storybook/parameters";
+import { asStaticStory } from "@/storybook/parameters";
 import type { Meta, StoryObj } from "@storybook/react";
 import { Add, Profile } from "iconsax-react";
 import Avatar from ".";
@@ -77,9 +77,7 @@ export const Playground: Story = {
   ),
 };
 
-export const Basic: Story = {
-  parameters: staticStoryParameters,
-  render: () => (
+export const Basic = asStaticStory(() => (
     <Stack wrap className="gap-6">
       <Avatar>
         <Avatar.Image
@@ -131,12 +129,9 @@ export const Basic: Story = {
         </Avatar>
       </Avatar.Group>
     </Stack>
-  ),
-};
+  ));
 
-export const Badge: Story = {
-  parameters: staticStoryParameters,
-  render: () => (
+export const Badge = asStaticStory(() => (
     <Avatar>
       <Avatar.Image
         src="https://randomuser.me/api/portraits/women/3.jpg"
@@ -145,12 +140,9 @@ export const Badge: Story = {
       <Avatar.Fallback>CN</Avatar.Fallback>
       <Avatar.Badge />
     </Avatar>
-  ),
-};
+  ));
 
-export const BadgeWithIcon: Story = {
-  parameters: staticStoryParameters,
-  render: () => (
+export const BadgeWithIcon = asStaticStory(() => (
     <Avatar>
       <Avatar.Image
         src="https://randomuser.me/api/portraits/women/3.jpg"
@@ -161,12 +153,9 @@ export const BadgeWithIcon: Story = {
         <Add color="white" />
       </Avatar.Badge>
     </Avatar>
-  ),
-};
+  ));
 
-export const AvatarGroup: Story = {
-  parameters: staticStoryParameters,
-  render: () => (
+export const AvatarGroup = asStaticStory(() => (
     <Avatar.Group>
       <Avatar>
         <Avatar.Image
@@ -190,12 +179,9 @@ export const AvatarGroup: Story = {
         <Avatar.Fallback>ER</Avatar.Fallback>
       </Avatar>
     </Avatar.Group>
-  ),
-};
+  ));
 
-export const AvatarGroupCount: Story = {
-  parameters: staticStoryParameters,
-  render: () => (
+export const AvatarGroupCount = asStaticStory(() => (
     <Avatar.Group>
       <Avatar>
         <Avatar.Image
@@ -222,12 +208,9 @@ export const AvatarGroupCount: Story = {
         <Avatar.Count>+4</Avatar.Count>
       </Avatar>
     </Avatar.Group>
-  ),
-};
+  ));
 
-export const AvatarGroupWithIcon: Story = {
-  parameters: staticStoryParameters,
-  render: () => (
+export const AvatarGroupWithIcon = asStaticStory(() => (
     <Avatar.Group>
       <Avatar>
         <Avatar.Image
@@ -256,12 +239,9 @@ export const AvatarGroupWithIcon: Story = {
         </Avatar.Count>
       </Avatar>
     </Avatar.Group>
-  ),
-};
+  ));
 
-export const Sizes: Story = {
-  parameters: staticStoryParameters,
-  render: () => (
+export const Sizes = asStaticStory(() => (
     <Stack wrap className="items-center gap-4">
       <Avatar size="sm">
         <Avatar.Image
@@ -285,5 +265,4 @@ export const Sizes: Story = {
         <Avatar.Fallback>CN</Avatar.Fallback>
       </Avatar>
     </Stack>
-  ),
-};
+  ));

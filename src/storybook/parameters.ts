@@ -1,12 +1,11 @@
-import type { StoryObj } from "@storybook/react";
+import type { ReactElement } from "react";
 
 export const staticStoryParameters = {
   controls: { disable: true },
 };
 
-export function asStaticStory(render: StoryObj["render"]): StoryObj {
-  return {
-    parameters: staticStoryParameters,
-    render,
-  };
+type StoryRender = (...args: never[]) => ReactElement;
+
+export function asStaticStory(render: StoryRender): StoryRender {
+  return Object.assign(render, { parameters: staticStoryParameters });
 }

@@ -3,7 +3,7 @@ import {
   drawerAnchorArgType,
   numberArg,
 } from "@/storybook/argTypes";
-import { staticStoryParameters } from "@/storybook/parameters";
+import { asStaticStory } from "@/storybook/parameters";
 import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
 import Drawer from ".";
@@ -79,9 +79,7 @@ export const Playground: Story = {
   },
 };
 
-export const Default: Story = {
-  parameters: staticStoryParameters,
-  render: function Default() {
+export const Default = asStaticStory(function Default() {
     const [openDrawer, toggleDrawer, closeDrawer] = useToggle(false);
     return (
       <div>
@@ -113,12 +111,9 @@ export const Default: Story = {
         </Drawer>
       </div>
     );
-  },
-};
+  });
 
-export const Anchor: Story = {
-  parameters: staticStoryParameters,
-  render: function Anchor() {
+export const Anchor = asStaticStory(function Anchor() {
     const anchors = ["top", "start", "bottom", "end"] as const;
     const [state, setState] = useState({
       top: false,
@@ -181,12 +176,9 @@ export const Anchor: Story = {
         ))}
       </ButtonGroup>
     );
-  },
-};
+  });
 
-export const PreventClose: Story = {
-  parameters: staticStoryParameters,
-  render: function PreventClose() {
+export const PreventClose = asStaticStory(function PreventClose() {
     const [openDrawer, toggleDrawer, closeDrawer] = useToggle(false);
     return (
       <div>
@@ -223,5 +215,4 @@ export const PreventClose: Story = {
         </Drawer>
       </div>
     );
-  },
-};
+  });

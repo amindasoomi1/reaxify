@@ -1,5 +1,5 @@
 import { booleanArg } from "@/storybook/argTypes";
-import { staticStoryParameters } from "@/storybook/parameters";
+import { asStaticStory } from "@/storybook/parameters";
 import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
 import Table from ".";
@@ -60,9 +60,7 @@ export const Playground: Story = {
   ),
 };
 
-export const Default: Story = {
-  parameters: staticStoryParameters,
-  render: () => (
+export const Default = asStaticStory(() => (
     <Table.Container className="w-full max-h-96">
       <Table striped bordered hover>
         <Table.Header>
@@ -87,12 +85,9 @@ export const Default: Story = {
         </Table.Body>
       </Table>
     </Table.Container>
-  ),
-};
+  ));
 
-export const Interactive: Story = {
-  parameters: staticStoryParameters,
-  render: function Interactive() {
+export const Interactive = asStaticStory(function Interactive() {
     const [activeId, setActiveId] = useState(1);
 
     const rows = [
@@ -158,5 +153,4 @@ export const Interactive: Story = {
         </Table>
       </Table.Container>
     );
-  },
-};
+  });

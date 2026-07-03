@@ -3,7 +3,7 @@ import {
   colorArgType,
   rangeArg,
 } from "@/storybook/argTypes";
-import { staticStoryParameters } from "@/storybook/parameters";
+import { asStaticStory } from "@/storybook/parameters";
 import type { Meta, StoryObj } from "@storybook/react";
 import Progress from ".";
 import Stack from "../Stack";
@@ -55,9 +55,7 @@ export const Playground: Story = {
     ),
 };
 
-export const Value: Story = {
-  parameters: staticStoryParameters,
-  render: () => (
+export const Value = asStaticStory(() => (
     <Stack direction="column" className="gap-4">
       <Progress value={10} color="primary" />
       <Progress value={20} color="secondary" />
@@ -68,10 +66,6 @@ export const Value: Story = {
       <Progress value={70} color="dark" />
       <Progress value={80} color="light" />
     </Stack>
-  ),
-};
+  ));
 
-export const Animation: Story = {
-  parameters: staticStoryParameters,
-  render: () => <Progress animate color="primary" />,
-};
+export const Animation = asStaticStory(() => <Progress animate color="primary" />);

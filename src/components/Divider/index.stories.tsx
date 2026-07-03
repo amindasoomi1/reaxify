@@ -3,7 +3,7 @@ import {
   dividerOrientationArgType,
   dividerVariantArgType,
 } from "@/storybook/argTypes";
-import { staticStoryParameters } from "@/storybook/parameters";
+import { asStaticStory } from "@/storybook/parameters";
 import type { Meta, StoryObj } from "@storybook/react";
 import {
   TextalignCenter,
@@ -137,9 +137,7 @@ export const Playground: Story = {
   },
 };
 
-export const Horizontal: Story = {
-  parameters: staticStoryParameters,
-  render: () => (
+export const Horizontal = asStaticStory(() => (
     <Card>
       <Card.Body>
         <Typography variant="body-2" className="py-2">
@@ -155,12 +153,9 @@ export const Horizontal: Story = {
         </Typography>
       </Card.Body>
     </Card>
-  ),
-};
+  ));
 
-export const VerticalWithStaticHeight: Story = {
-  parameters: staticStoryParameters,
-  render: () => (
+export const VerticalWithStaticHeight = asStaticStory(() => (
     <Card>
       <Card.Body className="p-0">
         <Stack className="w-fit h-10">
@@ -182,12 +177,9 @@ export const VerticalWithStaticHeight: Story = {
         </Stack>
       </Card.Body>
     </Card>
-  ),
-};
+  ));
 
-export const VerticalWithAutoHeightAndFlexItem: Story = {
-  parameters: staticStoryParameters,
-  render: () => (
+export const VerticalWithAutoHeightAndFlexItem = asStaticStory(() => (
     <Card>
       <Card.Body className="p-0">
         <Stack className="w-fit">
@@ -209,12 +201,9 @@ export const VerticalWithAutoHeightAndFlexItem: Story = {
         </Stack>
       </Card.Body>
     </Card>
-  ),
-};
+  ));
 
-export const Variant: Story = {
-  parameters: staticStoryParameters,
-  render: () => (
+export const Variant = asStaticStory(() => (
     <Card>
       <Card.Body>
         <Typography variant="body-2" className="py-2">
@@ -234,5 +223,4 @@ export const Variant: Story = {
         </Typography>
       </Card.Body>
     </Card>
-  ),
-};
+  ));

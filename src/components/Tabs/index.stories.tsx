@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { staticStoryParameters } from "@/storybook/parameters";
+import { asStaticStory } from "@/storybook/parameters";
 import { useState } from "react";
 import Tabs from ".";
 import Stack from "../Stack";
@@ -78,9 +78,7 @@ export const Playground: Story = {
   },
 };
 
-export const Default: Story = {
-  parameters: staticStoryParameters,
-  render: function Default() {
+export const Default = asStaticStory(function Default() {
     const [active, setActive] = useState("basic-info");
     return (
       <div className="w-full space-y-4">
@@ -127,5 +125,4 @@ export const Default: Story = {
         </Tabs>
       </div>
     );
-  },
-};
+  });

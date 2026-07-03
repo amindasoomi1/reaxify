@@ -3,7 +3,7 @@ import {
   numberArg,
 } from "@/storybook/argTypes";
 import { setAnchorPointer } from "@/helpers";
-import { staticStoryParameters } from "@/storybook/parameters";
+import { asStaticStory } from "@/storybook/parameters";
 import type { Meta, StoryObj } from "@storybook/react";
 import { Fragment } from "react/jsx-runtime";
 import { MouseEvent, useState } from "react";
@@ -74,9 +74,7 @@ export const Playground: Story = {
   },
 };
 
-export const Dropdown: Story = {
-  parameters: staticStoryParameters,
-  render: function Dropdown() {
+export const Dropdown = asStaticStory(function Dropdown() {
     const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
     const open = !!anchorEl;
     const handleClick = (e: MouseEvent<HTMLElement>) => {
@@ -96,12 +94,9 @@ export const Dropdown: Story = {
         </Menu>
       </Fragment>
     );
-  },
-};
+  });
 
-export const CloseOnClick: Story = {
-  parameters: staticStoryParameters,
-  render: function CloseOnClick() {
+export const CloseOnClick = asStaticStory(function CloseOnClick() {
     const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
     const open = !!anchorEl;
     const handleClick = (e: MouseEvent<HTMLElement>) => {
@@ -121,12 +116,9 @@ export const CloseOnClick: Story = {
         </Menu>
       </Fragment>
     );
-  },
-};
+  });
 
-export const CloseOnClickOneItem: Story = {
-  parameters: staticStoryParameters,
-  render: function CloseOnClickOneItem() {
+export const CloseOnClickOneItem = asStaticStory(function CloseOnClickOneItem() {
     const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
     const open = !!anchorEl;
     const handleClick = (e: MouseEvent<HTMLElement>) => {
@@ -146,12 +138,9 @@ export const CloseOnClickOneItem: Story = {
         </Menu>
       </Fragment>
     );
-  },
-};
+  });
 
-export const PreventClose: Story = {
-  parameters: staticStoryParameters,
-  render: function PreventClose() {
+export const PreventClose = asStaticStory(function PreventClose() {
     const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
     const open = !!anchorEl;
     const handleClick = (e: MouseEvent<HTMLElement>) => {
@@ -177,12 +166,9 @@ export const PreventClose: Story = {
         </Menu>
       </Fragment>
     );
-  },
-};
+  });
 
-export const ContextMenu: Story = {
-  parameters: staticStoryParameters,
-  render: function ContextMenu() {
+export const ContextMenu = asStaticStory(function ContextMenu() {
     const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
     const open = !!anchorEl;
     const handleContextMenu = (e: MouseEvent<HTMLElement>) => {
@@ -214,5 +200,4 @@ export const ContextMenu: Story = {
         </Menu>
       </Fragment>
     );
-  },
-};
+  });

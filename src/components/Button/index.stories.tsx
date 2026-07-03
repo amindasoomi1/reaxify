@@ -3,7 +3,7 @@ import {
   buttonSizeArgType,
   buttonVariantArgType,
 } from "@/storybook/argTypes";
-import { staticStoryParameters } from "@/storybook/parameters";
+import { asStaticStory } from "@/storybook/parameters";
 import type { Meta, StoryObj } from "@storybook/react";
 import { Send2 } from "iconsax-react";
 import Button from ".";
@@ -87,9 +87,7 @@ export const Playground: Story = {
   ),
 };
 
-export const Solid: Story = {
-  parameters: staticStoryParameters,
-  render: () => (
+export const Solid = asStaticStory(() => (
     <Stack wrap className="items-center gap-4">
       <Button color="primary" variant="solid">
         Primary
@@ -110,12 +108,9 @@ export const Solid: Story = {
         Danger
       </Button>
     </Stack>
-  ),
-};
+  ));
 
-export const Outline: Story = {
-  parameters: staticStoryParameters,
-  render: () => (
+export const Outline = asStaticStory(() => (
     <Stack wrap className="items-center gap-4">
       <Button color="primary" variant="outline">
         Primary
@@ -136,12 +131,9 @@ export const Outline: Story = {
         Danger
       </Button>
     </Stack>
-  ),
-};
+  ));
 
-export const Soft: Story = {
-  parameters: staticStoryParameters,
-  render: () => (
+export const Soft = asStaticStory(() => (
     <Stack wrap className="items-center gap-4">
       <Button color="primary" variant="soft">
         Primary
@@ -162,12 +154,9 @@ export const Soft: Story = {
         Danger
       </Button>
     </Stack>
-  ),
-};
+  ));
 
-export const Text: Story = {
-  parameters: staticStoryParameters,
-  render: () => (
+export const Text = asStaticStory(() => (
     <Stack wrap className="items-center gap-4">
       <Button color="primary" variant="text">
         Primary
@@ -188,12 +177,9 @@ export const Text: Story = {
         Danger
       </Button>
     </Stack>
-  ),
-};
+  ));
 
-export const Sizes: Story = {
-  parameters: staticStoryParameters,
-  render: () => (
+export const Sizes = asStaticStory(() => (
     <Stack wrap className="items-center gap-4">
       <Button color="success" variant="solid" size="icon">
         <Send2 color="currentColor" variant="Bold" />
@@ -208,12 +194,9 @@ export const Sizes: Story = {
         Large
       </Button>
     </Stack>
-  ),
-};
+  ));
 
-export const Loading: Story = {
-  parameters: staticStoryParameters,
-  render: () => (
+export const Loading = asStaticStory(() => (
     <Stack wrap className="items-center gap-4">
       <Button color="success" variant="solid" loading>
         Button
@@ -228,5 +211,4 @@ export const Loading: Story = {
         Button
       </Button>
     </Stack>
-  ),
-};
+  ));

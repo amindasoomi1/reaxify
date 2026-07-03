@@ -1,5 +1,5 @@
 import { booleanArg, colorArgType, sizeArgType } from "@/storybook/argTypes";
-import { staticStoryParameters } from "@/storybook/parameters";
+import { asStaticStory } from "@/storybook/parameters";
 import type { Meta, StoryObj } from "@storybook/react";
 import Spinner from ".";
 import Stack from "../Stack";
@@ -52,14 +52,9 @@ export const Playground: Story = {
   ),
 };
 
-export const Default: Story = {
-  parameters: staticStoryParameters,
-  render: () => <Spinner />,
-};
+export const Default = asStaticStory(() => <Spinner />);
 
-export const Color: Story = {
-  parameters: staticStoryParameters,
-  render: () => (
+export const Color = asStaticStory(() => (
     <Stack direction="row" className="gap-4">
       <Spinner color="primary" />
       <Spinner color="secondary" />
@@ -70,16 +65,12 @@ export const Color: Story = {
       <Spinner color="dark" />
       <Spinner color="light" />
     </Stack>
-  ),
-};
+  ));
 
-export const Size: Story = {
-  parameters: staticStoryParameters,
-  render: () => (
+export const Size = asStaticStory(() => (
     <Stack direction="row" className="items-center gap-4">
       <Spinner size="sm" />
       <Spinner size="md" />
       <Spinner size="lg" />
     </Stack>
-  ),
-};
+  ));

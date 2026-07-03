@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { staticStoryParameters } from "@/storybook/parameters";
+import { asStaticStory } from "@/storybook/parameters";
 import InputGroup from ".";
 import Stack from "../Stack";
 
@@ -33,9 +33,7 @@ export const Playground: Story = {
   ),
 };
 
-export const Default: Story = {
-  parameters: staticStoryParameters,
-  render: () => (
+export const Default = asStaticStory(() => (
     <Stack direction="column" className="gap-4">
       <InputGroup>
         <InputGroup.Label>Email address</InputGroup.Label>
@@ -51,5 +49,4 @@ export const Default: Story = {
         </InputGroup.Stack>
       </InputGroup>
     </Stack>
-  ),
-};
+  ));

@@ -5,7 +5,7 @@ import {
   buttonVariantArgType,
   colorArgType,
 } from "@/storybook/argTypes";
-import { staticStoryParameters } from "@/storybook/parameters";
+import { asStaticStory } from "@/storybook/parameters";
 import type { Meta, StoryObj } from "@storybook/react";
 import ButtonGroup from ".";
 import Button from "../Button";
@@ -59,9 +59,7 @@ export const Playground: Story = {
   ),
 };
 
-export const Colors: Story = {
-  parameters: staticStoryParameters,
-  render: () => (
+export const Colors = asStaticStory(() => (
     <Stack direction="column" className="gap-4">
       <ButtonGroup color="primary">
         <Button>{label}</Button>
@@ -74,12 +72,9 @@ export const Colors: Story = {
         <Button>{label}</Button>
       </ButtonGroup>
     </Stack>
-  ),
-};
+  ));
 
-export const Variants: Story = {
-  parameters: staticStoryParameters,
-  render: () => (
+export const Variants = asStaticStory(() => (
     <Stack direction="column" className="gap-4">
       <ButtonGroup variant="outline">
         <Button>{label}</Button>
@@ -92,12 +87,9 @@ export const Variants: Story = {
         <Button>{label}</Button>
       </ButtonGroup>
     </Stack>
-  ),
-};
+  ));
 
-export const Sizes: Story = {
-  parameters: staticStoryParameters,
-  render: () => (
+export const Sizes = asStaticStory(() => (
     <Stack direction="column" className="gap-4">
       <ButtonGroup size="lg">
         <Button>{label}</Button>
@@ -120,12 +112,9 @@ export const Sizes: Story = {
         <Button>{label}</Button>
       </ButtonGroup>
     </Stack>
-  ),
-};
+  ));
 
-export const Loading: Story = {
-  parameters: staticStoryParameters,
-  render: () => (
+export const Loading = asStaticStory(() => (
     <Stack direction="column" className="gap-4">
       <ButtonGroup loading>
         <Button>{label}</Button>
@@ -138,12 +127,9 @@ export const Loading: Story = {
         <Button>{label}</Button>
       </ButtonGroup>
     </Stack>
-  ),
-};
+  ));
 
-export const Orientations: Story = {
-  parameters: staticStoryParameters,
-  render: () => (
+export const Orientations = asStaticStory(() => (
     <Stack direction="column" className="gap-4">
       <ButtonGroup orientation="horizontal">
         <Button color="primary" variant="solid">
@@ -168,5 +154,4 @@ export const Orientations: Story = {
         </Button>
       </ButtonGroup>
     </Stack>
-  ),
-};
+  ));
