@@ -1,8 +1,4 @@
-import {
-  booleanArg,
-  colorArgType,
-  sizeArgType,
-} from "@/storybook/argTypes";
+import { booleanArg, colorArgType, sizeArgType } from "@/storybook/argTypes";
 import { staticStoryParameters } from "@/storybook/parameters";
 import type { Meta, StoryObj } from "@storybook/react";
 import Spinner from ".";

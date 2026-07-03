@@ -1,4 +1,4 @@
-html {
+/* html {
   scrollbar-gutter: stable;
 }
 html:has(
@@ -6,7 +6,7 @@ html:has(
   [role="dialog"][data-name="drawer"][data-open="true"]
 ) {
   scrollbar-gutter: auto;
-}
+} */
 body:has([data-open="true"]) {
   @apply overflow-hidden overscroll-none;
 }

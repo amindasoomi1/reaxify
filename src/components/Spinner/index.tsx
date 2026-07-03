@@ -46,6 +46,7 @@ export default function Spinner({
   }, [size, classes?.size]);
   return (
     <span
+      dir="ltr"
       data-name="spinner"
       className={twMerge(
         "inline-block align-middle rounded-full animate-spin aspect-square",
