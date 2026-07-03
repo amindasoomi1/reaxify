@@ -41,12 +41,11 @@ export default function Spinner({
     const sizeResult = sizes?.[size] ?? sizes.md;
     const classesResult = classes?.size?.[size];
     const hiddenClasses =
-      "border-e-transparent! border-e-0! border-s-transparent! border-t-0!";
+      "border-r-transparent! border-r-0! border-l-transparent! border-t-0!";
     return [sizeResult, classesResult, hiddenClasses];
   }, [size, classes?.size]);
   return (
     <span
-      dir="ltr"
       data-name="spinner"
       className={twMerge(
         "inline-block align-middle rounded-full animate-spin aspect-square",
