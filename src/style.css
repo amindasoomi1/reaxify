@@ -2,9 +2,9 @@ html {
   scrollbar-gutter: stable;
 }
 html:has(
-    [role="dialog"][data-name="modal"][data-open="true"],
-    [role="dialog"][data-name="drawer"][data-open="true"]
-  ) {
+  [role="dialog"][data-name="modal"][data-open="true"],
+  [role="dialog"][data-name="drawer"][data-open="true"]
+) {
   scrollbar-gutter: auto;
 }
 body:has([data-open="true"]) {
