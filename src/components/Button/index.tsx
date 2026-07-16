@@ -127,10 +127,10 @@ export default function Button<E extends ElementType = "button">({
   }, [colorClasses]);
   const sizeClasses = useMemo(() => {
     const sizes: Sizes = {
-      sm: "text-sm py-1 px-3.5",
-      md: "text-base py-1.5 px-4",
-      lg: "text-xl py-1.5 px-6",
-      icon: "size-9 p-0 inline-flex items-center justify-center rounded-full",
+      sm: "text-sm py-1 px-3.5 [&_svg:not([class*='size-'])]:size-4",
+      md: "text-base py-1.5 px-4 [&_svg:not([class*='size-'])]:size-5",
+      lg: "text-xl py-1.5 px-6 [&_svg:not([class*='size-'])]:size-6",
+      icon: "size-9 p-0 inline-flex items-center justify-center rounded-full [&_svg:not([class*='size-'])]:size-5",
     };
     return [sizes?.[size], classes?.size?.[size]];
   }, [size, classes?.size]);
@@ -159,7 +159,7 @@ export default function Button<E extends ElementType = "button">({
       role="button"
       data-name="button"
       className={twMerge(
-        "relative inline-flex items-center justify-center gap-1.5 no-underline whitespace-nowrap font-medium text-center rounded border border-border cursor-pointer transition-[box-shadow,opacity,color,background-color,border-color] [user-select:none] focus-visible:outline-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-5",
+        "relative inline-flex items-center justify-center gap-1.5 no-underline whitespace-nowrap font-medium text-center rounded border border-border cursor-pointer transition-[box-shadow,opacity,color,background-color,border-color] [user-select:none] focus-visible:outline-none [&_svg]:pointer-events-none [&_svg]:shrink-0",
         classes?.base,
         colorClasses,
         sizeClasses,
