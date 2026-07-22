@@ -1,0 +1,66 @@
+name: 🚀 Publish to npm
+
+on:
+  push:
+    branches:
+    paths:
+
+jobs:
+  check-and-publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🔍 Check if version changed
+        id: version_check
+        uses: actions/checkout@v4
+        with:
+
+      - name: 📊 Compare versions
+        id: compare
+        run: |
+          CURRENT_VERSION=$(node -p "require('./package.json').version")
+          echo "Current version: $CURRENT_VERSION"
+
+          git checkout HEAD~1 -- package.json 2>/dev/null || echo "First commit"
+          PREVIOUS_VERSION=$(node -p "require('./package.json').version" 2>/dev/null || echo "0.0.0")
+          echo "Previous version: $PREVIOUS_VERSION"
+
+          git checkout HEAD -- package.json
+
+          if [ "$CURRENT_VERSION" != "$PREVIOUS_VERSION" ]; then
+            echo "Version changed from $PREVIOUS_VERSION to $CURRENT_VERSION"
+            echo "version_changed=true" >> $GITHUB_OUTPUT
+            echo "new_version=$CURRENT_VERSION" >> $GITHUB_OUTPUT
+          else
+            echo "Version not changed"
+            echo "version_changed=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: 📦 Setup Node.js
+        if: steps.compare.outputs.version_changed == 'true'
+        uses: actions/setup-node@v4
+        with:
+
+      - name: 📥 Install dependencies
+        if: steps.compare.outputs.version_changed == 'true'
+        run: npm ci
+
+      - name: 🔨 Build project
+        if: steps.compare.outputs.version_changed == 'true'
+        run: npm run build
+
+      - name: 🚀 Publish to npm
+        if: steps.compare.outputs.version_changed == 'true'
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: ✅ Publish result
+        if: steps.compare.outputs.version_changed == 'true'
+        run: |
+          echo "🎉 Successfully published version ${{ steps.compare.outputs.new_version }}"
+
+      - name: ⏭️ Skip publish
+        if: steps.compare.outputs.version_changed != 'true'
+        run: |
+          echo "⏭️ Version not changed, skipping publish"
