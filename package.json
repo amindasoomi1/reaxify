@@ -50,7 +50,7 @@
   "scripts": {
     "dev": "storybook dev -p 3000",
     "build": "tsc && vite build",
-    "release": "npm version patch --no-git-tag-version --no-commit-hooks && npm run build && npm publish",
+    "release": "npm version patch --no-git-tag-version --no-commit-hooks && npm run build",
     "build-storybook": "storybook build"
   },
   "dependencies": {
