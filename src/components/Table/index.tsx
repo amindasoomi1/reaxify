@@ -225,12 +225,14 @@ function TableHeaderCell({
   children,
   ...props
 }: TableHeaderCellProps) {
+  const classes = useClasses((c) => c.table.headerCell.base);
   return (
     <th
       data-name="table-header-cell"
       className={twMerge(
         "font-medium text-sm py-2 px-4 whitespace-nowrap text-center first:text-start last:text-end",
         sticky && "bg-inherit sticky inset-e-0 z-1",
+        classes,
         className,
       )}
       {...props}
@@ -245,12 +247,14 @@ function TableDataCell({
   children,
   ...props
 }: TableDataCellProps) {
+  const classes = useClasses((c) => c.table.dataCell.base);
   return (
     <td
       data-name="table-data-cell"
       className={twMerge(
         "font-normal text-sm py-2 px-4 whitespace-nowrap text-center first:text-start last:text-end",
         sticky && "bg-inherit sticky inset-e-0 z-1",
+        classes,
         className,
       )}
       {...props}
