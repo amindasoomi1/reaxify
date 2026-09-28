@@ -42,7 +42,7 @@ export default function Spinner({
     const classesResult = classes?.size?.[size];
     const hiddenClasses =
       "border-r-transparent! border-r-0! border-l-transparent! border-t-0!";
-    return [sizeResult, classesResult, hiddenClasses];
+    return [sizeResult, hiddenClasses, classesResult];
   }, [size, classes?.size]);
   return (
     <span
