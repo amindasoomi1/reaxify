@@ -161,7 +161,7 @@ function ModalDialog<E extends ElementType = "div">({
       data-name="modal-dialog"
       style={{ transitionDuration: `${duration}ms` }}
       className={twMerge(
-        "max-w-full max-h-full m-auto transition-transform",
+        "flex flex-col max-w-full max-h-full m-auto transition-transform [&>*:not([class*='min-w-'])]:min-w-0",
         classes?.base,
         modalSize,
         transitionClasses[transitionState],
@@ -198,7 +198,7 @@ function ModalBody<E extends ElementType = "div">({
     <Card.Body
       as={as}
       data-name="modal-body"
-      className={cn(classes, className)}
+      className={cn("flex-1 overflow-auto", classes, className)}
       {...(props as ComponentProps<E>)}
     />
   );
