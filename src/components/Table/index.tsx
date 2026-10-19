@@ -140,7 +140,6 @@ function TableRow({
   disabled,
   className,
   children,
-  tabIndex,
   onClick,
   ...props
 }: TableRowProps) {
@@ -186,11 +185,9 @@ function TableRow({
     <tr
       ref={rowRef}
       data-name="table-row"
-      tabIndex={tabIndex ?? (isHoverable ? 0 : undefined)}
       aria-disabled={isDisabled || undefined}
       aria-current={isActive ? "true" : undefined}
       className={twMerge(
-        "bg-white",
         classes?.base,
         hasBordered && "border-b border-solid border-border",
         isDashed && "border-dashed",

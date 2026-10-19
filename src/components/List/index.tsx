@@ -72,7 +72,6 @@ function ListItem<E extends ElementType = "li">({
   disabled,
   className,
   children,
-  tabIndex,
   onClick,
   ...props
 }: ComponentPropsWithAs<E, ListItemProps>) {
@@ -111,7 +110,6 @@ function ListItem<E extends ElementType = "li">({
     <Component
       ref={itemRef as Ref<HTMLLIElement>}
       data-name="list-item"
-      tabIndex={tabIndex ?? (isHoverable ? 0 : undefined)}
       aria-disabled={isDisabled || undefined}
       aria-current={isActive ? "true" : undefined}
       className={twMerge(
